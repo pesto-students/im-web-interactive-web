@@ -1,0 +1,11 @@
+const PRIMARY = "PRIMARY";
+const SECONDARY = "SECONDARY";
+const TERTIARY = "TERTIARY";
+
+const BUTTON_TYPES = {
+  PRIMARY,
+  SECONDARY,
+  TERTIARY,
+};
+
+export default BUTTON_TYPES;
