@@ -11,7 +11,7 @@ function App() {
       </div>
       <div>
         <SearchBox placeholder={"Enter Search Text"} onSearch={(searchText) => console.log('Searching ' + searchText)} />
-    </div>
+      </div>
     </>
   )
 }
