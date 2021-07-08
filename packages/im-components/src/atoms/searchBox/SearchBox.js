@@ -26,4 +26,4 @@ SearchBox.defaultProps = {
   style: {},
 };
 
-export default Search;
+export default SearchBox;
