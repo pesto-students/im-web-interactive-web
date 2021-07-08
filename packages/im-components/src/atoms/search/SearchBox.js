@@ -6,7 +6,6 @@ import { Input } from "antd";
 
 // Search Component
 const { Search } = Input;
-const AntdSearch = Search;
 
 const SearchBox = (props) => {
   const { placeholder, onSearch, style, ...restProps } = props;
