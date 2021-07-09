@@ -1,4 +1,4 @@
 import Title from "./Title";
+import Label from "./Label";
 
-export { default as Label } from "./Label";
-export { Title };
+export { Title, Label };

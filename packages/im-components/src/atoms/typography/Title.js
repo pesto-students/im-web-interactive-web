@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 // Component
 import { Typography, Skeleton } from "antd";
 
@@ -10,7 +11,11 @@ const Title = (props) => {
   const { Title } = Typography;
   const { className, children, level, ...restProps } = props;
   return (
-    <Title {...restProps} level={level} className={className}>
+    <Title
+      {...restProps}
+      level={level}
+      className={[className, styles.textWhite].join(" ")}
+    >
       {children ? (
         children
       ) : (
@@ -22,8 +27,8 @@ const Title = (props) => {
 
 Title.propTypes = {
   className: PropTypes.string,
-  level: PropTypes.string,
-  ellipsis: true,
+  level: PropTypes.number,
+  ellipsis: PropTypes.bool,
 };
 
 Title.defaultProps = {

@@ -2,15 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Component
-import { Typography,Skeleton } from "antd";
+import { Typography, Skeleton } from "antd";
+
 // Styles
 import styles from "./typography.module.scss";
+
 const Label = (props) => {
   const { Text } = Typography;
   const { className, children, type, ...restProps } = props;
 
   return (
-    <Text {...restProps} type={type} className={className}>
+    <Text
+      {...restProps}
+      type={type}
+      className={[className, styles.textWhite].join(" ")}
+    >
       {children ? (
         children
       ) : (
