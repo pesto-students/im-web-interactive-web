@@ -1,19 +1,23 @@
-import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 // Components
-import Button from "imcomponents/atoms/button";
-import SearchBox from "imcomponents/atoms/searchBox";
+import AppSkeleton from "./organisms/appSkeleton";
+import LandingPage from "./pages/landingPage";
+
+// Styles
+import "antd/dist/antd.css";
+import "./App.css";
 
 function App() {
   return (
-    <>
-      <div>
-        <Button label={"My Button"} />
-      </div>
-      <div>
-        <SearchBox placeholder={"Enter Search Text"} onSearch={(searchText) => console.log('Searching ' + searchText)} />
-      </div>
-    </>
-  )
-}
+    <Router>
+      <AppSkeleton>
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+        </Switch>
+      </AppSkeleton>
+    </Router>
+  );
+ }
 
 export default App;
