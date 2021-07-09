@@ -1,0 +1,26 @@
+.bannerImage {
+  height: 50vh;
+  width: 100vw;
+  min-height: 40rem;
+}
+
+.description {
+}
+
+.metadata {
+  display: flex;
+  flex-direction: row;
+  padding: 2rem 4rem;
+}
+
+.thumbnail {
+  width: 20rem;
+  height: 30rem;
+  position: relative;
+  top: -15.4rem;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+}
