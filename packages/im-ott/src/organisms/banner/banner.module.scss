@@ -1,0 +1,21 @@
+.bannerContent {
+  height: 25rem;
+  color: "#fff";
+  line-height: 25rem;
+  background: "#364d79";
+  position: relative;
+}
+
+.bannerOverlay {
+  z-index: 2;
+  position: absolute;
+  top: 12rem;
+  margin-left: 6rem;
+  width: 50rem;
+  text-align: left;
+}
+
+.overlayTitle,
+.overlayDesc {
+  color: #fff !important;
+}
