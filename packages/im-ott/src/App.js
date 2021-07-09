@@ -1,9 +1,23 @@
-import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 // Components
-import Button from "imcomponents/atoms/button";
+import AppSkeleton from "./organisms/appSkeleton";
+import LandingPage from "./pages/landingPage";
+
+// Styles
+import "antd/dist/antd.css";
+import "./App.css";
 
 function App() {
-  return <Button label={"My Button"} />;
+  return (
+    <Router>
+      <AppSkeleton>
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+        </Switch>
+      </AppSkeleton>
+    </Router>
+  );
 }
 
 export default App;
