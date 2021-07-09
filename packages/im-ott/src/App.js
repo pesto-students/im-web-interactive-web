@@ -1,28 +1,22 @@
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+// Components
+import AppSkeleton from "./organisms/appSkeleton";
+import LandingPage from "./pages/landingPage";
+
+// Styles
 import "antd/dist/antd.css";
 import "./App.css";
-// Components
-import Button from "imcomponents/atoms/button";
-import { Label } from "imcomponents/atoms/typography";
-import Image from "imcomponents/atoms/image";
-import FilmCard from "imcomponents/molecules/FilmCard";
 
 function App() {
   return (
-    <>
-      <div>
-        <Button label={"My Button"} />
-      </div>
-      <div>
-        <Label>Hi how are you</Label>
-      </div>
-      <>
-        <Image
-          width={200}
-          src="https://homepages.cae.wisc.edu/~ece533/images/airplane.png"
-        />
-      </>
-      <FilmCard className="pl-2" title={"Jab We Met"} year={"2020"} />
-    </>
+    <Router>
+      <AppSkeleton>
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+        </Switch>
+      </AppSkeleton>
+    </Router>
   );
 }
 
