@@ -18,6 +18,6 @@ function App() {
       </AppSkeleton>
     </Router>
   );
-}
+ }
 
 export default App;
