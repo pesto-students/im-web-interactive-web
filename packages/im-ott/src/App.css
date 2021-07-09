@@ -1,7 +1,10 @@
-@import '~antd/dist/antd.css';
+html {
+  font-size: 62.5%;
+}
 
 .App {
   text-align: center;
+  background-color: black;
 }
 
 .App-logo {
@@ -16,7 +19,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,6 +30,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.ant-carousel {
+  text-align: center;
 }
 
 @keyframes App-logo-spin {

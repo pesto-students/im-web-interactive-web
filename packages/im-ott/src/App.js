@@ -1,20 +1,23 @@
-import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 // Components
-import Button from "imcomponents/atoms/button";
-import Input from "imcomponents/atoms/input";
-import { INPUT_SIZES } from "imcomponents/atoms/input";
+import AppSkeleton from "./organisms/appSkeleton";
+import LandingPage from "./pages/landingPage";
+
+// Styles
+import "antd/dist/antd.css";
+import "./App.css";
 
 function App() {
   return (
-    <>
-      <div>
-        <Button label={"My Button"} />
-      </div>
-      <div>
-        <Input placeholder={"My Input"} size={INPUT_SIZES.LARGE} />;
-      </div>
-    </>
-  )
-}
+    <Router>
+      <AppSkeleton>
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+        </Switch>
+      </AppSkeleton>
+    </Router>
+  );
+ }
 
-export default App;
+ export default App;
