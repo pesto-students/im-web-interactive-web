@@ -7,11 +7,13 @@ const { getLoader, loaderByName } = require("@craco/craco");
 
 const packages = [];
 packages.push(path.resolve(__dirname, "../im-components/src"));
+packages.push(path.resolve(__dirname, "../im-base/src"));
 
 module.exports = {
   webpack: {
     alias: {
       imcomponents: "@im/components/src",
+      imbase: "@im/base/src",
     },
     configure: (webpackConfig) => {
       const { isFound, match } = getLoader(

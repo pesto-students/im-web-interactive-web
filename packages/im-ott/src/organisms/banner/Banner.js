@@ -10,7 +10,7 @@ import styles from "./banner.module.scss";
 
 const Banner = () => {
   return (
-    <Carousel>
+    <Carousel autoplay>
       <div>
         <div className={styles.bannerOverlay}>
           <Title level={3}>King Kong</Title>
