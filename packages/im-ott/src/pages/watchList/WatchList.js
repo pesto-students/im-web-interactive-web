@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 // Lodash
 import _map from "lodash/map";
@@ -7,24 +8,40 @@ import _isEmpty from "lodash/isEmpty";
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
 import Loader from "imcomponents/molecules/loader/Loader";
-import Error from "../../molecules/error";
+import Error from "imcomponents/molecules/error";
 
 // Utils
-import getDataFromResponse from "../../utils/getDataFromResponse";
+import getDataFromResponse from "imbase/utils/getDataFromResponse";
 
 // Readers
-import FilmReader from "../../readers/Film";
+import FilmReader from "imbase/readers/Film";
 
 // Constants
-import { EMPTY_ARRAY, EMPTY_OBJECT } from "../../constants/base.constants";
-import MOCK_DATA from "../../constants/mockData.json";
+import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
+import MOCK_DATA from "imbase/constants/mockDataWatchlist.json";
 
 // Styles
 import styles from "./watchList.module.scss";
 
 const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   const filmId = FilmReader.id(filmDetails);
-  return <FilmCard key={filmId} {...filmDetails} className={styles.film} />;
+  const filmTitle = FilmReader.title(filmDetails);
+  const filmRating = FilmReader.rating(filmDetails);
+  const filmGenre = FilmReader.genre(filmDetails);
+  const filmImgSrc = FilmReader.thumbnail(filmDetails);
+  return (
+    <Link to={`film/${filmId}`}>
+      <FilmCard
+        key={filmId}
+        title={filmTitle}
+        genre={filmGenre}
+        imgSrc={filmImgSrc}
+        rating={filmRating}
+        {...filmDetails}
+        className={styles.film}
+      />
+    </Link>
+  );
 };
 
 const WatchList = () => {

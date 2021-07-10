@@ -8,14 +8,14 @@ import _isEmpty from "lodash/isEmpty";
 // Components
 import Loader from "imcomponents/molecules/loader/Loader";
 import { Title, Label } from "imcomponents/atoms/typography";
-import Error from "../../molecules/error";
+import Error from "imcomponents/molecules/error";
 
 // Readers
-import FilmReader from "../../readers/Film";
+import FilmReader from "imbase/readers/Film";
 
 // Constants
-import { EMPTY_OBJECT } from "../../constants/base.constants";
-import getDataFromResponse from "../../utils/getDataFromResponse";
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+import getDataFromResponse from "imbase/utils/getDataFromResponse";
 
 // Styles
 import styles from "./filmDetails.module.scss";
