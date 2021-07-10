@@ -4,12 +4,17 @@ import React from "react";
 import Banner from "../../organisms/banner";
 import FilmList from "../../organisms/filmList";
 
+// Styles
+import styles from "./landingPage.module.scss";
+
 function LandingPage() {
   return (
     <>
       <Banner />
-      <FilmList />
-      <FilmList label={"Featured Movies"} isFeatured={true}/>
+      <div className={styles.container}>
+        <FilmList label={"New Releases"} />
+        <FilmList label={"Featured Movies"} isFeatured={true} />
+      </div>
     </>
   );
 }

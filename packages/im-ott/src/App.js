@@ -6,8 +6,14 @@ import LandingPage from "./pages/landingPage";
 import WatchList from "./pages/watchList/WatchList";
 import FilmDetails from "./pages/filmDetails";
 
-// Styles
+// Antd Styles
 import "antd/dist/antd.css";
+
+// Slider Styles
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+// Styles
 import "./App.css";
 
 function App() {

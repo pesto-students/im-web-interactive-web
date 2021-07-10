@@ -1,7 +1,5 @@
 .horizontalList {
-  overflow: auto;
-  overflow-y: hidden;
-  margin: 0 auto;
+  margin: 4rem auto;
   white-space: nowrap;
 }
 
@@ -9,6 +7,6 @@
   display: inline-block;
 }
 
-.filmSpacing{
+.filmSpacing {
   margin-left: 1rem !important;
 }
