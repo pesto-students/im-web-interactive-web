@@ -1,10 +1,11 @@
 .filmcard {
-  background: #050e12;
+  background: #050e12 !important;
   border-radius: 6px;
-  width: 200px;
+  border: 1px solid black;
 }
 
 .title,
 .year {
   color: #fff !important;
+  border: none;
 }

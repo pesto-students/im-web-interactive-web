@@ -11,16 +11,18 @@ import { Label, Title } from "imcomponents/atoms/typography";
 import styles from "./filmcard.module.scss";
 
 const FilmCard = (props) => {
-  const { className, title, imgSrc, year, ...restProps } = props;
+  const { className, title, imgSrc, year, isFeatured, ...restProps } = props;
   const filmCardClassName = cx(styles.filmcard, className);
+  const cardWidth = isFeatured ? 300 : 200;
+  const cardHeight = isFeatured ? 300 : 200;
+
   return (
     <Card
       hoverable
       className={filmCardClassName}
       bodyStyle={{ padding: "1rem" }}
-      cover={
-        <Image src={imgSrc} />
-      }
+      bordered={false}
+      cover={<Image src={imgSrc} width={cardWidth} height={cardHeight} />}
       {...restProps}
     >
       <Title level={4} className={styles.title}>
