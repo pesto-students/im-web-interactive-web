@@ -33,11 +33,11 @@
 }
 
 .detailsFeatured {
-  top: 12rem;
+  top: calc(100% - 24rem);
 }
 
 .detailsNotFeatured {
-  top: 12rem;
+  top: calc(100% - 23rem);
 }
 
 .tag {
