@@ -15,7 +15,7 @@ const Image = (props) => {
 
 Image.propTypes = {
   className: PropTypes.string,
-  width: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.number,
   src: PropTypes.string,
   fallback: PropTypes.string,
