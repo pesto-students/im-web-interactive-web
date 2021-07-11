@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 // Components
 import { Layout } from "antd";
-import FooterContent from "../footerContent";
 import Navbar from "../navbar";
 
 // Styles
@@ -19,9 +18,7 @@ const AppSkeleton = (props) => {
         <Navbar />
       </Header>
       <Content className={styles.content}>{children}</Content>
-      <Footer className={styles.footer}>
-        <FooterContent />
-      </Footer>
+      <Footer className={styles.footer}>Interactive Web Platform 2021</Footer>
     </Layout>
   );
 };
