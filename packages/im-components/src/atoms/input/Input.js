@@ -5,23 +5,31 @@ import PropTypes from "prop-types";
 import { Input as AntdInput } from "antd";
 
 // Constants
-import INPUT_SIZES from "./constants/input.sizes";
+import SIZES from "./constants/input.sizes";
+import TYPES from "./constants/input.types";
 
 const Input = (props) => {
-  const { size, placeholder, ...restProps } = props;
+  const { type, size, placeholder, ...restProps } = props;
   return (
-    <AntdInput {...restProps} size={size} placeholder={placeholder}/>
+    <AntdInput
+      {...restProps}
+      type={type}
+      size={size}
+      placeholder={placeholder}
+    />
   );
 };
 
 Input.propTypes = {
+  type: PropTypes.string,
   size: PropTypes.string,
   placeholder: PropTypes.string,
 };
 
 Input.defaultProps = {
-  placeholder: '',
-  size: INPUT_SIZES.MEDIUM,
+  type: TYPES.TEXT,
+  size: SIZES.MEDIUM,
+  placeholder: "",
 };
 
 export default Input;

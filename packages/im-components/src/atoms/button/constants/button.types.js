@@ -1,11 +1,17 @@
-const PRIMARY = "PRIMARY";
-const SECONDARY = "SECONDARY";
-const TERTIARY = "TERTIARY";
+const PRIMARY = "primary";
+const GHOST = "ghost";
+const DASHED = "dashed";
+const LINK = "link";
+const TEXT = "text";
+const DEFAULT = "default";
 
 const BUTTON_TYPES = {
   PRIMARY,
-  SECONDARY,
-  TERTIARY,
+  GHOST,
+  DASHED,
+  LINK,
+  TEXT,
+  DEFAULT,
 };
 
 export default BUTTON_TYPES;
