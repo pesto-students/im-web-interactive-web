@@ -1,14 +1,13 @@
 import React from "react";
 
-// Icons
-import { FaVideo, FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
-
 // Components
 import Footer from "imcomponents/atoms/footer";
 
-
 // Styles
 import styles from "./footerContent.module.scss";
+
+// Icons
+import { FacebookFilled, InstagramOutlined, TwitterOutlined, VideoCameraFilled } from "imcomponents/atoms/icon";
 
 function FooterUI() {
     return (
@@ -36,12 +35,12 @@ function FooterUI() {
                     </Footer.Column>
                 </Footer.Row>
                 <div>
-                    <FaVideo size={100} className="footerLogo"/>
+                    <VideoCameraFilled style={{ fontSize: '500%'}}/>
                     <div>© 2021 Studio Media. All rights reserved.</div>
                     <div className={styles.socialContainer}>
-                        <a href="#" className={styles.social}><FaFacebookF /></a>
-                        <a href="#" className={styles.social}><FaTwitter /></a>
-                        <a href="#" className={styles.social}><FaInstagram /></a>
+                        <a href="#" className={styles.social}><FacebookFilled /></a>
+                        <a href="#" className={styles.social}><TwitterOutlined /></a>
+                        <a href="#" className={styles.social}><InstagramOutlined /></a>
                     </div>
                 </div>
             </Footer.Wrapper>
