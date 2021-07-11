@@ -1,5 +1,7 @@
 .horizontalList {
-  margin: 4rem auto;
+  overflow: auto;
+  overflow-y: hidden;
+  margin: 4rem 0;
   white-space: nowrap;
 }
 

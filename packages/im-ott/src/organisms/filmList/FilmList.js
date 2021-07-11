@@ -11,7 +11,7 @@ import FilmCard from "imcomponents/molecules/filmCard";
 import { Title } from "imcomponents/atoms/typography";
 import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
-import { Slider, SLIDER_SETTINGS } from "imcomponents/atoms/slider";
+import Slider from "imcomponents/atoms/slider";
 
 // Utils
 import getDataFromResponse from "imbase/utils/getDataFromResponse";
@@ -89,7 +89,7 @@ const FilmList = (props) => {
       <Title level={4}>
         {label} &nbsp; <RightOutlined />
       </Title>
-      <Slider {...SLIDER_SETTINGS}>
+      <Slider>
         {_map(movieList, (movie) => renderMovie(movie, isFeatured))}
       </Slider>
     </div>

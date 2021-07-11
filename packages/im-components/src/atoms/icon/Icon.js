@@ -1,3 +1,8 @@
-import { StarOutlined, StarTwoTone, RightOutlined } from "@ant-design/icons";
+import {
+  StarOutlined,
+  StarTwoTone,
+  RightOutlined,
+  LeftOutlined,
+} from "@ant-design/icons";
 
-export { StarOutlined, StarTwoTone, RightOutlined };
+export { StarOutlined, StarTwoTone, RightOutlined, LeftOutlined };

@@ -1,1 +1,6 @@
-export { StarOutlined, StarTwoTone, RightOutlined } from "./Icon";
+export {
+  StarOutlined,
+  StarTwoTone,
+  RightOutlined,
+  LeftOutlined,
+} from "./Icon";

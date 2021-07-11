@@ -1,1 +1,1 @@
-export { Slider, SLIDER_SETTINGS } from "./Slider";
+export { default } from "./Slider";
