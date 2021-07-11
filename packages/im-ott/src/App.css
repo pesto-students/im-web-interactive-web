@@ -26,6 +26,10 @@ html {
   opacity: 0.25;
 }
 
+.ant-carousel .ant-typography,
+.film-details .ant-typography {
+  color: #fff;
+}
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {

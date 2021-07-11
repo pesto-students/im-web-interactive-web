@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // Components
 import { Menu } from "antd";
@@ -11,7 +12,9 @@ function Navbar() {
     <>
       <div className="logo" />
       <Menu theme="dark" mode="horizontal" className={styles.floatRight}>
-        <Menu.Item key={"key1"}>{"Home"}</Menu.Item>
+        <Menu.Item key={"key1"}>
+          <Link to={"/"}>Home</Link>
+        </Menu.Item>
       </Menu>
     </>
   );

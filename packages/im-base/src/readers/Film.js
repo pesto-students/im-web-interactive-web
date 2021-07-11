@@ -8,6 +8,7 @@ const rating = _property("rating");
 const genre = _property("genre");
 const description = _property("description");
 const thumbnail = _property("images.thumbnail");
+const cover = _property("images.cover");
 
 export default {
   id,
@@ -17,4 +18,5 @@ export default {
   genre,
   description,
   thumbnail,
+  cover,
 };
