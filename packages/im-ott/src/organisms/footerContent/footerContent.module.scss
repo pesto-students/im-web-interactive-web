@@ -1,0 +1,10 @@
+a.social {
+    margin: 0.5rem 1rem;
+    transition: transform 250ms;
+    display: inline-block;
+    color: white;
+}
+
+a.social:hover {
+    transform: translateY(-2px);
+}

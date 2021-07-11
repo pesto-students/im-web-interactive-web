@@ -3,4 +3,8 @@ export {
   StarTwoTone,
   RightOutlined,
   LeftOutlined,
+  InstagramOutlined,
+  FacebookFilled,
+  TwitterOutlined,
+  VideoCameraFilled
 } from "./Icon";
