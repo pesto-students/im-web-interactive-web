@@ -32,15 +32,47 @@ html {
   color: #61dafb;
 }
 
+/* ===== Antd Carousel CSS ===== */
 .ant-carousel {
   text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ant-slider-carousel > .ant-carousel {
+  text-align: left;
+}
+
+.ant-carousel .slick-prev {
+  left: 0;
+  z-index: 1;
+}
+
+.ant-carousel .slick-next {
+  right: 0;
+}
+
+.slick-disabled {
+  opacity: 0.25;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #29282a #000;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  height: 0.5rem;
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: #000;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #29282a;
+  border-radius: 0.7rem;
+  border: 0.1rem solid #000;
 }

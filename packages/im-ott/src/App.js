@@ -9,10 +9,6 @@ import FilmDetails from "./pages/filmDetails";
 // Antd Styles
 import "antd/dist/antd.css";
 
-// Slider Styles
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
 // Styles
 import "./App.css";
 
