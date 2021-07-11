@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import cx from "classnames";
 
 // Component
 import { Typography, Skeleton } from "antd";
@@ -7,16 +8,13 @@ import { Typography, Skeleton } from "antd";
 // Styles
 import styles from "./typography.module.scss";
 
-const Label = (props) => {
-  const { Text } = Typography;
-  const { className, children, type, ...restProps } = props;
+const { Text } = Typography;
 
+const Label = (props) => {
+  const { className, children, type, ...restProps } = props;
+  const labelClassName = cx(styles.textWhite, className);
   return (
-    <Text
-      {...restProps}
-      type={type}
-      className={[className, styles.textWhite].join(" ")}
-    >
+    <Text {...restProps} type={type} className={labelClassName}>
       {children ? (
         children
       ) : (
