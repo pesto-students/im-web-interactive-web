@@ -5,12 +5,15 @@
 }
 
 .description {
+  padding: 1rem 4rem;
+  position: relative;
+  top: -14rem;
 }
 
 .metadata {
   display: flex;
   flex-direction: row;
-  padding: 2rem 4rem;
+  padding: 1rem 4rem;
 }
 
 .thumbnail {
@@ -23,4 +26,16 @@
 img {
   height: 100%;
   width: 100%;
+}
+
+.ml2 {
+  margin-left: 2rem;
+}
+
+.mb1 {
+  margin-bottom: 1rem;
+}
+
+.whiteColor {
+  color: #fff;
 }

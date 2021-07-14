@@ -3,4 +3,5 @@ export {
   StarTwoTone,
   RightOutlined,
   LeftOutlined,
+  StarFilled,
 } from "./Icon";
