@@ -1,12 +1,10 @@
 import React from "react";
-import cx from "classnames";
 
 // Styles
 import styles from "./footerContent.module.scss";
 
 // Icons
 import { Row, Col } from "imcomponents/atoms/grid";
-import Button from "imcomponents/atoms/button";
 import { FacebookFilled, InstagramOutlined, TwitterOutlined, VideoCameraFilled } from "imcomponents/atoms/icon";
 
 function FooterContent() {
@@ -41,7 +39,7 @@ function FooterContent() {
                 <div className={styles.socialContainer}>
                     <a href="#" className={styles.social}><FacebookFilled /></a>
                     <a href="#" className={styles.social}><TwitterOutlined /></a>
-                    <a href="#" className={cx(styles.social, styles.instagram)}><InstagramOutlined /></a>
+                    <a href="#" className={styles.social}><InstagramOutlined /></a>
                 </div>
             </div>
             </div>
