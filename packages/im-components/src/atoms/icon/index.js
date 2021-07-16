@@ -4,4 +4,8 @@ export {
   RightOutlined,
   LeftOutlined,
   StarFilled,
+  FacebookFilled,
+  InstagramOutlined,
+  TwitterOutlined,
+  VideoCameraFilled
 } from "./Icon";
