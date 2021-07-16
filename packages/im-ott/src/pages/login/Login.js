@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 // Components
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
@@ -8,16 +8,16 @@ import Button from "imcomponents/atoms/button";
 import { Title, Label } from "imcomponents/atoms/typography";
 
 // Images
-import camera from "../../assets/images/camera.png";
-import clap from "../../assets/images/clap.png";
+// import camera from "../../assets/images/camera.png";
+// import clap from "../../assets/images/clap.png";
 import reel from "../../assets/images/reel.png";
 
 // Styles
 import styles from "./login.module.scss";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
 
   return (
     <div className={styles.container}>

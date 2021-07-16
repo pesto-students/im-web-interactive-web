@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import cx from "classnames";
-import PropTypes from "prop-types";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
