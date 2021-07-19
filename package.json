@@ -6,7 +6,8 @@
     "lerna": "^4.0.0"
   },
   "scripts": {
-    "start": "lerna exec --scope @im/ott -- yarn start"
+    "start": "lerna exec --scope @im/ott -- yarn start",
+    "build": "lerna exec --scope @im/ott -- yarn build"
   },
   "workspaces": {
     "packages": [
