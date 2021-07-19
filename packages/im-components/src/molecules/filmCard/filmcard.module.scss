@@ -3,6 +3,7 @@
 
   .relative {
     position: relative;
+
     .details {
       position: absolute;
       z-index: 10;
@@ -12,9 +13,11 @@
       left: 0.8rem;
       text-align: left;
       color: white;
+
       .tag {
         margin-bottom: 0.7rem !important;
       }
+
       .title {
         color: #fff;
         font-size: 1.4rem;
@@ -38,6 +41,7 @@
     width: calc(45rem * (9 / 16));
     border-radius: 1rem;
   }
+  
   &:hover {
     transform: scale(1.03);
   }
