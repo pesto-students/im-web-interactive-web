@@ -26,29 +26,28 @@ html {
   opacity: 0.25;
 }
 
-.ant-carousel .ant-typography,
-.film-details .ant-typography {
+.ant-carousel .ant-typography{
   color: #fff;
 }
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {
   scrollbar-width: auto;
-  scrollbar-color: #29282a #000;
+  scrollbar-color: #29282a #eee;
 }
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  height: 0.5rem;
-  width: 0.5rem;
+  height: 0;
+  width: 0;
 }
 
 *::-webkit-scrollbar-track {
-  background: #000;
+  background: #eee;
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: #29282a;
   border-radius: 0.7rem;
-  border: 0.1rem solid #000;
+  border: 0.1rem solid #eee;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -11,7 +11,6 @@ import FilmCard from "imcomponents/molecules/filmCard";
 import { Title } from "imcomponents/atoms/typography";
 import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
-import Slider from "imcomponents/atoms/slider";
 
 // Utils
 import getDataFromResponse from "imbase/utils/getDataFromResponse";
@@ -23,7 +22,7 @@ import FilmReader from "imbase/readers/Film";
 import { getFilmListClassName } from "./helpers/filmlist.general";
 
 // Icon
-import { RightOutlined } from "imcomponents/atoms/icon";
+import { LeftOutlined, RightOutlined } from "imcomponents/atoms/icon";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -39,8 +38,6 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   const filmGenre = FilmReader.genre(filmDetails);
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
 
-  const filmListClassName = getFilmListClassName(isFeatured);
-
   return (
     <Link to={`film/${filmId}`}>
       <FilmCard
@@ -50,7 +47,6 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
         imgSrc={filmImgSrc}
         rating={filmRating}
         {...filmDetails}
-        className={filmListClassName}
         isFeatured={isFeatured}
       />
     </Link>
@@ -62,6 +58,26 @@ const FilmList = (props) => {
   const { label, isFeatured } = props;
   const [movieList, setMovieList] = useState(EMPTY_ARRAY);
   const [error, setError] = useState(EMPTY_OBJECT);
+  const filmListRef = useRef();
+  const stylesInline = {
+    display: "block",
+    color: "#ccc",
+    fontSize: "4rem",
+    twoToneColor: "#fff",
+    width: "4rem",
+    height: "4rem",
+  };
+
+  const filmListContainer = getFilmListClassName(isFeatured);
+
+  // Handle Scrolling by increment / decreamenting scroll left
+  const handleNav = (direction) => {
+    if (direction === "left") {
+      filmListRef.current.scrollLeft -= 500;
+    } else {
+      filmListRef.current.scrollLeft += 500;
+    }
+  };
 
   useEffect(() => {
     Promise.resolve(MOCK_DATA)
@@ -85,13 +101,27 @@ const FilmList = (props) => {
   }
 
   return (
-    <div className={styles.horizontalList}>
+    <div className={styles.mt1}>
       <Title level={4}>
         {label} &nbsp; <RightOutlined />
       </Title>
-      <Slider>
-        {_map(movieList, (movie) => renderMovie(movie, isFeatured))}
-      </Slider>
+      <div className={filmListContainer}>
+        <div className={styles.filmArrow}>
+          <LeftOutlined
+            style={stylesInline}
+            onClick={() => handleNav("left")}
+          />
+        </div>
+        <div className={styles.navItems} ref={filmListRef}>
+          {_map(movieList, (movie) => renderMovie(movie, isFeatured))}
+        </div>
+        <div className={styles.filmArrow}>
+          <RightOutlined
+            style={stylesInline}
+            onClick={() => handleNav("right")}
+          />
+        </div>
+      </div>
     </div>
   );
 };
