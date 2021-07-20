@@ -72,7 +72,7 @@ const FilmDetails = (props) => {
           <div className={styles.ml2}>
             <Title>{FilmReader.title(filmDetails)}</Title>
             {_times(FilmReader.rating(filmDetails), () => (
-              <StarFilled style={{ color: "white" }} />
+              <StarFilled style={{ color: "yellow" }} />
             ))}
             <Button className={cx(styles.ml2)} label={"Host a Party"} danger></Button>
             <Button className={cx(styles.ml2)} label={"Add to Watchlist"} danger></Button>

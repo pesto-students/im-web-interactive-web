@@ -1,14 +1,30 @@
-.horizontalList {
-  overflow: auto;
-  overflow-y: hidden;
-  margin: 4rem 0;
-  white-space: nowrap;
+.menuContainer {
+  display: flex;
+  flex-direction: row;
+  max-height: 32rem;
+
+  .navItems {
+    overflow: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+  }
+
+  .navItems a {
+    display: inline-block;
+    padding: 1.2rem 0;
+  }
+
+  .filmArrow {
+    align-self: center;
+    padding: 1rem;
+    cursor: pointer;
+  }
 }
 
-.filmCard {
-  display: inline-block;
+.menuContainerFeatured {
+  max-height: 44rem;
 }
 
-.filmSpacing {
-  margin-left: 1rem !important;
+.mt1 {
+  margin-top: 3rem;
 }
