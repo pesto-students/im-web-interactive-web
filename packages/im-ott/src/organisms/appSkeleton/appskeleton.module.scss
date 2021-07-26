@@ -3,6 +3,12 @@
 
 .header {
   color: #000;
+  background: #fff !important;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0 0 0.9rem 0.3rem rgba(41,41,41,.25);
 }
 
 .content {
