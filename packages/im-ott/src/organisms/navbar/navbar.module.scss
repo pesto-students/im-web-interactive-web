@@ -1,3 +1,22 @@
 .floatRight {
   float: right;
 }
+
+.brandImage {
+  display: inline-block;
+  height: 100%;
+  padding: 0rem 2rem;
+}
+
+.brandLogo {
+  display: inline-flex !important;
+  color: #fff;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bolder;
+  font-family: monospace;
+  font-size: 3.5rem;
+  color: white;
+}

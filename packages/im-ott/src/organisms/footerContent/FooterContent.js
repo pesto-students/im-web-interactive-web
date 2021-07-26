@@ -21,40 +21,40 @@ function FooterContent() {
           <Row className={styles.footerRow}>
             <Col className={styles.footerColumn}>
               <div className={styles.footerTitle}>iFlix Media</div>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 Pricing
               </Link>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 Updated
               </Link>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 FAQs
               </Link>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 Tutorials
               </Link>
             </Col>
             <Col className={styles.footerColumn}>
               <div className={styles.footerTitle}>Product</div>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 Business
               </Link>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 Designers
               </Link>
             </Col>
             <Col className={styles.footerColumn}>
               <div className={styles.footerTitle}>About</div>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 Company
               </Link>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 Careers
               </Link>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 Legal
               </Link>
-              <Link href="#" className={styles.footerLink}>
+              <Link to="#" className={styles.footerLink}>
                 Help
               </Link>
             </Col>
@@ -65,13 +65,13 @@ function FooterContent() {
               © 2021 Studio Media. All rights reserved.
             </div>
             <div className={styles.socialContainer}>
-              <Link href="#" className={styles.social}>
+              <Link to="#" className={styles.social}>
                 <FacebookFilled />
               </Link>
-              <Link href="#" className={styles.social}>
+              <Link to="#" className={styles.social}>
                 <TwitterOutlined />
               </Link>
-              <Link href="#" className={styles.social}>
+              <Link to="#" className={styles.social}>
                 <InstagramOutlined />
               </Link>
             </div>
