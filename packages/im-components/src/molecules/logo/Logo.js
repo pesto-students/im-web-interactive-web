@@ -7,6 +7,8 @@ import { VideoCameraFilled } from "imcomponents/atoms/icon";
 
 // Styles
 import styles from "./logo.module.scss";
+
+// Constants
 import { EMPTY_STRING } from "imbase/constants/base.constants";
 
 const Logo = ( props ) => {
