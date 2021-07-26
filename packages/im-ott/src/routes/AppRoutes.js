@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 
 // Components
-import AppLoader from "../molecules/appLoader";
+import AppLoader from "imcomponents/molecules/appLoader";
 import AppSkeleton from "../organisms/appSkeleton";
 import WatchList from "../pages/watchList";
 import FilmDetails from "../pages/filmDetails";
