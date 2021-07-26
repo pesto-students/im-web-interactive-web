@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // Components
 import { Layout } from "antd";
 import Navbar from "../navbar";
-import FooterContent from "../footerContent";
+import FooterContent from "imcomponents/organisms/footerContent";
 
 // Styles
 import styles from "./appskeleton.module.scss";
