@@ -2,15 +2,56 @@ import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
+// Lodash
+import _map from "lodash/map";
+
 // Components
 import screenfull from "screenfull";
 import ReactPlayer from "react-player/youtube";
+import Overlay from "../overlay";
 
 // Styles
 import styles from "./player.module.scss";
 
+// Mock Data
+const overlayData = [
+  {
+    overlayId: 1,
+    overlayTemplate: "default",
+    overlayName: "Test Overlay",
+    jumpPoint: 20,
+    templateTitle: "Which song do you want to play?",
+    templateLeftAction: 176,
+    templateRightAction: 368,
+    templateLeftLabel: "Bom Diggy Diggy",
+    templateRightLabel: "Milei Milegi",
+  },
+  {
+    overlayId: 2,
+    overlayTemplate: "default",
+    overlayName: "Test Overlay",
+    jumpPoint: 196,
+    templateTitle: "Which song do you want to play now?",
+    templateLeftAction: 1755,
+    templateRightAction: 1973,
+    templateLeftLabel: "Dil Chori",
+    templateRightLabel: "Oh Humsafar",
+  },
+  {
+    overlayId: 3,
+    overlayTemplate: "default",
+    overlayName: "Test Overlay",
+    jumpPoint: 1983,
+    templateTitle: "At last Which?",
+    templateLeftAction: 2175,
+    templateRightAction: 2699,
+    templateLeftLabel: "Patola",
+    templateRightLabel: "KhaliBali",
+  },
+];
+
 const Player = (props) => {
-  const { classname, videoUrl, isHost, debug } = props;
+  const { classname, videoUrl, isHost } = props;
 
   const [state, setState] = useState({
     url: null,
@@ -28,6 +69,9 @@ const Player = (props) => {
 
   // player wrapper
   const playerWrapper = useRef(null);
+
+  // player
+  const player = useRef(null);
 
   // to load url
   const load = (url) => {
@@ -111,9 +155,18 @@ const Player = (props) => {
     }
   };
 
+  // handle overlay action
+  const handleOverlayAction = (seconds) => {
+    console.log("aagate" + seconds);
+    if (player?.current) {
+      player.current.seekTo(seconds);
+    }
+  };
+
   return (
     <div className={styles.playerWrapper} ref={playerWrapper}>
       <ReactPlayer
+        ref={player}
         className={cx(styles.reactPlayer, classname)}
         url={state.url || videoUrl}
         width="100%"
@@ -130,36 +183,25 @@ const Player = (props) => {
         onDuration={handleDuration}
         onReady={() => handlePlayPause()}
       />
-      {debug && (
-        <table>
-          <tbody>
-            <tr>
-              <th>playing</th>
-              <td>{state.playing ? "true" : "false"}</td>
-            </tr>
-            <tr>
-              <th>played</th>
-              <td>{state.played.toFixed(3)}</td>
-            </tr>
-            <tr>
-              <th>loaded</th>
-              <td>{state.loaded.toFixed(3)}</td>
-            </tr>
-            <tr>
-              <th>duration</th>
-              <td>{state.duration}</td>
-            </tr>
-            <tr>
-              <th>elapsed</th>
-              <td>{state.duration * state.played}</td>
-            </tr>
-            <tr>
-              <th>remaining</th>
-              <td>{state.duration * (1 - state.played)}</td>
-            </tr>
-          </tbody>
-        </table>
-      )}
+
+      <div>
+        {_map(overlayData, (overlay) => {
+          if (
+            Math.round(state.played * state.duration) > overlay.jumpPoint &&
+            Math.round(state.played * state.duration) < overlay.jumpPoint + 10
+          ) {
+            return (
+              <Overlay
+                key={`overlay-${overlay.id}`}
+                overlay={overlay}
+                currentTime={Math.round(state.played * state.duration)}
+                seekTo={handleOverlayAction}
+              />
+            );
+          }
+        })}
+      </div>
+
       {state.visible_button_refresh && (
         <div className={styles.controls}>
           <div>
@@ -169,7 +211,7 @@ const Player = (props) => {
           </div>
           <div>
             <button type="button" onClick={() => handleClickFullscreen()}>
-              Fullscreen
+              Fullscreen {Math.round(state.played * state.duration)}
             </button>
           </div>
         </div>
@@ -187,7 +229,7 @@ Player.propTypes = {
 
 Player.defaultProps = {
   className: undefined,
-  videoUrl: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
+  videoUrl: "https://www.youtube.com/watch?v=bxnYFOixIoc",
   debug: false,
   isHost: true,
 };
