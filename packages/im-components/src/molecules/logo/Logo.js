@@ -16,7 +16,7 @@ const Logo = ( props ) => {
   return (
     <>
       <Link to={"/"} className={styles.logo} >
-        <VideoCameraFilled className={styles.image} style={{ fontSize:"250%" }} />
+        <VideoCameraFilled className={styles.image} />
         <div className={styles.text} >{text}</div>
       </Link>
     </>
@@ -24,7 +24,8 @@ const Logo = ( props ) => {
 }
 
 Logo.propTypes = {
-  text: PropTypes.string
+  text: PropTypes.string,
+  children: PropTypes.element
 };
 
 Logo.defaultProps = {
