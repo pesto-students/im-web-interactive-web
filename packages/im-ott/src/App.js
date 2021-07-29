@@ -2,7 +2,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 // Components
 import { ErrorBoundary } from "@sentry/react";
-import AppLoader from "./molecules/appLoader";
+import AppLoader from "imcomponents/molecules/appLoader";
 
 // Routes
 import Routes from "./routes";

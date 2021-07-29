@@ -7,7 +7,9 @@
   },
   "scripts": {
     "start": "lerna exec --scope @im/ott -- yarn start",
-    "build": "lerna exec --scope @im/ott -- yarn build"
+    "build": "lerna exec --scope @im/ott -- yarn build",
+    "start-studio": "lerna exec --scope @im/studio -- yarn start",
+    "build-studio": "lerna exec --scope @im/studio -- yarn build"
   },
   "workspaces": {
     "packages": [
