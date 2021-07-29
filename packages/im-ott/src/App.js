@@ -13,7 +13,7 @@ import "antd/dist/antd.css";
 // Styles
 import "./App.css";
 
-// setry test purpose only, will be replaced by 404 page
+// sentry test purpose only, will be replaced by 404 page
 function FallbackComponent() {
   return <div>An error has occurred</div>;
 }

@@ -75,12 +75,12 @@ const FilmDetails = (props) => {
               <StarFilled style={{ color: "yellow" }} />
             ))}
             <Button
-              className={cx(styles.ml2)}
+              className={styles.ml2}
               label={"Host a Party"}
               danger
             ></Button>
             <Button
-              className={cx(styles.ml2)}
+              className={styles.ml2}
               label={"Add to Watchlist"}
               danger
             ></Button>
