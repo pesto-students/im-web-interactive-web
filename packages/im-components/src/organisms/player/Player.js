@@ -14,41 +14,7 @@ import Overlay from "../overlay";
 import styles from "./player.module.scss";
 
 // Mock Data
-const overlayData = [
-  {
-    overlayId: 1,
-    overlayTemplate: "default",
-    overlayName: "Test Overlay",
-    jumpPoint: 20,
-    templateTitle: "Which song do you want to play?",
-    templateLeftAction: 176,
-    templateRightAction: 368,
-    templateLeftLabel: "Bom Diggy Diggy",
-    templateRightLabel: "Milei Milegi",
-  },
-  {
-    overlayId: 2,
-    overlayTemplate: "default",
-    overlayName: "Test Overlay",
-    jumpPoint: 196,
-    templateTitle: "Which song do you want to play now?",
-    templateLeftAction: 1755,
-    templateRightAction: 1973,
-    templateLeftLabel: "Dil Chori",
-    templateRightLabel: "Oh Humsafar",
-  },
-  {
-    overlayId: 3,
-    overlayTemplate: "default",
-    overlayName: "Test Overlay",
-    jumpPoint: 1983,
-    templateTitle: "At last Which?",
-    templateLeftAction: 2175,
-    templateRightAction: 2699,
-    templateLeftLabel: "Patola",
-    templateRightLabel: "KhaliBali",
-  },
-];
+import { overlayData } from "imbase/constants/mockOverlayData";
 
 const Player = (props) => {
   const { classname, videoUrl, isHost } = props;
