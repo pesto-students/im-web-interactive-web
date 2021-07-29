@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // Styles
 import styles from "./footerContent.module.scss";
 
-// Icons
+// Components
 import { Row, Col } from "imcomponents/atoms/grid";
 import {
   FacebookFilled,
