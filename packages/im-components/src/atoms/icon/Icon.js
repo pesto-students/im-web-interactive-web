@@ -1,13 +1,15 @@
 import {
-  StarOutlined,
-  StarTwoTone,
-  RightOutlined,
-  LeftOutlined,
-  StarFilled,
+  CloudUploadOutlined,
   FacebookFilled,
   InstagramOutlined,
+  LeftOutlined,
+  RightOutlined,
+  StarFilled,
+  StarTwoTone,
   TwitterOutlined,
-  VideoCameraFilled
+  VideoCameraFilled,
+  StarOutlined
 } from "@ant-design/icons";
 
-export { StarOutlined, StarTwoTone, RightOutlined, LeftOutlined, StarFilled, FacebookFilled, InstagramOutlined, TwitterOutlined, VideoCameraFilled };
+export { CloudUploadOutlined, FacebookFilled, InstagramOutlined, LeftOutlined, RightOutlined, StarFilled, StarOutlined, StarTwoTone, TwitterOutlined, VideoCameraFilled,
+};

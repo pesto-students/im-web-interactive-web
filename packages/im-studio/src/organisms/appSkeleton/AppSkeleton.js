@@ -14,7 +14,7 @@ const { Header, Content, Footer } = Layout;
 const AppSkeleton = (props) => {
   const { children } = props;
   return (
-    <Layout className={"layout"}>
+    <Layout className={styles.container}>
       <Header className={styles.header}>
         <Navbar />
       </Header>

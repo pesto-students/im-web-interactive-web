@@ -1,11 +1,12 @@
 export {
-  StarOutlined,
-  StarTwoTone,
-  RightOutlined,
-  LeftOutlined,
-  StarFilled,
+  CloudUploadOutlined,
   FacebookFilled,
   InstagramOutlined,
+  LeftOutlined,
+  RightOutlined,
+  StarFilled,
+  StarTwoTone,
   TwitterOutlined,
-  VideoCameraFilled
+  VideoCameraFilled,
+  StarOutlined
 } from "./Icon";

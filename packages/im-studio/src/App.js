@@ -15,6 +15,7 @@ import "./App.css";
 function App() {
   return (
     <Router>
+      {/* new Http(MODULES.YOUTUBE); */} // Add where it is loaded
       <AppLoader />
       <Routes />
     </Router>
