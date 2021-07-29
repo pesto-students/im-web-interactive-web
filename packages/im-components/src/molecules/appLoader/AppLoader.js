@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import _noop from "lodash/noop";
 
 // Components
-import Image from "imcomponents/atoms/image";
-import { Label } from "imcomponents/atoms/typography";
+import Image from "../../atoms/image";
+import { Label } from "../../atoms/typography";
 
 // Images
 import reel from "../../assets/images/reel.png";

@@ -16,7 +16,7 @@ const SearchBox = (props) => {
 
 SearchBox.propTypes = {
   placeholder: PropTypes.string,
-  onSearch: PropTypes.function,
+  onSearch: PropTypes.func,
   style: PropTypes.object
 };
 

@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 
 // Components
-import Seeker from "imcomponents/organisms/seeker";
-import Player from "imcomponents/organisms/player";
 import AppLoader from "imcomponents/molecules/appLoader";
 import AppSkeleton from "../organisms/appSkeleton";
-import WatchList from "../pages/watchList";
-import FilmDetails from "../pages/filmDetails";
 import LandingPage from "../pages/landingPage";
 
 const AppRoutes = () => {
@@ -29,10 +25,6 @@ const AppRoutes = () => {
     <AppSkeleton>
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/watchlist" component={WatchList} />
-        <Route exact path="/film/:filmId" component={FilmDetails} />
-        <Route exact path="/player" component={Player} />
-        <Route exact path="/player/seeker" component={Seeker} />
       </Switch>
     </AppSkeleton>
   );

@@ -11,7 +11,7 @@ import styles from "./navbar.module.scss";
 function Navbar() {
   return (
     <>
-      <Logo text={"iFlix"} />
+      <Logo text={"iFlix Studio"} />
       <Menu theme="dark" mode="horizontal" className={styles.floatRight}>
         <Menu.Item key={"key1"}>
           <Link to={"/"}>Home</Link>
