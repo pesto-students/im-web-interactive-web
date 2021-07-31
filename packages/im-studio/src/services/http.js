@@ -1,20 +1,33 @@
-// import Http from "./http"
-
-const getMovieById = (API_KEY, id) => { 
-    // TODO : Change to API / Promise 
-    return `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=${API_KEY}`
+import axios from "axios";
+​
+// Constants
+import { EMPTY_OBJECT } from "../constants/base.constants";
+​
+// Helpers
+import { getBaseUrl, getBaseParams, getHeaders } from "../helpers/http";
+​
+class Http {
+  constructor(module, { headers = EMPTY_OBJECT } = EMPTY_OBJECT) {
+    const axiosInstance = axios.create({
+      baseURL: getBaseUrl(module),
+      headers: {
+        ...getHeaders(module),
+        ...headers,
+      },
+    });
+    Http[module] = axiosInstance;
+  }
+​
+  static get(module, url, data) {
+    return Http[module]({
+      method: "GET",
+      url,
+      params: {
+        ...getBaseParams(module),
+        ...data,
+      },
+    });
+  }
 }
-
-// const getComments = ({
-//     videoId,
-//     maxResults = 5,
-//     order = "relevance",
-//     ...restProps
-//   }) => {
-//     return Http.get(MODULES.YOUTUBE, "/commentThreads", {
-//       videoId,
-//       maxResults,
-//       order,
-//       ...restProps,
-//     });
-//   };
+​
+export default Http;
