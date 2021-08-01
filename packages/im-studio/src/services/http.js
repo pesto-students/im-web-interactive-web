@@ -1,23 +1,23 @@
 import axios from "axios";
-​
+
 // Constants
-import { EMPTY_OBJECT } from "../constants/base.constants";
-​
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+
 // Helpers
-import { getBaseUrl, getBaseParams, getHeaders } from "../helpers/http";
-​
+import { getBaseUrl, getBaseParams, getBaseHeaders } from "./helpers/http";
+
 class Http {
   constructor(module, { headers = EMPTY_OBJECT } = EMPTY_OBJECT) {
     const axiosInstance = axios.create({
       baseURL: getBaseUrl(module),
       headers: {
-        ...getHeaders(module),
+        ...getBaseHeaders(module),
         ...headers,
       },
     });
     Http[module] = axiosInstance;
   }
-​
+
   static get(module, url, data) {
     return Http[module]({
       method: "GET",
@@ -29,5 +29,5 @@ class Http {
     });
   }
 }
-​
+
 export default Http;

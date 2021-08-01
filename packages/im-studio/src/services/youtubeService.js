@@ -1,23 +1,37 @@
-// import Http from "./http"
+// Axios
+import axios from "axios";
 
-const getMovieById = (API_KEY, id) => { 
-    // TODO : Change to API / Promise 
-    return `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=${API_KEY}`
+// Constants
+import { MODULES , BASE_URL, URL_REGEX } from "./constants/modules.constants";
+
+const getMovieById = ({
+    videoId,
+    ...restProps
+  }) => {
+    return axios.get(BASE_URL[MODULES.YOUTUBE] + "/videos", { 
+        params: {
+            id: videoId,
+            // TODO - key: process.env.YOUTUBE_API_KEY,
+            key: MODULES.YOUTUBE_API_KEY,
+            part: 'snippet',
+            ...restProps,
+        }
+    });
 }
 
-// const getComments = ({
-//     videoId,
-//     maxResults = 5,
-//     order = "relevance",
-//     ...restProps
-//   }) => {
-//     return Http.get(MODULES.YOUTUBE, "/commentThreads", {
-//       videoId,
-//       maxResults,
-//       order,
-//       ...restProps,
-//     });
-//   };
-  
+/*
+ * Youtube links can be of 2 forms :
+ *  http://www.youtube.com/watch?v=u8nQa1cJyX8&a=GxdCwVVULXctT2lYDEPllDR0LRTutYfW
+ *  http://www.youtube.com/watch?v=u8nQa1cJyX8
+ * 
+ * Method returns true if URL matches youtube
+ */
+function matchYoutubeUrl(url) {
+    const youtubeRegex = URL_REGEX[MODULES.YOUTUBE];
+    if(url.match(youtubeRegex)){
+        return url.match(youtubeRegex)[1];
+    }
+    return false;
+}
 
-export default { getMovieById }
+export default { getMovieById, matchYoutubeUrl };

@@ -3,6 +3,9 @@ import React, { useState } from "react";
 // Lodash
 import _isEmpty from "lodash/isEmpty";
 
+// Constants
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+
 // Components
 import Button from "imcomponents/atoms/button";
 import { CloudUploadOutlined } from "imcomponents/atoms/icon";
@@ -12,17 +15,10 @@ import Error from "imcomponents/molecules/error";
 import Loader from "imcomponents/molecules/loader/Loader";
 
 // Helpers
-import { getVideoIdFromURL } from "./helper/landingPage.general";
-
-// Constants
-import { EMPTY_OBJECT } from "imbase/constants/base.constants";
-import { YOUTUBE_API_KEY } from "./constants/landingPage.constants";
-
-// Services 
-import youtubeService from "../../services/youtubeService";
 
 // Styles
 import styles from "./landingPage.module.scss";
+import { getVideoData, isUploadDisabled } from "./helper/landingPage.general";
 
 const LandingPage = () => {
   const [uploadlink, setUploadlink ] = useState('');
@@ -31,55 +27,26 @@ const LandingPage = () => {
   const [error, setError] = useState(EMPTY_OBJECT);
   const [isLinkInvalid, setIsLinkInvalid] = useState(false);
 
-  const handleSearch = async (value, event) => {
-    // if searchText is empty
-    if (!_isEmpty(value)) {
-
-      // setError({message: "There is an error!"});
-      setUploadlink(value);
-      const videoId = getVideoIdFromURL(value);
-      
-      // if valid videoId
-      if (!_isEmpty(videoId)) {
-        
-        // TODO: create ENV_VAR for API key
-        let videoData = EMPTY_OBJECT;
-
-        try {
-          // videoData = await getVideoData(YOUTUBE_API_KEY, videoId);
-        } catch (error) {
-            console.log("Error while fetching video data !!");
-            setError(error);
-        }
-        
-        // video found with the link
-        if(videoData && !_isEmpty(videoData.items)) {
-          setVideoDetails(videoData.items[0]);
-          setIsLinkInvalid(false);
-        } else {
-          // no video found by this id
-          setIsLinkInvalid(true);
-        }
-      } else {
-        // if invalid URL or invalid id
-        setIsLinkInvalid(true);
-      }
-    } else {
-      // if text cleared
+  const handleSearch = (value, event) => {
+    if (_isEmpty(value)) {
       setIsLinkInvalid(false);
       setVideoDetails(EMPTY_OBJECT);
+    } else {
+      
+      Promise.resolve(getVideoData(value))
+      .then((response) => {
+        if(_isEmpty(response) || _isEmpty(response.data) || response.data.items.length === 0) {
+          setIsLinkInvalid(true);
+          setVideoDetails(EMPTY_OBJECT);
+        } else {
+          setVideoDetails(response.data.items[0]);
+          setUploadlink(value);
+        }
+      }).catch(error => {
+        setError(error);
+      });
     }
   };
-
-  async function getVideoData(key, videoId) {
-    const res = await fetch(youtubeService.getMovieById(key, videoId));
-    const data = await res.json();
-    return data;
-  }
-
-  const isUploadDisabled = () => {
-    return _isEmpty(videoDetails)
-  }
 
   if (loading) {
     return <Loader />;
@@ -110,8 +77,8 @@ const LandingPage = () => {
             </div>
             {
             !_isEmpty(videoDetails) && 
-            <div className="videos">
-              <h2 className="title">{videoDetails.snippet.title}</h2>
+            <div className={styles.videoDetails}>
+              <h2 className={styles.title} >{videoDetails.snippet.title}</h2>
               <Image 
                 className={styles.thumbnailImage}
                 src={videoDetails.snippet.thumbnails.high.url}
@@ -124,7 +91,7 @@ const LandingPage = () => {
               className={styles.uploadbutton}
               label={"Upload"}
               shape={"round"}
-              disabled={isUploadDisabled()}
+              disabled={isUploadDisabled(videoDetails)}
               danger
             />
           </div>
