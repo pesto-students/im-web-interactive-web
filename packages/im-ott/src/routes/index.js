@@ -2,17 +2,20 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 // Components
-import Register from "../pages/register";
+import Logout from "../pages/logout";
 import Login from "../pages/login";
 import AppRoutes from "./AppRoutes";
+import UserProvider from "../providers/UserProvider";
 
 const Routes = () => {
   return (
-    <Switch>
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/register" component={Register} />
-      <Route path="*" component={AppRoutes} />
-    </Switch>
+    <UserProvider>
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/logout" component={Logout} />
+        <Route path="*" component={AppRoutes} />
+      </Switch>
+    </UserProvider>
   );
 };
 

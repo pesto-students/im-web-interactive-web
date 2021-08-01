@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 
 // Components
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import Input from "imcomponents/atoms/input";
 import Image from "imcomponents/atoms/image";
-import Button from "imcomponents/atoms/button";
 import { Title, Label } from "imcomponents/atoms/typography";
+import { signInWithGoogle } from "../../services/firebase";
+import { UserContext } from "../../providers/UserProvider";
 
 // Images
-// import camera from "../../assets/images/camera.png";
-// import clap from "../../assets/images/clap.png";
 import reel from "../../assets/images/reel.png";
 
 // Styles
 import styles from "./login.module.scss";
 
 const Login = () => {
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
+  const user = useContext(UserContext);
+  const [redirect, setredirect] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      setredirect("/");
+    }
+  }, [user]);
+
+  if (redirect) {
+    return <Redirect to={redirect} />;
+  }
 
   return (
     <div className={styles.container}>
@@ -31,24 +39,19 @@ const Login = () => {
         <div className={styles.loginForm}>
           <Title className={styles.title}>Welcome :)</Title>
           <Label className={styles.subTitle}>
-            To enjoy watching interactive films, please login with your personal
-            information by mobile number and otp
+            To enjoy watching interactive films, please login with your google
+            account
           </Label>
+          <div className={styles.inputField}></div>
           <div className={styles.inputField}>
-            <Input
-              placeholder={"Username"}
-              prefix={<UserOutlined className="site-form-item-icon" />}
-              className={styles.input}
-            />
+            <button
+              type="button"
+              className={styles.loginWithGoogleBtn}
+              onClick={signInWithGoogle}
+            >
+              Sign in with Google
+            </button>
           </div>
-          <div className={styles.inputField}>
-            <Input
-              placeholder={"Password"}
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              className={styles.input}
-            />
-          </div>
-          <Button label={"Login"} />
         </div>
       </div>
     </div>

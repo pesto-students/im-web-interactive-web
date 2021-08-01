@@ -13,8 +13,11 @@ function Navbar() {
     <>
       <Logo text={"iFlix"} />
       <Menu theme="dark" mode="horizontal" className={styles.floatRight}>
-        <Menu.Item key={"key1"}>
+        <Menu.Item key={"home"}>
           <Link to={"/"}>Home</Link>
+        </Menu.Item>
+        <Menu.Item key={"logout"}>
+          <Link to={"/logout"}>Logout</Link>
         </Menu.Item>
       </Menu>
     </>
