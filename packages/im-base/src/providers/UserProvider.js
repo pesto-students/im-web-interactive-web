@@ -4,11 +4,12 @@ import React, { useState, useEffect, createContext } from "react";
 import { auth } from "../services/firebase";
 
 // User Context
-export const UserContext = createContext({ user: null });
+export const UserContext = createContext({ user: null, setuser: () => {} });
 
 const UserProvider = (props) => {
   const { children } = props;
   const [user, setuser] = useState(null);
+  const value = {user, setuser}
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
@@ -22,7 +23,7 @@ const UserProvider = (props) => {
     });
   }, []);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export default UserProvider;
