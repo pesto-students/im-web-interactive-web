@@ -2,19 +2,24 @@ import React, { useEffect, useParams, useState } from "react";
 
 import PropTypes from "prop-types";
 
+// Constants
 import { EMPTY_OBJECT, EMPTY_STRING } from "imbase/constants/base.constants";
+import MOCK_DATA from "imbase/constants/mockYoutubeVideoResponse.json";
 import VideoReader from "imbase/readers/Video";
 
-
+// Components
 import Tabs from "imcomponents/atoms/tabs";
-import TabPane from "imcomponents/atoms/tabPane";
 
-import MOCK_DATA from "imbase/constants/mockYoutubeVideoResponse.json";
-
+// Services
 import youtubeService from "../../services/youtubeService";
 
+// Styles
 import styles from "./editVideo.module.scss";
+
+// Organisms
 import EditTab from "../../organisms/editTab";
+
+const { TabPane } = Tabs;
 
 function callback(key) {
     console.log(key);

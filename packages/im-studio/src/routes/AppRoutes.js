@@ -3,10 +3,13 @@ import { Route, Switch } from "react-router-dom";
 
 // Components
 import AppLoader from "imcomponents/molecules/appLoader";
+
+// Organisms
 import AppSkeleton from "../organisms/appSkeleton";
+
+// Pages
 import LandingPage from "../pages/landingPage";
 import EditVideo from "../pages/editVideo";
-import Dashboard from "../pages/dashboard";
 
 const AppRoutes = () => {
   const [loading, setLoading] = useState(true);

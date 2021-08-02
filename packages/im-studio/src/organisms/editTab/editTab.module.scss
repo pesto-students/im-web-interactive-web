@@ -1,19 +1,22 @@
-.editForm {
-    label {
-        float: left;
-        width: 10rem;
-        margin-right: 1rem;
-        padding-left: 2rem;
+.container {
+
+    .editForm {
+        label {
+            float: left;
+            width: 10rem;
+            margin-right: 1rem;
+            padding-left: 2rem;
+            }
+
+        .backButton {
+            margin-left: 2rem;
+            background-color: lightgray;
+            min-width: 10rem;
         }
 
-    .backButton {
-        margin-left: 2rem;
-        background-color: grey;
-        min-width: 10rem;
-    }
-
-    .submitButton {
-        margin-left: 2rem;
-        min-width: 10rem;
+        .submitButton {
+            margin-left: 2rem;
+            min-width: 10rem;
+        }
     }
 }
