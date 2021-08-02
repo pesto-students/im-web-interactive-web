@@ -11,7 +11,7 @@ const getMovieById = ({
     return axios.get(BASE_URL[MODULES.YOUTUBE] + "/videos", { 
         params: {
             id: videoId,
-            // TODO - key: process.env.YOUTUBE_API_KEY,
+            // key: process.env.REACT_APP_YOUTUBE_API_KEY,
             key: MODULES.YOUTUBE_API_KEY,
             part: 'snippet',
             ...restProps,
@@ -34,4 +34,8 @@ function matchYoutubeUrl(url) {
     return false;
 }
 
-export default { getMovieById, matchYoutubeUrl };
+const getVideoDataFromResponse = (response ) => {
+    return response && response.data && response.data.items[0];
+}
+
+export default { getMovieById, getVideoDataFromResponse, matchYoutubeUrl };

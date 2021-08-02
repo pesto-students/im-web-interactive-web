@@ -7,7 +7,7 @@ import _isEmpty from "lodash/isEmpty";
 // Services
 import youtubeService from "../../../services/youtubeService";
 
-const getVideoData = async (url) => {    
+const getVideoId = async (url) => {    
     if (!youtubeService.matchYoutubeUrl(url)) {
         return EMPTY_STRING;
     }
@@ -24,11 +24,11 @@ const getVideoData = async (url) => {
         videoId = videoId.substring(0, ampersandPosition);
     }
 
-    return youtubeService.getMovieById({videoId})
+    return videoId
 }
 
 const isUploadDisabled = (videoData) => {
    return _isEmpty(videoData)
 }
 
-export { getVideoData, isUploadDisabled }
+export { getVideoId, isUploadDisabled }
