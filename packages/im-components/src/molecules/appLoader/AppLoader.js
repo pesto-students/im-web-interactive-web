@@ -8,7 +8,7 @@ import Image from "../../atoms/image";
 import { Label } from "../../atoms/typography";
 
 // Images
-import reel from "../../assets/images/reel.png";
+import reel from "imbase/assets/images/reel.png";
 
 // Styles
 import styles from "./appLoader.module.scss";

@@ -2,17 +2,18 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 // Components
-import Register from "../pages/register";
-import Login from "../pages/login";
+import Login from "imcomponents/molecules/login";
+import UserProvider from "imbase/providers/UserProvider";
 import AppRoutes from "./AppRoutes";
 
 const Routes = () => {
   return (
-    <Switch>
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/register" component={Register} />
-      <Route path="*" component={AppRoutes} />
-    </Switch>
+    <UserProvider>
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route path="*" component={AppRoutes} />
+      </Switch>
+    </UserProvider>
   );
 };
 

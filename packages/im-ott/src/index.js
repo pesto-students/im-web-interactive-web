@@ -1,5 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
 
 // Sentry Error Logging
 import * as Sentry from "@sentry/react";
@@ -14,19 +19,32 @@ import reportWebVitals from "./reportWebVitals";
 dotenv.config();
 
 // Sentry Logging Initialization
-Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN,
-  integrations: [new Integrations.BrowserTracing()],
-  environment: process.env.REACT_APP_NODE_ENV,
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
+if (process.env.REACT_APP_NODE_ENV !== "development") {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DSN,
+    integrations: [new Integrations.BrowserTracing()],
+    environment: process.env.REACT_APP_NODE_ENV,
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+  });
+}
+
+// apollo-client graphql initialization
+const client = new ApolloClient({
+  uri:
+    process.env.REACT_APP_NODE_ENV !== "development"
+      ? process.env.REACT_APP_GRAPH_PROD_API
+      : process.env.REACT_APP_GRAPH_DEV_API,
+  cache: new InMemoryCache(),
 });
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
