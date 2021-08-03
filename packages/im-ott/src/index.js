@@ -1,5 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
 
 // Sentry Error Logging
 import * as Sentry from "@sentry/react";
@@ -26,9 +31,20 @@ if (process.env.REACT_APP_NODE_ENV !== "development") {
   });
 }
 
+// apollo-client graphql initialization
+const client = new ApolloClient({
+  uri:
+    process.env.REACT_APP_NODE_ENV !== "development"
+      ? process.env.REACT_APP_GRAPH_PROD_API
+      : process.env.REACT_APP_GRAPH_DEV_API,
+  cache: new InMemoryCache(),
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

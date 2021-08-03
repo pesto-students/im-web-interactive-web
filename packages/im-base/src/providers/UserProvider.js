@@ -9,15 +9,18 @@ export const UserContext = createContext({ user: null, setuser: () => {} });
 const UserProvider = (props) => {
   const { children } = props;
   const [user, setuser] = useState(null);
-  const value = {user, setuser}
+  const value = { user, setuser };
 
   useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
+    auth?.onAuthStateChanged(async (user) => {
       if (user) {
-        const { displayName, email } = user;
+        const { uid, displayName, email, photoURL, emailVerified } = user;
         setuser({
+          uid,
           displayName,
           email,
+          photoURL,
+          emailVerified,
         });
       }
     });

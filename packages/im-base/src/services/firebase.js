@@ -32,6 +32,7 @@ firebase.initializeApp(firebaseInit);
 
 export const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
+
 export const signInWithGoogle = () => {
   auth
     .signInWithPopup(googleProvider)
@@ -52,4 +53,8 @@ export const logOut = () => {
     .catch((error) => {
       console.log(error.message);
     });
+};
+
+export const getCurrentUser = () => {
+  return firebase.auth().currentUser;
 };
