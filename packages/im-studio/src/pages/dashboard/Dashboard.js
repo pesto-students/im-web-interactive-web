@@ -24,64 +24,63 @@ import MOCK_DATA from "imbase/constants/mockDataWatchlist.json";
 import styles from "./dashboard.module.scss";
 
 const renderFilm = (filmDetails = EMPTY_OBJECT) => {
-  const filmId = FilmReader.id(filmDetails);
-  const filmTitle = FilmReader.title(filmDetails);
-  const filmRating = FilmReader.rating(filmDetails);
-  const filmGenre = FilmReader.genre(filmDetails);
-  const filmImgSrc = FilmReader.thumbnail(filmDetails);
-  return (
-    <Link 
-        to={`film/${filmId}`}
-        className={styles.movieLinks}
+    const filmId = FilmReader.id(filmDetails);
+    const filmTitle = FilmReader.title(filmDetails);
+    const filmRating = FilmReader.rating(filmDetails);
+    const filmGenre = FilmReader.genre(filmDetails);
+    const filmImgSrc = FilmReader.thumbnail(filmDetails);
+    return (
+        <Link
+            to={`film/${filmId}`}
+            className={styles.movieLinks}
         >
-      <FilmCard
-        key={filmId}
-        title={filmTitle}
-        genre={filmGenre}
-        imgSrc={filmImgSrc}
-        rating={filmRating}
-        {...filmDetails}
-        className={styles.film}
-      />
-    </Link>
-  );
+            <FilmCard
+                key={filmId}
+                title={filmTitle}
+                genre={filmGenre}
+                imgSrc={filmImgSrc}
+                rating={filmRating}
+                {...filmDetails}
+                className={styles.film}
+            />
+        </Link>
+    );
 };
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(true);
-  const [films, setFilms] = useState(EMPTY_ARRAY);
-  const [error, setError] = useState(EMPTY_OBJECT);
+    const [loading, setLoading] = useState(true);
+    const [films, setFilms] = useState(EMPTY_ARRAY);
+    const [error, setError] = useState(EMPTY_OBJECT);
 
-  useEffect(() => {
-    Promise.resolve(MOCK_DATA)
-      .then((response) => {
-        const films = getDataFromResponse(response);
-        setFilms(films);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }, []);
+    useEffect(() => {
+        Promise.resolve(MOCK_DATA)
+            .then((response) => {
+                const films = getDataFromResponse(response);
+                setFilms(films);
+                setLoading(false);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
+    if (loading) {
+        return <Loader />;
+    }
 
-  if (!_isEmpty(error)) {
-    return <Error {...error} />;
-  }
+    if (!_isEmpty(error)) {
+        return <Error {...error} />;
+    }
 
-  return <div className={styles.container}>
-      <div className={styles.content}>
-        <h1 className={styles.heading}>My Movies</h1>
-        <div className={styles.movies}>
-            {_map(films, renderFilm)}
+    return <div className={styles.container}>
+        <div className={styles.content}>
+            <h1 className={styles.heading}>My Movies</h1>
+            <div className={styles.movies}>
+                {_map(films, renderFilm)}
+            </div>
         </div>
-      </div>
-        
-      </div>;
+    </div>;
 };
 
 export default Dashboard;

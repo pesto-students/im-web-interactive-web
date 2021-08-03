@@ -13,11 +13,11 @@ function Navbar() {
     <>
       <Logo text={"iFlix Studio"} />
       <Menu theme="dark" mode="horizontal" className={styles.floatRight}>
-        <Menu.Item key={"upload"}>
-          <Link to={"/upload"}>Upload</Link>
-        </Menu.Item>
         <Menu.Item key={"key1"}>
           <Link to={"/"}>Home</Link>
+        </Menu.Item>
+        <Menu.Item key={"upload"}>
+          <Link to={"/upload"}>Upload</Link>
         </Menu.Item>
       </Menu>
     </>
