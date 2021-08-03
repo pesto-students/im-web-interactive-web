@@ -1,0 +1,23 @@
+.container {
+    button {
+        margin-left: 2rem;
+        min-width: 10rem;
+        filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
+    }
+
+    .editForm {
+        label {
+            float: left;
+            width: 10rem;
+            margin-right: 1rem;
+            padding-left: 2rem;
+            }
+
+        .backButton {
+            background-color: rgb(238, 234, 234);
+        }
+
+        .saveButton {
+        }
+    }
+}
