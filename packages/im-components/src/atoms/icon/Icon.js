@@ -8,8 +8,10 @@ import {
   StarTwoTone,
   TwitterOutlined,
   VideoCameraFilled,
-  StarOutlined
+  StarOutlined,
+  EditOutlined,
+  DeleteOutlined
 } from "@ant-design/icons";
 
-export { CloudUploadOutlined, FacebookFilled, InstagramOutlined, LeftOutlined, RightOutlined, StarFilled, StarOutlined, StarTwoTone, TwitterOutlined, VideoCameraFilled,
+export { EditOutlined, DeleteOutlined, CloudUploadOutlined, FacebookFilled, InstagramOutlined, LeftOutlined, RightOutlined, StarFilled, StarOutlined, StarTwoTone, TwitterOutlined, VideoCameraFilled,
 };
