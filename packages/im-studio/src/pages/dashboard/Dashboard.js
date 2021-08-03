@@ -1,58 +1,87 @@
-import React, { useEffect, useParams, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import PropTypes from "prop-types";
-
-// Constants
-import { EMPTY_ARRAY, EMPTY_OBJECT, EMPTY_STRING } from "imbase/constants/base.constants";
-import MOCK_DATA from "imbase/constants/mockVideosData.json";
-import getDataFromResponse from "imbase/utils/getDataFromResponse";
+// Lodash
+import _map from "lodash/map";
+import _isEmpty from "lodash/isEmpty";
 
 // Components
-import Tabs from "imcomponents/atoms/tabs";
+import FilmCard from "imcomponents/molecules/filmCard";
+import Loader from "imcomponents/molecules/loader/Loader";
+import Error from "imcomponents/molecules/error";
+
+// Utils
+import getDataFromResponse from "imbase/utils/getDataFromResponse";
+
+// Readers
+import FilmReader from "imbase/readers/Film";
+
+// Constants
+import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
+import MOCK_DATA from "imbase/constants/mockDataWatchlist.json";
 
 // Styles
 import styles from "./dashboard.module.scss";
 
-
-const { TabPane } = Tabs;
-
-function callback(key) {
-    console.log(key);
-}
+const renderFilm = (filmDetails = EMPTY_OBJECT) => {
+  const filmId = FilmReader.id(filmDetails);
+  const filmTitle = FilmReader.title(filmDetails);
+  const filmRating = FilmReader.rating(filmDetails);
+  const filmGenre = FilmReader.genre(filmDetails);
+  const filmImgSrc = FilmReader.thumbnail(filmDetails);
+  return (
+    <Link 
+        to={`film/${filmId}`}
+        className={styles.movieLinks}
+        >
+      <FilmCard
+        key={filmId}
+        title={filmTitle}
+        genre={filmGenre}
+        imgSrc={filmImgSrc}
+        rating={filmRating}
+        {...filmDetails}
+        className={styles.film}
+      />
+    </Link>
+  );
+};
 
 const Dashboard = () => {
-    const [ myVideos, setMyVideos ] = useState(EMPTY_ARRAY);
-    const [ loading, setLoading ] = useState(true);
-    const [ error, setError ] = useState(EMPTY_OBJECT);
+  const [loading, setLoading] = useState(true);
+  const [films, setFilms] = useState(EMPTY_ARRAY);
+  const [error, setError] = useState(EMPTY_OBJECT);
 
-    useEffect(() => {
-        Promise.resolve(MOCK_DATA)
-            .then((response) => {
-                const video = getDataFromResponse(response);
-                setMyVideos(video);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setError(error);
-                setLoading(false);
-            });
-    }, []);
+  useEffect(() => {
+    Promise.resolve(MOCK_DATA)
+      .then((response) => {
+        const films = getDataFromResponse(response);
+        setFilms(films);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
 
-    return (
-        <div className={styles.container}>
-            <div className={styles.content}>
-               This is the dashboard
-            </div>
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!_isEmpty(error)) {
+    return <Error {...error} />;
+  }
+
+  return <div className={styles.container}>
+      <div className={styles.content}>
+        <h1 className={styles.heading}>My Movies</h1>
+        <div className={styles.movies}>
+            {_map(films, renderFilm)}
         </div>
-    );
-}
-
-Dashboard.propTypes = {
-    userId: PropTypes.string
-}
-
-Dashboard.defaultProps = {
-    userId: EMPTY_STRING
-}
+      </div>
+        
+      </div>;
+};
 
 export default Dashboard;
