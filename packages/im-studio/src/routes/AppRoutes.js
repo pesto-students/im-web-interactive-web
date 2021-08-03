@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 // Components
 import AppLoader from "imcomponents/molecules/appLoader";
 import AppSkeleton from "../organisms/appSkeleton";
-import LandingPage from "../pages/landingPage";
+import Dashboard from "../pages/dashboard";
 import EditVideo from "../pages/editVideo";
+import Upload from "../pages/upload";
+import Preview from "../pages/preview";
 
 const AppRoutes = () => {
-  const [loading, setLoading] = useState(true);
+  const [ loading, setLoading ] = useState(true);
+  const [ loggedIn, setLoggedIn ] = useState(true); // TODO:  Set to false later
 
   useEffect(() => {
     setTimeout(() => {
@@ -25,7 +28,12 @@ const AppRoutes = () => {
   return (
     <AppSkeleton>
       <Switch>
-        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/">
+          {loggedIn ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+        </Route>
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/upload" component={Upload} />
+        <Route exact path="/video/:videoId/" component={Preview} />
         <Route exact path="/video/:videoId/edit" component={EditVideo} />
       </Switch>
     </AppSkeleton>
