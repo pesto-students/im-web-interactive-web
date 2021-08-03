@@ -9,6 +9,8 @@ import VideoReader from "imbase/readers/Video";
 
 // Components
 import Tabs from "imcomponents/atoms/tabs";
+import EditTab from "../../organisms/editTab";
+import Hotspots from "../../organisms/hotspots";
 
 // Services
 import youtubeService from "../../services/youtubeService";
@@ -16,8 +18,6 @@ import youtubeService from "../../services/youtubeService";
 // Styles
 import styles from "./editVideo.module.scss";
 
-// Organisms
-import EditTab from "../../organisms/editTab";
 
 const { TabPane } = Tabs;
 
@@ -69,7 +69,7 @@ const EditVideo = () => {
                            <EditTab changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Hotspots" key="2">
-                            Content of Tab Pane 2
+                            <Hotspots changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Overlays" key="3">
                             Content of Tab Pane 3

@@ -3,11 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 // Components
 import AppLoader from "imcomponents/molecules/appLoader";
-
-// Organisms
 import AppSkeleton from "../organisms/appSkeleton";
-
-// Pages
 import LandingPage from "../pages/landingPage";
 import EditVideo from "../pages/editVideo";
 
@@ -30,7 +26,7 @@ const AppRoutes = () => {
     <AppSkeleton>
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/editVideo/:videoId" component={EditVideo} />
+        <Route exact path="/video/:videoId/edit" component={EditVideo} />
       </Switch>
     </AppSkeleton>
   );
