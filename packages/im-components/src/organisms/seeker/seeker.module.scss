@@ -1,0 +1,30 @@
+$thumb-height: 1.2rem;
+$track-width: 100%;
+$track-color: #eee;
+$contrast: -5%;
+
+.seekerWrapper {
+  margin: 0 auto;
+  padding: 3rem;
+
+  .reactSeeker {
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 27rem;
+  }
+
+  [type="range"] {
+    -webkit-appearance: none;
+    margin: $thumb-height / 2 0;
+    width: $track-width;
+
+    &:focus {
+      outline: 0;
+
+      &::-ms-fill-lower {
+        background: $track-color;
+      }
+    }
+  }
+}
