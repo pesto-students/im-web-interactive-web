@@ -34,8 +34,8 @@ function matchYoutubeUrl(url) {
     return false;
 }
 
-const getVideoDataFromResponse = (response ) => {
-    return response && response.data && response.data.items[0];
+function getVideoDataFromResponse (response) {
+    return response.data.items[0];
 }
 
 export default { getMovieById, getVideoDataFromResponse, matchYoutubeUrl };

@@ -70,7 +70,7 @@ const EditTab = (props) => {
                         // onClick={() => changeTab("2")}
                     />
                     <Button
-                        className={styles.submitButton}
+                        className={styles.saveButton}
                         label={"Save"}
                         shape={"round"}
                         // onClick={() => changeTab((parseInt(activeTabKey) + 1).toString())}

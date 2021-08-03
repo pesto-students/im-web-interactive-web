@@ -15,15 +15,14 @@ import SearchBox from "imcomponents/atoms/searchBox";
 import Error from "imcomponents/molecules/error";
 import Loader from "imcomponents/molecules/loader/Loader";
 
-// Helpers
-import { getVideoId, isUploadDisabled } from "./helper/landingPage.general";
-
 // Styles
 import styles from "./landingPage.module.scss";
 
+// Helpers
+import { getVideoId, isUploadDisabled } from "./helper/landingPage.general";
+
 // Services
 import youtubeService from "../../services/youtubeService";
-
 
 const LandingPage = () => {
   const [videoId, setVideoId] = useState(EMPTY_STRING);
@@ -38,9 +37,14 @@ const LandingPage = () => {
       setVideoDetails(EMPTY_OBJECT);
     } else {
 
-      setVideoId( getVideoId(value) );
-      const videoDataPromise = videoId && youtubeService.getMovieById({videoId});
-      Promise.resolve( videoDataPromise )
+      const videoIdFromUrl = getVideoId(value);
+      if (_isEmpty(videoIdFromUrl)) {
+        setIsLinkInvalid(true);
+        setVideoDetails(EMPTY_OBJECT);
+        return;
+      }
+
+      Promise.resolve(youtubeService.getMovieById({ videoId: videoIdFromUrl }))
         .then((response) => {
           if (_isEmpty(response) || _isEmpty(response.data) || response.data.items.length === 0) {
             setIsLinkInvalid(true);
@@ -48,7 +52,8 @@ const LandingPage = () => {
           } else {
             const videoData = youtubeService.getVideoDataFromResponse(response);
             setVideoDetails(videoData);
-            setVideoId(videoDataPromise.id);
+            setVideoId(videoIdFromUrl);
+            setIsLinkInvalid(false);
           }
         }).catch(error => {
           setError(error);
@@ -95,7 +100,7 @@ const LandingPage = () => {
               />
             </div>
           }
-          <Link to={`/editVideo/${videoId}`}>
+          <Link to={`/video/${videoId}`}>
             <Button
               className={styles.uploadbutton}
               label={"Upload"}
@@ -108,6 +113,6 @@ const LandingPage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default LandingPage;
