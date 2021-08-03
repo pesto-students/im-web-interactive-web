@@ -3,3 +3,4 @@ node_modules
 packages/im-components/package-lock.json
 yarn.lock
 packages/im-ott/.env
+packages/im-studio/.env

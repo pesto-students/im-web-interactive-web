@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 // Components
 import { ErrorBoundary } from "@sentry/react";
 import AppLoader from "imcomponents/molecules/appLoader";
+// import SocketIoTest from "./SocketIoTest";
 
 // Routes
 import Routes from "./routes";
@@ -24,6 +25,7 @@ function App() {
   return (
     <Router>
       <ErrorBoundary fallback={myFallback} showDialog>
+        {/* <SocketIoTest /> */}
         <AppLoader />
         <Routes />
       </ErrorBoundary>
