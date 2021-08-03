@@ -16,15 +16,15 @@ import Error from "imcomponents/molecules/error";
 import Loader from "imcomponents/molecules/loader/Loader";
 
 // Styles
-import styles from "./landingPage.module.scss";
+import styles from "./upload.module.scss";
 
 // Helpers
-import { getVideoId, isUploadDisabled } from "./helper/landingPage.general";
+import { getVideoId, isUploadDisabled } from "./helper/upload.general";
 
 // Services
 import youtubeService from "../../services/youtubeService";
 
-const LandingPage = () => {
+const Upload = () => {
   const [videoId, setVideoId] = useState(EMPTY_STRING);
   const [videoDetails, setVideoDetails] = useState(EMPTY_OBJECT);
   const [loading, setLoading] = useState(false);
@@ -115,4 +115,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Upload;
