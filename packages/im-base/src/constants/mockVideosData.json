@@ -1,0 +1,88 @@
+{
+    "data": {
+        "data": [
+            {
+                "id": "1234",
+                "name": "MyVideo1",
+                "genre": "Comedy",
+                "description": "Test video1",
+                "coverImage": {
+                    "url": "https://i.ytimg.com/vi/DLX62G4lc44/maxresdefault.jpg",
+                        "width": 1280,
+                        "height": 720
+                },
+                "url": "https://www.youtube.com/watch?v=DLX62G4lc44",
+                "thumbnails": {
+                    "default": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/default.jpg",
+                      "width": 120,
+                      "height": 90
+                    },
+                    "medium": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/mqdefault.jpg",
+                      "width": 320,
+                      "height": 180
+                    },
+                    "high": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/hqdefault.jpg",
+                      "width": 480,
+                      "height": 360
+                    },
+                    "standard": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/sddefault.jpg",
+                      "width": 640,
+                      "height": 480
+                    },
+                    "maxres": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/maxresdefault.jpg",
+                      "width": 1280,
+                      "height": 720
+                    }
+                  },
+                "isPublished": true,
+                "isFeatured": false
+            },
+            {
+                "id": "4321",
+                "name": "MyVideo2",
+                "genre": "Learning",
+                "description": "Test video2",
+                "coverImage": {
+                    "url": "https://i.ytimg.com/vi/DLX62G4lc44/maxresdefault.jpg",
+                        "width": 1280,
+                        "height": 720
+                },
+                "url": "https://www.youtube.com/watch?v=DLX62G4lc44",
+                "thumbnails": {
+                    "default": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/default.jpg",
+                      "width": 120,
+                      "height": 90
+                    },
+                    "medium": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/mqdefault.jpg",
+                      "width": 320,
+                      "height": 180
+                    },
+                    "high": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/hqdefault.jpg",
+                      "width": 480,
+                      "height": 360
+                    },
+                    "standard": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/sddefault.jpg",
+                      "width": 640,
+                      "height": 480
+                    },
+                    "maxres": {
+                      "url": "https://i.ytimg.com/vi/DLX62G4lc44/maxresdefault.jpg",
+                      "width": 1280,
+                      "height": 720
+                    }
+                  },
+                "isPublished": false,
+                "isFeatured": false
+            }
+        ]
+    } 
+}
