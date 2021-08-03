@@ -11,7 +11,7 @@ import TextArea from "imcomponents/atoms/textArea";
 import styles from "./editTab.module.scss";
 
 // Helper
-import { isBackDisabled } from "./helper/editTab.general";
+import { isBackDisabled } from "../../utils/ogranisms/common/tabHelper.general";
 
 
 const EditTab = (props) => {
