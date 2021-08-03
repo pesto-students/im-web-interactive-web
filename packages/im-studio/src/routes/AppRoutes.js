@@ -25,7 +25,7 @@ const AppRoutes = () => {
     <AppSkeleton>
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/video/:videoId/edit" component={EditVideo} />
+        {/* <Route exact path="/video/:videoId/edit" component={EditVideo} /> */}
       </Switch>
     </AppSkeleton>
   );

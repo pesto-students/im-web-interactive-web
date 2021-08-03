@@ -53,6 +53,7 @@ const LandingPage = () => {
             const videoData = youtubeService.getVideoDataFromResponse(response);
             setVideoDetails(videoData);
             setVideoId(videoIdFromUrl);
+            setIsLinkInvalid(false);
           }
         }).catch(error => {
           setError(error);
@@ -104,7 +105,7 @@ const LandingPage = () => {
               className={styles.uploadbutton}
               label={"Upload"}
               shape={"round"}
-              disabled={() => _isEmpty(videoData)}
+              disabled={isUploadDisabled(videoDetails)}
               danger
             />
           </Link>

@@ -31,4 +31,4 @@ const isUploadDisabled = (videoData) => {
    return _isEmpty(videoData)
 }
 
-export { getVideoData, isUploadDisabled }
+export { getVideoId, isUploadDisabled }
