@@ -7,7 +7,6 @@ import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form"
 import Input from "imcomponents/atoms/input";
 import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
-import TextArea from "imcomponents/atoms/textArea";
 
 // Styles
 import styles from "./hotspots.module.scss";
@@ -110,6 +109,12 @@ const Hotspots = (props) => {
                     <div className={styles.testPlayerDiv}>
 
                     </div>
+                </Form.Item>
+                <Form.Item>
+                    <Input 
+                        className={styles.jumpInTimer}
+                        placeholder="00:01:00"
+                    />
                 </Form.Item>
                 <Form.Item {...buttonItemLayout}>
                     <Button
