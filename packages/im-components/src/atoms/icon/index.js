@@ -8,5 +8,7 @@ export {
   StarTwoTone,
   TwitterOutlined,
   VideoCameraFilled,
-  StarOutlined
+  StarOutlined,
+  EditOutlined,
+  DeleteOutlined
 } from "./Icon";
