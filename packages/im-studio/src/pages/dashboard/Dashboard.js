@@ -31,7 +31,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
     const filmImgSrc = FilmReader.thumbnail(filmDetails);
     return (
         <Link
-            to={`film/${filmId}`}
+            to={`video/${filmId}`}  
             className={styles.movieLinks}
         >
             <FilmCard

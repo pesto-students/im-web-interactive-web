@@ -1,11 +1,22 @@
 .container {
+    padding: 10rem 4rem 4rem 4rem;
     
-    .content {
-        padding-top: 10rem;
-        min-height: 50rem;
+    .content {  
+        
+        .buttonsContainer {
+            text-align: center;
 
-        .uploadbutton {
-            filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
-          }
+            .editButton {
+                margin: 1rem;
+                min-width: 10rem;
+                filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
+              }
+    
+              .backButton {
+                margin: 1rem;
+                background-color: lightgray;
+                min-width: 10rem;
+            }
+        }        
     }
 }
