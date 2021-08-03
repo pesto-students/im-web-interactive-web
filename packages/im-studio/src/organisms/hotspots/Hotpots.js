@@ -7,7 +7,6 @@ import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form"
 import Input from "imcomponents/atoms/input";
 import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
-import TextArea from "imcomponents/atoms/textArea";
 
 // Styles
 import styles from "./hotspots.module.scss";
@@ -19,17 +18,14 @@ const columns = [
     {
         title: 'No.',
         dataIndex: 'serialNumber',
-        // render: text => <a>{text}</a>
     },
     {
         title: 'Group Name',
         dataIndex: 'groupName',
-        // render: text => <a>{text}</a>
     },
     {
         title: 'Start Point',
         dataIndex: 'startPoint',
-        // render: text => <a>{text}</a>
     },
     {
         title: 'Actions',
@@ -103,12 +99,11 @@ const Hotspots = (props) => {
                 <Form.Item label="Group Name">
                     <Input
                         placeholder="Enter group name"
-                    // value={videoTitle}
                     />
                 </Form.Item>
                 <Form.Item label="Jump to point in video">
                     <div className={styles.testPlayerDiv}>
-
+                        {/* TODO: Add player */}
                     </div>
                 </Form.Item>
                 <Form.Item {...buttonItemLayout}>
@@ -117,20 +112,20 @@ const Hotspots = (props) => {
                         label={"Back"}
                         shape={"round"}
                         disabled={isBackDisabled(activeTabKey)}
-                    // onClick={() => changeTab("2")}
+                        // TODO: Should move to previous tab
                     />
                     <Button
                         className={styles.saveButton}
                         label={"Save"}
                         shape={"round"}
-                        // onClick={() => changeTab("2")}
+                        // TODO: should save to DB and move to next tab
                         danger
                     />
                     <Button
                         className={styles.addNewButton}
                         label={"Add New"}
                         shape={"round"}
-                        // onClick={() => changeTab((parseInt(activeTabKey) + 1).toString())}
+                        // TODO: Add new hotspot
                         danger
                     />
                 </Form.Item>

@@ -5,7 +5,6 @@ import { Route, Switch } from "react-router-dom";
 import AppLoader from "imcomponents/molecules/appLoader";
 import AppSkeleton from "../organisms/appSkeleton";
 import LandingPage from "../pages/landingPage";
-import EditVideo from "../pages/editVideo";
 
 const AppRoutes = () => {
   const [loading, setLoading] = useState(true);
@@ -26,7 +25,6 @@ const AppRoutes = () => {
     <AppSkeleton>
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/video/:videoId/edit" component={EditVideo} />
       </Switch>
     </AppSkeleton>
   );

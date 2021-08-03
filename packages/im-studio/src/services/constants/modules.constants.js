@@ -1,6 +1,5 @@
 const MODULES = {
-    YOUTUBE: "youtube",
-    YOUTUBE_API_KEY: "AIzaSyDUMhTyytqgr7jLHt5afWCWUJSuNwAug3w"
+    YOUTUBE: "youtube"
 }
 
 const BASE_URL = {

@@ -1,11 +1,8 @@
-import React, { useEffect, useParams, useState } from "react";
-
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 
 // Constants
-import { EMPTY_OBJECT, EMPTY_STRING } from "imbase/constants/base.constants";
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 import MOCK_DATA from "imbase/constants/mockYoutubeVideoResponse.json";
-import VideoReader from "imbase/readers/Video";
 
 // Components
 import Tabs from "imcomponents/atoms/tabs";
@@ -21,20 +18,12 @@ import styles from "./editVideo.module.scss";
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-    console.log(key);
-}
-
 const EditVideo = () => {
-    // const { videoId } = useParams();
-    const [ videoData, setVideoData ] = useState(EMPTY_OBJECT);
-    const [ activeTabKey, setActiveTabKey ] = useState("1");
-    const [ loading, setLoading ] = useState(true);
-    const [ error, setError ] = useState(EMPTY_OBJECT);
-
-    // const videoIdFromData = VideoReader.id(videoData);
-    // const videoTitle = VideoReader.title(videoData);
-    // const videoDescription = VideoReader.description(videoData);
+    // TODO: save id from params and fetch data with id
+    const [videoData, setVideoData] = useState(EMPTY_OBJECT);
+    const [activeTabKey, setActiveTabKey] = useState("1");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(EMPTY_OBJECT);
 
     const changeTab = (key) => {
         setActiveTabKey(key);
@@ -60,13 +49,9 @@ const EditVideo = () => {
 
                 </div>
                 <div className={styles.movieData}>
-                    <Tabs
-                        onChange={callback}
-                        type="card"
-                        // activeKey={activeTabKey}
-                    >
+                    <Tabs type="card" >
                         <TabPane className={styles.editTab} tab="Edit" key="1">
-                           <EditTab changeTab={changeTab} activeTabKey={activeTabKey} />
+                            <EditTab changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Hotspots" key="2">
                             <Hotspots changeTab={changeTab} activeTabKey={activeTabKey} />
@@ -85,16 +70,6 @@ const EditVideo = () => {
             </div>
         </div>
     );
-}
-
-EditVideo.propTypes = {
-    videoId: PropTypes.string,
-    videoDataFromProps: PropTypes.object,
-}
-
-EditVideo.defaultProps = {
-    videoId: EMPTY_STRING,
-    videoDataFromProps: EMPTY_OBJECT
 }
 
 export default EditVideo;

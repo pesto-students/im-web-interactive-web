@@ -13,12 +13,11 @@ import styles from "./editTab.module.scss";
 // Helper
 import { isBackDisabled } from "../../utils/tabHelper.general";
 
-
 const EditTab = (props) => {
     const { changeTab, activeTabKey, ...restProps } = props;
 
     const formItemLayout = {
-        labelCol: { span: 3 },
+        labelCol: { span: 4 },
         wrapperCol: { span: 10 },
     };
 
@@ -39,7 +38,7 @@ const EditTab = (props) => {
                 <Form.Item label="Name">
                     <Input
                         placeholder="Enter name"
-                    // value={videoTitle}
+                        // TODO: Set value of video name by default
                     />
                 </Form.Item>
                 <Form.Item label="YouTube URL">
@@ -48,13 +47,13 @@ const EditTab = (props) => {
                 <Form.Item label="Title">
                     <Input
                         placeholder="Enter title"
-                    // value={videoTitle}
+                        // TODO: Set value of video title by default
                     />
                 </Form.Item>
                 <Form.Item label="Description">
                     <TextArea
                         placeholder="Enter description"
-                        // value={videoDescription}
+                        // TODO: Set value of video description by default
                         rows={4}
                     />
                 </Form.Item>
@@ -67,13 +66,13 @@ const EditTab = (props) => {
                         label={"Back"}
                         shape={"round"}
                         disabled={isBackDisabled(activeTabKey)}
-                        // onClick={() => changeTab("2")}
+                        // TODO: Should go back to preview page
                     />
                     <Button
                         className={styles.saveButton}
                         label={"Save"}
                         shape={"round"}
-                        // onClick={() => changeTab((parseInt(activeTabKey) + 1).toString())}
+                        // TODO: Should sve to DB and move to hoptspots tab 
                         danger
                     />
                 </Form.Item>
