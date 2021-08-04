@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Components
-import { Table } from 'antd';
 import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form"
 import Input from "imcomponents/atoms/input";
+import Table from 'imcomponents/atoms/table';
 import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
 
 // Styles
@@ -15,6 +15,7 @@ const columns = [
     {
         title: 'No.',
         dataIndex: 'serialNumber',
+        width: '5%'
     },
     {
         title: 'Group Name',
@@ -23,19 +24,20 @@ const columns = [
     {
         title: 'Start Point',
         dataIndex: 'startPoint',
+        sorter: true
     },
     {
-        title: 'Actions',
+        title: '',
         dataIndex: 'actions',
         render: icons => (
-        <>
+        <div className={styles.buttonContainer}>
             <a className={styles.editIcon}>
                 <EditOutlined />
             </a>
             <a className={styles.deleteIcon}>
                 <DeleteOutlined />
             </a>
-        </>
+        </div>
         )
     },
 ];
@@ -46,7 +48,7 @@ const data = [
         serialNumber: '1',
         groupName: 'Explore Kitchen',
         startPoint: '01:00',
-        actions: 'TODO',
+        actions: 'TODO'
     },
     {
         key: '2',
@@ -67,8 +69,8 @@ const data = [
         serialNumber: '4',
         groupName: 'Explore Terrace',
         startPoint: '07:00',
-        actions: 'TODO',
-    },
+        actions: 'TODO'
+    }
 ];
 
 const Hotspots = (props) => {
@@ -80,7 +82,7 @@ const Hotspots = (props) => {
     };
 
     const buttonItemLayout = {
-        wrapperCol: { span: 14, offset: 2 },
+        wrapperCol: { span: 14, offset: 1 },
     };
 
     const [form] = Form.useForm();
@@ -137,6 +139,7 @@ const Hotspots = (props) => {
                 className={styles.hotspotsTable}
                 columns={columns}
                 dataSource={data}
+                pagination={false}  
                 bordered
             />
         </div>

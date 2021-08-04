@@ -1,22 +1,24 @@
 .container {
 
     .editForm {
-        
+        text-align: center;
+
         label {
             float: left;
             width: 10rem;
             margin-right: 1rem;
             padding-left: 2rem;
-            }
+            font-weight: bolder;
+        }
 
         .backButton {
-            margin-left: 2rem;
+            margin: 0 1rem;
             background-color: lightgray;
             min-width: 10rem;
         }
 
         .saveButton {
-            margin-left: 2rem;
+            margin: 0 1rem;
             min-width: 10rem;
         }
     }
