@@ -1,5 +1,5 @@
 import { all, takeEvery, call, put } from "redux-saga/effects";
-import { gqlClient } from "../../graphql/client";
+import { gqlClient } from "imbase/graphql/gqlClient";
 import { HELLO_WORLD } from "../../graphql/queries";
 import { FETCH_MOVIES } from "./types";
 import { fetchMoviesSuccess, fetchMoviesError } from "./actions";

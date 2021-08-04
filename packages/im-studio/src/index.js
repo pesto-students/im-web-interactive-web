@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 
 // graphql
-import { gqlClient } from "./graphql/client";
+import { gqlClient } from "imbase/graphql/gqlClient";
 
 import dotenv from "dotenv";
 
