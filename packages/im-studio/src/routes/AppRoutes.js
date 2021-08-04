@@ -7,7 +7,6 @@ import AppSkeleton from "../organisms/appSkeleton";
 import Dashboard from "../pages/dashboard";
 import EditVideo from "../pages/editVideo";
 import Upload from "../pages/upload";
-import Preview from "../pages/preview";
 
 const AppRoutes = () => {
   const [ loading, setLoading ] = useState(true);

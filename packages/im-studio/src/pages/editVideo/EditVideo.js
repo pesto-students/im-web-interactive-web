@@ -9,6 +9,9 @@ import Tabs from "imcomponents/atoms/tabs";
 import Player from "imcomponents/organisms/player";
 import EditTab from "../../organisms/editTab";
 import Hotspots from "../../organisms/hotspots";
+import OverlaysTab from "../../organisms/overlaysTab";
+import PublishTab from "../../organisms/publishTab";
+import TimeTriggersTab from "../../organisms/timeTriggersTab";
 
 // Services
 import youtubeService from "../../services/youtubeService";
@@ -52,20 +55,20 @@ const EditVideo = () => {
                 </div>
                 <div className={styles.movieData}>
                     <Tabs type="card" >
-                        <TabPane className={styles.editTab} tab="Edit" key="1">
+                        <TabPane className={styles.editTab} tab="Edit Details" key="1">
                             <EditTab changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Hotspots" key="2">
                             <Hotspots changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Overlays" key="3">
-                            Content of Tab Pane 3
+                            <OverlaysTab changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Time Triggers" key="4">
-                            Content of Tab Pane 2
+                            <TimeTriggersTab changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Publish" key="5">
-                            Content of Tab Pane 3
+                            <PublishTab changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                     </Tabs>
                 </div>
