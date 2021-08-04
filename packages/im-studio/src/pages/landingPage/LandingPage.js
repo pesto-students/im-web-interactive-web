@@ -13,7 +13,6 @@ import { CloudUploadOutlined } from "imcomponents/atoms/icon";
 import Image from "imcomponents/atoms/image";
 import SearchBox from "imcomponents/atoms/searchBox";
 import Error from "imcomponents/molecules/error";
-import Loader from "imcomponents/molecules/loader/Loader";
 
 // Styles
 import styles from "./landingPage.module.scss";
@@ -27,7 +26,6 @@ import youtubeService from "../../services/youtubeService";
 const LandingPage = () => {
   const [videoId, setVideoId] = useState(EMPTY_STRING);
   const [videoDetails, setVideoDetails] = useState(EMPTY_OBJECT);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(EMPTY_OBJECT);
   const [isLinkInvalid, setIsLinkInvalid] = useState(false);
 
@@ -60,10 +58,6 @@ const LandingPage = () => {
         });
     }
   };
-
-  if (loading) {
-    return <Loader />;
-  }
 
   if (!_isEmpty(error)) {
     return <Error {...error} />;

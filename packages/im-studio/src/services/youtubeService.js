@@ -37,4 +37,5 @@ function getVideoDataFromResponse (response) {
     return response.data.items[0];
 }
 
-export default { getMovieById, getVideoDataFromResponse, matchYoutubeUrl };
+const youtubeService = { getMovieById, getVideoDataFromResponse, matchYoutubeUrl };
+export default youtubeService;
