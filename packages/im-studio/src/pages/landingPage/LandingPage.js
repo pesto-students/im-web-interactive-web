@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
-// Movies Actions
-import { fetchMovies } from "../../redux/movies/actions";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
@@ -33,20 +29,11 @@ const LandingPage = () => {
   const [error, setError] = useState(EMPTY_OBJECT);
   const [isLinkInvalid, setIsLinkInvalid] = useState(false);
 
-  // Test redux 
-  const count = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const handleC = () => {
-    dispatch(fetchMovies());
-  };
-  console.log(count);
-  
   const handleSearch = (value, event) => {
     if (_isEmpty(value)) {
       setIsLinkInvalid(false);
       setVideoDetails(EMPTY_OBJECT);
     } else {
-
       const videoIdFromUrl = getVideoId(value);
       if (_isEmpty(videoIdFromUrl)) {
         setIsLinkInvalid(true);
@@ -56,7 +43,11 @@ const LandingPage = () => {
 
       Promise.resolve(youtubeService.getMovieById({ videoId: videoIdFromUrl }))
         .then((response) => {
-          if (_isEmpty(response) || _isEmpty(response.data) || response.data.items.length === 0) {
+          if (
+            _isEmpty(response) ||
+            _isEmpty(response.data) ||
+            response.data.items.length === 0
+          ) {
             setIsLinkInvalid(true);
             setVideoDetails(EMPTY_OBJECT);
           } else {
@@ -65,7 +56,8 @@ const LandingPage = () => {
             setVideoId(videoIdFromUrl);
             setIsLinkInvalid(false);
           }
-        }).catch(error => {
+        })
+        .catch((error) => {
           setError(error);
         });
     }
@@ -77,11 +69,9 @@ const LandingPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.content} >
-        <div className={styles.center} >
-          <CloudUploadOutlined
-            className={styles.uploadIcon}
-          />
+      <div className={styles.content}>
+        <div className={styles.center}>
+          <CloudUploadOutlined className={styles.uploadIcon} />
           <h1>Paste a Youtube link below to start</h1>
           <div className={styles.inputField}>
             <SearchBox
@@ -91,12 +81,13 @@ const LandingPage = () => {
               onSearch={handleSearch}
               allowClear
             />
-            {isLinkInvalid && <p className={styles.error} >This link is invalid</p>}
+            {isLinkInvalid && (
+              <p className={styles.error}>This link is invalid</p>
+            )}
           </div>
-          {
-            !_isEmpty(videoDetails) &&
+          {!_isEmpty(videoDetails) && (
             <div className={styles.videoDetails}>
-              <h2 className={styles.title} >{videoDetails.snippet.title}</h2>
+              <h2 className={styles.title}>{videoDetails.snippet.title}</h2>
               <Image
                 className={styles.thumbnailImage}
                 src={videoDetails.snippet.thumbnails.high.url}
@@ -104,7 +95,7 @@ const LandingPage = () => {
                 width={videoDetails.snippet.thumbnails.high.width}
               />
             </div>
-          }
+          )}
           <Link to={`/video/${videoId}/edit`}>
             <Button
               className={styles.uploadbutton}
