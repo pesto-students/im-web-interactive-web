@@ -1,11 +1,9 @@
 // Axios
 import axios from "axios";
-import dotenv from "dotenv";
 
 // Constants
 import { MODULES , BASE_URL, URL_REGEX } from "./constants/modules.constants";
-
-dotenv.config();
+import { getBaseParams } from "./helpers/http";
 
 const getMovieById = ({
     videoId,
@@ -13,9 +11,8 @@ const getMovieById = ({
   }) => {
     return axios.get(BASE_URL[MODULES.YOUTUBE] + "/videos", { 
         params: {
+            ...getBaseParams(MODULES.YOUTUBE),
             id: videoId,
-            key: process.env.REACT_APP_YOUTUBE_API_KEY,
-            part: 'snippet',
             ...restProps,
         }
     });

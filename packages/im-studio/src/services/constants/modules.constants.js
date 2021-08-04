@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const MODULES = {
     YOUTUBE: "youtube"
 }
@@ -9,7 +13,7 @@ const BASE_URL = {
 const BASE_PARAMS = {
     [MODULES.YOUTUBE]: {
         part:'snippet',
-        key: process.env.YOUTUBE_API_KEY
+        key: process.env.REACT_APP_YOUTUBE_API_KEY
     }
 }
 
