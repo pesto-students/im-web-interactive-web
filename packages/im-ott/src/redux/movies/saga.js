@@ -14,7 +14,7 @@ const getMoviesFromApi = () => {
 };
 
 function* getMovies() {
-  const { loading, error, data } = yield call(getMoviesFromApi);
+  const { error, data } = yield call(getMoviesFromApi);
   if (data) {
     console.log(data);
     yield put(fetchMoviesSuccess(data));
