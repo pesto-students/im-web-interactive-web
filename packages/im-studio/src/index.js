@@ -1,5 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { ApolloProvider } from "@apollo/client";
+
+// Redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
+// graphql
+import { gqlClient } from "./graphql/client";
 
 import dotenv from "dotenv";
 
@@ -8,11 +16,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 dotenv.config();
-console.log(process.env);
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <ApolloProvider client={gqlClient}>
+        <App />
+      </ApolloProvider>
+    </React.StrictMode>
+  </Provider>,
   document.getElementById("root")
 );
 
