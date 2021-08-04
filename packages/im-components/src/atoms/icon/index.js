@@ -10,5 +10,6 @@ export {
   VideoCameraFilled,
   StarOutlined,
   EditOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  DownOutlined
 } from "./Icon";
