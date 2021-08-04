@@ -3,6 +3,7 @@ import axios from "axios";
 
 // Constants
 import { MODULES , BASE_URL, URL_REGEX } from "./constants/modules.constants";
+import { getBaseParams } from "./helpers/http";
 
 const getMovieById = ({
     videoId,
@@ -10,10 +11,8 @@ const getMovieById = ({
   }) => {
     return axios.get(BASE_URL[MODULES.YOUTUBE] + "/videos", { 
         params: {
+            ...getBaseParams(MODULES.YOUTUBE),
             id: videoId,
-            // key: process.env.REACT_APP_YOUTUBE_API_KEY,
-            key: MODULES.YOUTUBE_API_KEY,
-            part: 'snippet',
             ...restProps,
         }
     });

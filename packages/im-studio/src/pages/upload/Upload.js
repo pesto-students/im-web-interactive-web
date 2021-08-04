@@ -75,7 +75,6 @@ const Upload = () => {
         <div className={styles.center} >
           <CloudUploadOutlined
             className={styles.uploadIcon}
-            style={{ fontSize: "1500%" }}
           />
           <h1>Paste a Youtube link below to start</h1>
           <div className={styles.inputField}>
