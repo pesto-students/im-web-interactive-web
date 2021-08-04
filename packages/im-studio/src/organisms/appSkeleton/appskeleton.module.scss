@@ -1,25 +1,26 @@
 .container {
+  .header {
+    color: #000;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    box-shadow: 0 0 0.9rem 0.3rem rgba(41,41,41,.25);
+  }
+
+  .content {
+    color: #000;
+  }
+  
+  .footer {
+    text-align: center;
+    background-color: black;
+    color: white;
+    box-shadow: 1rem 1rem 1rem #fff;
+  }
 }
 
-.header {
-  color: #000;
-  background: #fff !important;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 999;
-  box-shadow: 0 0 0.9rem 0.3rem rgba(41,41,41,.25);
-}
 
-.content {
-  color: #000;
-  // @TODO: Fix content to start below header
-  padding-top: 8rem;
-}
 
-.footer {
-  text-align: center;
-  background-color: black !important;
-  color: white !important;
-  box-shadow: 1rem 1rem 1rem #fff;
-}
+
