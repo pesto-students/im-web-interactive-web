@@ -11,9 +11,6 @@ import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
 // Styles
 import styles from "./hotspots.module.scss";
 
-// Helper
-import { isBackDisabled } from "../../utils/ogranisms/common/tabHelper.general";
-
 const columns = [
     {
         title: 'No.',
@@ -117,7 +114,6 @@ const Hotspots = (props) => {
                         className={styles.backButton}
                         label={"Back"}
                         shape={"round"}
-                        disabled={isBackDisabled(activeTabKey)}
                         // TODO: Should move to previous tab
                     />
                     <Button

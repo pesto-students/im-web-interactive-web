@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+
 
 // Components
 import Button from "imcomponents/atoms/button";
@@ -9,9 +11,6 @@ import TextArea from "imcomponents/atoms/textArea";
 
 // Styles
 import styles from "./editTab.module.scss";
-
-// Helper
-import { isBackDisabled } from "../../utils/ogranisms/common/tabHelper.general";
 
 const EditTab = (props) => {
     const { changeTab, activeTabKey, ...restProps } = props;
@@ -38,7 +37,7 @@ const EditTab = (props) => {
                 <Form.Item label="Name">
                     <Input
                         placeholder="Enter name"
-                        // TODO: Set value of video name by default
+                    // TODO: Set value of video name by default
                     />
                 </Form.Item>
                 <Form.Item label="YouTube URL">
@@ -47,7 +46,7 @@ const EditTab = (props) => {
                 <Form.Item label="Title">
                     <Input
                         placeholder="Enter title"
-                        // TODO: Set value of video title by default
+                    // TODO: Set value of video title by default
                     />
                 </Form.Item>
                 <Form.Item label="Description">
@@ -61,13 +60,13 @@ const EditTab = (props) => {
                     <Input placeholder="Enter genre" />
                 </Form.Item>
                 <Form.Item {...buttonItemLayout}>
-                    <Button
-                        className={styles.backButton}
-                        label={"Back"}
-                        shape={"round"}
-                        disabled={isBackDisabled(activeTabKey)}
-                        // TODO: Should go back to preview page
-                    />
+                    <Link to="/dashboard">
+                        <Button
+                            className={styles.backButton}
+                            label={"Back"}
+                            shape={"round"}
+                        />
+                    </Link>
                     <Button
                         className={styles.saveButton}
                         label={"Save"}
