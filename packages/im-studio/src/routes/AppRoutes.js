@@ -33,7 +33,6 @@ const AppRoutes = () => {
         </Route>
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/upload" component={Upload} />
-        <Route exact path="/video/:videoId/" component={Preview} />
         <Route exact path="/video/:videoId/edit" component={EditVideo} />
       </Switch>
     </AppSkeleton>
