@@ -41,7 +41,7 @@ const EditTab = (props) => {
                 <Form.Item label="Name">
                     <Input
                         placeholder="Enter name"
-                    // TODO: Set value of video name by default
+                        // TODO: Set value of video name by default
                     />
                 </Form.Item>
                 <Form.Item label="YouTube URL">
