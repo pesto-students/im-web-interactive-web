@@ -15,15 +15,15 @@ import SearchBox from "imcomponents/atoms/searchBox";
 import Error from "imcomponents/molecules/error";
 
 // Styles
-import styles from "./landingPage.module.scss";
+import styles from "./upload.module.scss";
 
 // Helpers
-import { getVideoId, isUploadDisabled } from "./helper/landingPage.general";
+import { getVideoId, isUploadDisabled } from "./helper/upload.general";
 
 // Services
 import youtubeService from "../../services/youtubeService";
 
-const LandingPage = () => {
+const Upload = () => {
   const [videoId, setVideoId] = useState(EMPTY_STRING);
   const [videoDetails, setVideoDetails] = useState(EMPTY_OBJECT);
   const [error, setError] = useState(EMPTY_OBJECT);
@@ -97,6 +97,7 @@ const LandingPage = () => {
             </div>
           )}
           <Link to={`/video/${videoId}/edit`}>
+            {/* Send video data to edit page for player*/}
             <Button
               className={styles.uploadbutton}
               label={"Upload"}
@@ -111,4 +112,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Upload;

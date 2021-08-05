@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 
+// Lodash
+import _isEmpty from "lodash/isEmpty";
+
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 import MOCK_DATA from "imbase/constants/mockYoutubeVideoResponse.json";
 
 // Components
 import Tabs from "imcomponents/atoms/tabs";
+import Error from "imcomponents/molecules/error";
+import Loader from "imcomponents/molecules/loader";
+import Player from "imcomponents/organisms/player";
 import EditTab from "../../organisms/editTab";
 import Hotspots from "../../organisms/hotspots";
+import OverlaysTab from "../../organisms/overlaysTab";
+import PublishTab from "../../organisms/publishTab";
+import TimeTriggersTab from "../../organisms/timeTriggersTab";
 
 // Services
 import youtubeService from "../../services/youtubeService";
@@ -21,12 +30,12 @@ const { TabPane } = Tabs;
 const EditVideo = () => {
     // TODO: save id from params and fetch data with id
     const [videoData, setVideoData] = useState(EMPTY_OBJECT);
-    const [activeTabKey, setActiveTabKey] = useState("1");
+    const [activeTabKey] = useState("1");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(EMPTY_OBJECT);
 
     const changeTab = (key) => {
-        setActiveTabKey(key);
+        // setActiveTabKey(key);
     };
 
     useEffect(() => {
@@ -42,28 +51,37 @@ const EditVideo = () => {
             });
     }, []);
 
+    if (loading) {
+        return <Loader />;
+    }
+
+    if (!_isEmpty(error)) {
+        return <Error {...error} />;
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.content}>
                 <div className={styles.player}>
-
+                    {/* TODO: load movie preview */}
+                    <Player url="https://www.youtube.com/watch?v=zT62eVxShsY"></Player>
                 </div>
                 <div className={styles.movieData}>
                     <Tabs type="card" >
-                        <TabPane className={styles.editTab} tab="Edit" key="1">
-                            <EditTab changeTab={changeTab} activeTabKey={activeTabKey} />
+                        <TabPane className={styles.editTab} tab="Edit Details" key="1">
+                            <EditTab changeTab={changeTab} activeTabKey={activeTabKey} data={videoData} />
                         </TabPane>
                         <TabPane tab="Hotspots" key="2">
                             <Hotspots changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Overlays" key="3">
-                            Content of Tab Pane 3
+                            <OverlaysTab changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Time Triggers" key="4">
-                            Content of Tab Pane 2
+                            <TimeTriggersTab changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                         <TabPane tab="Publish" key="5">
-                            Content of Tab Pane 3
+                            <PublishTab changeTab={changeTab} activeTabKey={activeTabKey} />
                         </TabPane>
                     </Tabs>
                 </div>

@@ -22,17 +22,20 @@ function Navbar() {
     history.push("/login");
   };
   return (
-    <>
+    <div>
       <Logo text={"iFlix Studio"} />
       <Menu theme="dark" mode="horizontal" className={styles.floatRight}>
         <Menu.Item key={"home"}>
           <Link to={"/"}>Home</Link>
         </Menu.Item>
+        <Menu.Item key={"upload"}>
+          <Link to={"/upload"}>Upload</Link>
+        </Menu.Item>
         <Menu.Item key={"logout"}>
           <div onClick={() => handleLogout()}>Logout</div>
         </Menu.Item>
       </Menu>
-    </>
+    </div>
   );
 }
 

@@ -2,22 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Components
-import { Table } from 'antd';
 import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form"
 import Input from "imcomponents/atoms/input";
-import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
+import Table from 'imcomponents/atoms/table';
 
 // Styles
 import styles from "./hotspots.module.scss";
-
-// Helper
-import { isBackDisabled } from "../../utils/tabHelper.general";
 
 const columns = [
     {
         title: 'No.',
         dataIndex: 'serialNumber',
+        width: '5%'
     },
     {
         title: 'Group Name',
@@ -26,30 +23,39 @@ const columns = [
     {
         title: 'Start Point',
         dataIndex: 'startPoint',
+        sorter: true
     },
     {
-        title: 'Actions',
+        title: '',
         dataIndex: 'actions',
-        render: icons => (
-        <>
-            <a className={styles.editIcon}>
+        render: () => (
+            <div className={styles.buttonContainer}>
+                {/* TODO: buttons working */}
+                {/* <a 
+                className={styles.editIcon}
+                href={"#"}
+            >
                 <EditOutlined />
             </a>
-            <a className={styles.deleteIcon}>
+            <a 
+                className={styles.deleteIcon}
+                href="#"
+            >
                 <DeleteOutlined />
-            </a>
-        </>
+            </a> */}
+            </div>
         )
     },
 ];
 
+// TODO: Get data from server
 const data = [
     {
         key: '1',
         serialNumber: '1',
         groupName: 'Explore Kitchen',
         startPoint: '01:00',
-        actions: 'TODO',
+        actions: 'TODO'
     },
     {
         key: '2',
@@ -70,20 +76,19 @@ const data = [
         serialNumber: '4',
         groupName: 'Explore Terrace',
         startPoint: '07:00',
-        actions: 'TODO',
-    },
+        actions: 'TODO'
+    }
 ];
 
 const Hotspots = (props) => {
-    const { changeTab, activeTabKey, ...restProps } = props;
-
+    const { changeTab, activeTabKey } = props;
     const formItemLayout = {
         labelCol: { span: 4 },
         wrapperCol: { span: 10 },
     };
 
     const buttonItemLayout = {
-        wrapperCol: { span: 14, offset: 2 },
+        wrapperCol: { span: 14, offset: 1 },
     };
 
     const [form] = Form.useForm();
@@ -106,18 +111,25 @@ const Hotspots = (props) => {
                         {/* TODO: Add player */}
                     </div>
                 </Form.Item>
+                <Form.Item>
+                    <Input
+                        className={styles.jumpInTimer}
+                        placeholder="00:01:00"
+                    />
+                </Form.Item>
                 <Form.Item {...buttonItemLayout}>
                     <Button
                         className={styles.backButton}
                         label={"Back"}
                         shape={"round"}
-                        disabled={isBackDisabled(activeTabKey)}
-                        // TODO: Should move to previous tab
+                        onClick={changeTab((parseInt(activeTabKey) - 1).toString())}
+                    // TODO: Should move to previous tab
                     />
                     <Button
                         className={styles.saveButton}
                         label={"Save"}
                         shape={"round"}
+                        onClick={changeTab((parseInt(activeTabKey) + 1).toString())}
                         // TODO: should save to DB and move to next tab
                         danger
                     />
@@ -135,6 +147,7 @@ const Hotspots = (props) => {
                 className={styles.hotspotsTable}
                 columns={columns}
                 dataSource={data}
+                pagination={false}
                 bordered
             />
         </div>
