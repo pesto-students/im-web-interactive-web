@@ -94,6 +94,7 @@ const Upload = () => {
             </div>
           }
           <Link to={`/video/${videoId}/edit`}>
+            {/* Send video data to edit page for player*/}
             <Button
               className={styles.uploadbutton}
               label={"Upload"}

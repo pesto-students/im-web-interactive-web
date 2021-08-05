@@ -30,12 +30,12 @@ const { TabPane } = Tabs;
 const EditVideo = () => {
     // TODO: save id from params and fetch data with id
     const [videoData, setVideoData] = useState(EMPTY_OBJECT);
-    const [activeTabKey, setActiveTabKey] = useState("1");
+    const [activeTabKey] = useState("1");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(EMPTY_OBJECT);
 
     const changeTab = (key) => {
-        setActiveTabKey(key);
+        // setActiveTabKey(key);
     };
 
     useEffect(() => {

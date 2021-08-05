@@ -1,9 +1,7 @@
 .container {
 
     button {
-        margin: 0 1.25rem;
-        min-width: 13rem;
-        filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
+        
     }
     
     .hotspotsForm {
@@ -18,6 +16,21 @@
 
         .backButton {
             background-color: lightgray;
+            margin: 0 1.25rem;
+            min-width: 12rem;
+            filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
+        }
+
+        .saveButton {
+            margin: 0 1.25rem;
+            min-width: 12rem;
+            filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
+        }
+
+        .addNewButton {
+            margin: 0 1.25rem;
+            min-width: 12rem;
+            filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
         }
 
         .testPlayerDiv {

@@ -10,13 +10,11 @@ import Upload from "../pages/upload";
 
 const AppRoutes = () => {
   const [ loading, setLoading ] = useState(true);
-  const [ loggedIn, setLoggedIn ] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       AppLoader.setVisibility(false);
       setLoading(false);
-      setLoggedIn(true);
     }, 2000);
   });
 
@@ -29,7 +27,7 @@ const AppRoutes = () => {
     <AppSkeleton>
       <Switch>
         <Route exact path="/">
-          {loggedIn ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+          <Redirect to="/dashboard" />
         </Route>
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/upload" component={Upload} />

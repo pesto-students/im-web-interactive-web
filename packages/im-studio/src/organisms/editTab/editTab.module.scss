@@ -14,12 +14,14 @@
         .backButton {
             margin: 0 1rem;
             background-color: lightgray;
-            min-width: 10rem;
+            min-width: 12rem;
+            filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
         }
 
         .saveButton {
             margin: 0 1rem;
-            min-width: 10rem;
+            min-width: 12rem;
+            filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
         }
     }
 }
