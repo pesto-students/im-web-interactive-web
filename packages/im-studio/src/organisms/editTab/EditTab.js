@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // Components
 import Button from "imcomponents/atoms/button";
@@ -10,19 +11,15 @@ import TextArea from "imcomponents/atoms/textArea";
 // Styles
 import styles from "./editTab.module.scss";
 
-// Helper
-import { isBackDisabled } from "../../utils/tabHelper.general";
-
 const EditTab = (props) => {
-    const { changeTab, activeTabKey, ...restProps } = props;
-
+    const { changeTab, activeTabKey } = props;
     const formItemLayout = {
         labelCol: { span: 4 },
         wrapperCol: { span: 10 },
     };
 
     const buttonItemLayout = {
-        wrapperCol: { span: 14, offset: 2 },
+        wrapperCol: { span: 10, offset: 2 },
     };
 
     const [form] = Form.useForm();
@@ -47,7 +44,7 @@ const EditTab = (props) => {
                 <Form.Item label="Title">
                     <Input
                         placeholder="Enter title"
-                        // TODO: Set value of video title by default
+                    // TODO: Set value of video title by default
                     />
                 </Form.Item>
                 <Form.Item label="Description">
@@ -61,17 +58,18 @@ const EditTab = (props) => {
                     <Input placeholder="Enter genre" />
                 </Form.Item>
                 <Form.Item {...buttonItemLayout}>
-                    <Button
-                        className={styles.backButton}
-                        label={"Back"}
-                        shape={"round"}
-                        disabled={isBackDisabled(activeTabKey)}
-                        // TODO: Should go back to preview page
-                    />
+                    <Link to="/dashboard">
+                        <Button
+                            className={styles.backButton}
+                            label={"Back"}
+                            shape={"round"}
+                        />
+                    </Link>
                     <Button
                         className={styles.saveButton}
                         label={"Save"}
                         shape={"round"}
+                        onClick={changeTab((parseInt(activeTabKey)+1).toString())}
                         // TODO: Should sve to DB and move to hoptspots tab 
                         danger
                     />

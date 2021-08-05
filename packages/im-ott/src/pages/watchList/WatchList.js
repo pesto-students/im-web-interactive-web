@@ -30,7 +30,10 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   const filmGenre = FilmReader.genre(filmDetails);
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
   return (
-    <Link to={`film/${filmId}`}>
+    <Link 
+    to={`film/${filmId}`}
+    className={styles.movieLinks}
+    >
       <FilmCard
         key={filmId}
         title={filmTitle}
@@ -70,7 +73,14 @@ const WatchList = () => {
     return <Error {...error} />;
   }
 
-  return <div className={styles.container}>{_map(films, renderFilm)}</div>;
+  return <div className={styles.container}>
+  <div className={styles.content}>
+      <h1 className={styles.heading}>Watchlist</h1>
+      <div className={styles.movies}>
+          {_map(films, renderFilm)}
+      </div>
+  </div>
+</div>;
 };
 
 export default WatchList;
