@@ -2,6 +2,10 @@ import dotenv from "dotenv";
 import firebase from "firebase/app";
 import "firebase/auth";
 
+// Graphql
+import { gqlClient } from "../graphql/gqlClient";
+import { CREATE_USER } from "../graphql/mutation";
+
 dotenv.config();
 
 // API Keys
@@ -37,7 +41,16 @@ export const signInWithGoogle = () => {
   auth
     .signInWithPopup(googleProvider)
     .then((res) => {
-      console.log(res.user);
+      gqlClient.mutate({
+        mutation: CREATE_USER,
+        variables: {
+          uid: res.user.uid,
+          displayName: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+          emailVerified: res.user.emailVerified,
+        },
+      });
     })
     .catch((error) => {
       console.log(error.message);

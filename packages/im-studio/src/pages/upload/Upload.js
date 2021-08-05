@@ -34,7 +34,6 @@ const Upload = () => {
       setIsLinkInvalid(false);
       setVideoDetails(EMPTY_OBJECT);
     } else {
-
       const videoIdFromUrl = getVideoId(value);
       if (_isEmpty(videoIdFromUrl)) {
         setIsLinkInvalid(true);
@@ -44,7 +43,11 @@ const Upload = () => {
 
       Promise.resolve(youtubeService.getMovieById({ videoId: videoIdFromUrl }))
         .then((response) => {
-          if (_isEmpty(response) || _isEmpty(response.data) || response.data.items.length === 0) {
+          if (
+            _isEmpty(response) ||
+            _isEmpty(response.data) ||
+            response.data.items.length === 0
+          ) {
             setIsLinkInvalid(true);
             setVideoDetails(EMPTY_OBJECT);
           } else {
@@ -53,7 +56,8 @@ const Upload = () => {
             setVideoId(videoIdFromUrl);
             setIsLinkInvalid(false);
           }
-        }).catch(error => {
+        })
+        .catch((error) => {
           setError(error);
         });
     }
@@ -65,11 +69,9 @@ const Upload = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.content} >
-        <div className={styles.center} >
-          <CloudUploadOutlined
-            className={styles.uploadIcon}
-          />
+      <div className={styles.content}>
+        <div className={styles.center}>
+          <CloudUploadOutlined className={styles.uploadIcon} />
           <h1>Paste a Youtube link below to start</h1>
           <div className={styles.inputField}>
             <SearchBox
@@ -79,12 +81,13 @@ const Upload = () => {
               onSearch={handleSearch}
               allowClear
             />
-            {isLinkInvalid && <p className={styles.error} >This link is invalid</p>}
+            {isLinkInvalid && (
+              <p className={styles.error}>This link is invalid</p>
+            )}
           </div>
-          {
-            !_isEmpty(videoDetails) &&
+          {!_isEmpty(videoDetails) && (
             <div className={styles.videoDetails}>
-              <h2 className={styles.title} >{videoDetails.snippet.title}</h2>
+              <h2 className={styles.title}>{videoDetails.snippet.title}</h2>
               <Image
                 className={styles.thumbnailImage}
                 src={videoDetails.snippet.thumbnails.high.url}
@@ -92,7 +95,7 @@ const Upload = () => {
                 width={videoDetails.snippet.thumbnails.high.width}
               />
             </div>
-          }
+          )}
           <Link to={`/video/${videoId}/edit`}>
             {/* Send video data to edit page for player*/}
             <Button

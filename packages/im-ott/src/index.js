@@ -1,14 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-} from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
+
+// Redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 // Sentry Error Logging
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
+
+// graphql
+import { gqlClient } from "imbase/graphql/gqlClient";
 
 import dotenv from "dotenv";
 
@@ -31,21 +34,14 @@ if (process.env.REACT_APP_NODE_ENV !== "development") {
   });
 }
 
-// apollo-client graphql initialization
-const client = new ApolloClient({
-  uri:
-    process.env.REACT_APP_NODE_ENV !== "development"
-      ? process.env.REACT_APP_GRAPH_PROD_API
-      : process.env.REACT_APP_GRAPH_DEV_API,
-  cache: new InMemoryCache(),
-});
-
 ReactDOM.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <ApolloProvider client={gqlClient}>
+        <App />
+      </ApolloProvider>
+    </React.StrictMode>
+  </Provider>,
   document.getElementById("root")
 );
 
