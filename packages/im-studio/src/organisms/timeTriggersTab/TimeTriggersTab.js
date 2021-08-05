@@ -6,7 +6,6 @@ import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form"
 import Input from "imcomponents/atoms/input";
 import Table from 'imcomponents/atoms/table';
-import { EditOutlined, DeleteOutlined, DownOutlined } from "imcomponents/atoms/icon";
 
 // Styles
 import styles from "./timeTriggersTab.module.scss";
@@ -40,17 +39,26 @@ const columns = [
         dataIndex: 'actions',
         render: icons => (
             <div className={styles.buttonContainer}>
-                <a className={styles.editIcon}>
-                    <EditOutlined />
-                </a>
-                <a className={styles.deleteIcon}>
-                    <DeleteOutlined />
-                </a>
+                {/* TODO: buttons working */}
+                {/* <a 
+                className={styles.editIcon}
+                href={"#"}
+            >
+                <EditOutlined />
+            </a>
+            <a 
+                className={styles.deleteIcon}
+                href="#"
+            >
+                <DeleteOutlined />
+            </a> */}
             </div>
         )
     },
 ];
 
+
+// TODO: Fetch data from server
 const data = [
     {
         key: '1',
@@ -82,7 +90,7 @@ const data = [
 ];
 
 const TimeTriggersTab = (props) => {
-    const { changeTab, activeTabKey, ...restProps } = props;
+    const { changeTab, activeTabKey } = props;
 
     const formItemLayout = {
         labelCol: { span: 4 },
@@ -141,12 +149,14 @@ const TimeTriggersTab = (props) => {
                         className={styles.backButton}
                         label={"Back"}
                         shape={"round"}
+                        onClick={changeTab((parseInt(activeTabKey) - 1).toString())}
                     // TODO: Should move to previous tab
                     />
                     <Button
                         className={styles.saveButton}
                         label={"Save"}
                         shape={"round"}
+                        onClick={changeTab((parseInt(activeTabKey) + 1).toString())}
                         // TODO: should save to DB and move to next tab
                         danger
                     />
@@ -154,7 +164,7 @@ const TimeTriggersTab = (props) => {
                         className={styles.addNewButton}
                         label={"Add New"}
                         shape={"round"}
-                        // TODO: Add new hotspot
+                        // TODO: Add new time trigger
                         danger
                     />
                 </Form.Item>

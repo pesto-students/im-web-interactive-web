@@ -10,12 +10,13 @@ import Upload from "../pages/upload";
 
 const AppRoutes = () => {
   const [ loading, setLoading ] = useState(true);
-  const [ loggedIn, setLoggedIn ] = useState(true); // TODO:  Set to false later
+  const [ loggedIn, setLoggedIn ] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       AppLoader.setVisibility(false);
       setLoading(false);
+      setLoggedIn(true);
     }, 2000);
   });
 

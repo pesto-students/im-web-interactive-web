@@ -8,7 +8,7 @@ import Form from "imcomponents/atoms/form"
 import Input from "imcomponents/atoms/input";
 import Menu from "imcomponents/atoms/menu";
 import Table from 'imcomponents/atoms/table';
-import { EditOutlined, DeleteOutlined, DownOutlined } from "imcomponents/atoms/icon";
+import { DownOutlined } from "imcomponents/atoms/icon";
 
 // Styles
 import styles from "./overlaysTab.module.scss";
@@ -35,19 +35,27 @@ const columns = [
     {
         title: '',
         dataIndex: 'actions',
-        render: icons => (
+        render: () => (
             <div className={styles.buttonContainer}>
-                <a className={styles.editIcon}>
-                    <EditOutlined />
-                </a>
-                <a className={styles.deleteIcon}>
-                    <DeleteOutlined />
-                </a>
+                {/* TODO: buttons working */}
+                {/* <a 
+                className={styles.editIcon}
+                href={"#"}
+            >
+                <EditOutlined />
+            </a>
+            <a 
+                className={styles.deleteIcon}
+                href="#"
+            >
+                <DeleteOutlined />
+            </a> */}
             </div>
         )
     },
 ];
 
+// TODO: fetch data from server
 const data = [
     {
         key: '1',
@@ -84,7 +92,7 @@ const data = [
 ];
 
 const OverlaysTab = (props) => {
-    const { changeTab, activeTabKey, ...restProps } = props;
+    const { changeTab, activeTabKey } = props;
 
     const formItemLayout = {
         labelCol: { span: 4 },
@@ -95,14 +103,7 @@ const OverlaysTab = (props) => {
         wrapperCol: { span: 14, offset: 1 },
     };
 
-
-    function handleButtonClick(e) {
-        // message.info('Click on left button.');
-        console.log('click left button', e);
-    }
-
     function handleMenuClick(e) {
-        // message.info('Click on menu item.');
         console.log('click', e);
     }
 
@@ -138,7 +139,7 @@ const OverlaysTab = (props) => {
                             icon={<DownOutlined />}
                             type={"default"}
                         >
-                            
+
                         </Button>
                     </Dropdown>
                 </Form.Item>
@@ -161,7 +162,7 @@ const OverlaysTab = (props) => {
                 <Form.Item label="Template Action">
                     <Button
                         label="Add/Edit"
-                        className={styles.addEditOverlaybutton }
+                        className={styles.addEditOverlaybutton}
                         shape={"round"}
                         danger
                     />
@@ -171,12 +172,14 @@ const OverlaysTab = (props) => {
                         className={styles.backButton}
                         label={"Back"}
                         shape={"round"}
+                        onClick={changeTab((parseInt(activeTabKey) - 1).toString())}
                     // TODO: Should move to previous tab
                     />
                     <Button
                         className={styles.saveButton}
                         label={"Save"}
                         shape={"round"}
+                        onClick={changeTab((parseInt(activeTabKey) + 1).toString())}
                         // TODO: should save to DB and move to next tab
                         danger
                     />
@@ -184,7 +187,7 @@ const OverlaysTab = (props) => {
                         className={styles.addNewButton}
                         label={"Add New"}
                         shape={"round"}
-                        // TODO: Add new hotspot
+                        // TODO: Add new overlay for template
                         danger
                     />
                 </Form.Item>

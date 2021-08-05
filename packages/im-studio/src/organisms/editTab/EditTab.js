@@ -1,12 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-
-import _get from "lodash/get";
-import _isEmpty from "lodash/isEmpty";
-
-// Constants
-import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
 // Components
 import Button from "imcomponents/atoms/button";
@@ -18,7 +12,7 @@ import TextArea from "imcomponents/atoms/textArea";
 import styles from "./editTab.module.scss";
 
 const EditTab = (props) => {
-    const { changeTab, activeTabKey, ...restProps } = props;
+    const { changeTab, activeTabKey } = props;
     const formItemLayout = {
         labelCol: { span: 4 },
         wrapperCol: { span: 10 },
@@ -75,6 +69,7 @@ const EditTab = (props) => {
                         className={styles.saveButton}
                         label={"Save"}
                         shape={"round"}
+                        onClick={changeTab((parseInt(activeTabKey)+1).toString())}
                         // TODO: Should sve to DB and move to hoptspots tab 
                         danger
                     />

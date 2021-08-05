@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 
+// Lodash
+import _isEmpty from "lodash/isEmpty";
+
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 import MOCK_DATA from "imbase/constants/mockYoutubeVideoResponse.json";
 
 // Components
 import Tabs from "imcomponents/atoms/tabs";
+import Error from "imcomponents/molecules/error";
+import Loader from "imcomponents/molecules/loader";
 import Player from "imcomponents/organisms/player";
 import EditTab from "../../organisms/editTab";
 import Hotspots from "../../organisms/hotspots";
@@ -46,17 +51,25 @@ const EditVideo = () => {
             });
     }, []);
 
+    if (loading) {
+        return <Loader />;
+    }
+
+    if (!_isEmpty(error)) {
+        return <Error {...error} />;
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.content}>
                 <div className={styles.player}>
                     {/* TODO: load movie preview */}
-                    <Player url="https://www.youtube.com/watch?v=zT62eVxShsY&t=1211s"></Player>
+                    <Player url="https://www.youtube.com/watch?v=zT62eVxShsY"></Player>
                 </div>
                 <div className={styles.movieData}>
                     <Tabs type="card" >
                         <TabPane className={styles.editTab} tab="Edit Details" key="1">
-                            <EditTab changeTab={changeTab} activeTabKey={activeTabKey} />
+                            <EditTab changeTab={changeTab} activeTabKey={activeTabKey} data={videoData} />
                         </TabPane>
                         <TabPane tab="Hotspots" key="2">
                             <Hotspots changeTab={changeTab} activeTabKey={activeTabKey} />

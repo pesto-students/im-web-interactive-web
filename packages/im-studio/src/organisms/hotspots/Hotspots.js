@@ -6,7 +6,6 @@ import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form"
 import Input from "imcomponents/atoms/input";
 import Table from 'imcomponents/atoms/table';
-import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
 
 // Styles
 import styles from "./hotspots.module.scss";
@@ -29,19 +28,27 @@ const columns = [
     {
         title: '',
         dataIndex: 'actions',
-        render: icons => (
-        <div className={styles.buttonContainer}>
-            <a className={styles.editIcon}>
+        render: () => (
+            <div className={styles.buttonContainer}>
+                {/* TODO: buttons working */}
+                {/* <a 
+                className={styles.editIcon}
+                href={"#"}
+            >
                 <EditOutlined />
             </a>
-            <a className={styles.deleteIcon}>
+            <a 
+                className={styles.deleteIcon}
+                href="#"
+            >
                 <DeleteOutlined />
-            </a>
-        </div>
+            </a> */}
+            </div>
         )
     },
 ];
 
+// TODO: Get data from server
 const data = [
     {
         key: '1',
@@ -74,8 +81,7 @@ const data = [
 ];
 
 const Hotspots = (props) => {
-    const { changeTab, activeTabKey, ...restProps } = props;
-
+    const { changeTab, activeTabKey } = props;
     const formItemLayout = {
         labelCol: { span: 4 },
         wrapperCol: { span: 10 },
@@ -106,7 +112,7 @@ const Hotspots = (props) => {
                     </div>
                 </Form.Item>
                 <Form.Item>
-                    <Input 
+                    <Input
                         className={styles.jumpInTimer}
                         placeholder="00:01:00"
                     />
@@ -116,12 +122,14 @@ const Hotspots = (props) => {
                         className={styles.backButton}
                         label={"Back"}
                         shape={"round"}
-                        // TODO: Should move to previous tab
+                        onClick={changeTab((parseInt(activeTabKey) - 1).toString())}
+                    // TODO: Should move to previous tab
                     />
                     <Button
                         className={styles.saveButton}
                         label={"Save"}
                         shape={"round"}
+                        onClick={changeTab((parseInt(activeTabKey) + 1).toString())}
                         // TODO: should save to DB and move to next tab
                         danger
                     />
@@ -139,7 +147,7 @@ const Hotspots = (props) => {
                 className={styles.hotspotsTable}
                 columns={columns}
                 dataSource={data}
-                pagination={false}  
+                pagination={false}
                 bordered
             />
         </div>

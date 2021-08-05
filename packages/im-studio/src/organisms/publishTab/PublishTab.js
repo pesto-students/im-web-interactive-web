@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -8,16 +8,12 @@ import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 // Components
 import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form"
-import Input from "imcomponents/atoms/input";
-import TextArea from "imcomponents/atoms/textArea";
 
 // Styles
 import styles from "./publishTab.module.scss";
 
 const PublishTab = (props) => {
-    // const [ state, setState ] = useState(EMPTY_OBJECT)
-    const { changeTab, activeTabKey, data, ...restProps } = props;
-    // setState(data);
+    const { changeTab, activeTabKey } = props;
 
     const formItemLayout = {
         labelCol: { span: 4 },
@@ -45,7 +41,7 @@ const PublishTab = (props) => {
                     Test URL
                 </Form.Item>
                 <Form.Item label="Title">
-                    Test Title                   
+                    Test Title
                 </Form.Item>
                 <Form.Item label="Description">
                     Test Description
@@ -54,20 +50,21 @@ const PublishTab = (props) => {
                     Test Genre
                 </Form.Item>
                 <Form.Item {...buttonItemLayout}>
+                    <Button
+                        className={styles.backButton}
+                        label={"Back"}
+                        shape={"round"}
+                        onClick={changeTab((parseInt(activeTabKey) - 1).toString())}
+                    />
                     <Link to="/dashboard">
                         <Button
-                            className={styles.backButton}
-                            label={"Back"}
+                            className={styles.saveButton}
+                            label={"Publish"}
                             shape={"round"}
+                            // TODO: Should save to DB and move to dashboard tab 
+                            danger
                         />
                     </Link>
-                    <Button
-                        className={styles.saveButton}
-                        label={"Publish"}
-                        shape={"round"}
-                        // TODO: Should save to DB and move to hoptspots tab 
-                        danger
-                    />
                 </Form.Item>
             </Form>
         </div>
