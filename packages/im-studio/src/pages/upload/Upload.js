@@ -93,7 +93,7 @@ const Upload = () => {
               />
             </div>
           }
-          <Link to={`/video/${videoId}`}>
+          <Link to={`/video/${videoId}/edit`}>
             <Button
               className={styles.uploadbutton}
               label={"Upload"}
