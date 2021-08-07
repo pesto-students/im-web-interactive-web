@@ -24,4 +24,30 @@ const CREATE_USER = gql`
   }
 `;
 
-export { CREATE_USER };
+const CREATE_MOVIE = gql`
+  mutation CreateMovie(
+    $mid: ID!
+    $guid: ID!
+    $title: String!
+    $description: String
+    $url: String!
+    $thumbnails: InputThumbnails
+  ) {
+    addMovie(
+      mId: $mid
+      guid: $guid
+      title: $title
+      description: $description
+      url: $url
+      thumbnails: $thumbnails
+    ) {
+      mId
+      guid
+      title
+      description
+      url
+    }
+  }
+`;
+
+export { CREATE_USER, CREATE_MOVIE };

@@ -1,0 +1,15 @@
+.container {
+    .content {
+        min-height: 50rem;
+        padding-top: 10rem;
+
+        .movieData {
+            margin: 2rem;
+
+            .editTab {
+                display: inline-block;
+            }
+        }
+    }
+}
+

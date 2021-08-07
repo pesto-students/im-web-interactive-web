@@ -1,66 +1,58 @@
 .container {
+  button {
+  }
 
-    button {
-        
-    }
-    
-    .hotspotsForm {
-        
-        label {
-            float: left;
-            width: 10rem;
-            margin-right: 1rem;
-            padding-left: 2rem;
-            font-weight: bolder;
-        }
-
-        .backButton {
-            background-color: lightgray;
-            margin: 0 1.25rem;
-            min-width: 12rem;
-            filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
-        }
-
-        .saveButton {
-            margin: 0 1.25rem;
-            min-width: 12rem;
-            filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
-        }
-
-        .addNewButton {
-            margin: 0 1.25rem;
-            min-width: 12rem;
-            filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
-        }
-
-        .testPlayerDiv {
-            max-width: 20rem;
-            min-height: 10rem;
-            background-color: aquamarine;
-        }
-
-        .jumpInTimer {
-            width: 20%;
-            margin-left: 22.5rem;
-            text-align: center;
-        }
+  .hotspotsForm {
+    label {
+      float: left;
+      width: 10rem;
+      margin-right: 1rem;
+      padding-left: 2rem;
+      font-weight: bolder;
     }
 
-    .hotspotsTable {
-        margin: 1rem 2rem;
-
-        .buttonContainer {
-    
-            .editButton {
-                margin: 0 10rem;
-                padding: 0 2rem;
-            }
-    
-            .deleteButton {
-                margin: 0 1rem;
-                padding: 0 2rem;
-            }
-        }
-
+    .backButton {
+      background-color: lightgray;
+      margin: 0 1.25rem;
+      min-width: 12rem;
+      filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
     }
+
+    .saveButton {
+      margin: 0 1.25rem;
+      min-width: 12rem;
+      filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
+    }
+
+    .addNewButton {
+      margin: 0 1.25rem;
+      min-width: 12rem;
+      filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
+    }
+
+    .testPlayerDiv {
+      min-height: 5rem;
+    }
+
+    .jumpInTimer {
+      width: 20%;
+      margin-left: 22.5rem;
+      text-align: center;
+    }
+  }
+
+  .hotspotsTable {
+    margin: 1rem 2rem;
+
+    .buttonContainer {
+      font-size: 2rem;
+      .editButton {
+        margin-right: 1rem;
+      }
+
+      .deleteButton {
+        margin-left: 1rem;
+      }
+    }
+  }
 }

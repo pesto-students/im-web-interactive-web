@@ -1,4 +1,5 @@
 import {
+  ADD_MOVIE,
   FETCH_MOVIES,
   FETCH_MOVIES_ERROR,
   FETCH_MOVIES_SUCCESS,
@@ -10,6 +11,8 @@ const INIT_STATE = {
 
 const MoviesReducer = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case ADD_MOVIE:
+      return { ...state, ...action.payload };
     case FETCH_MOVIES:
       return { ...state, loading: true };
     case FETCH_MOVIES_SUCCESS:

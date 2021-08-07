@@ -18,7 +18,6 @@ import { overlayData } from "imbase/constants/mockOverlayData";
 
 const Player = (props) => {
   const { classname, videoUrl, isHost } = props;
-
   const [state, setState] = useState({
     url: null,
     playing: true,

@@ -13,4 +13,5 @@ const padzero = (string) => {
   return ("0" + string).slice(-2);
 };
 
-export default getFormattedTime;
+
+export { getFormattedTime };

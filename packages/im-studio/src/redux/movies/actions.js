@@ -1,4 +1,5 @@
 import {
+  ADD_MOVIE,
   FETCH_MOVIES,
   FETCH_MOVIES_ERROR,
   FETCH_MOVIES_SUCCESS,
@@ -21,4 +22,12 @@ export const fetchMoviesSuccess = (data) => ({
 export const fetchMoviesError = (data) => ({
   type: FETCH_MOVIES_ERROR,
   payload: data,
+});
+
+// *********************************
+// Add Movie
+// *********************************
+export const addMovie = (options, history) => ({
+  type: ADD_MOVIE,
+  payload: { options, history },
 });

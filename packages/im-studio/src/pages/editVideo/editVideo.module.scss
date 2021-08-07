@@ -1,15 +1,17 @@
 .container {
-    .content {
-        min-height: 50rem;
-        padding-top: 10rem;
+  .content {
+    min-height: 50rem;
+    padding-top: 10rem;
 
-        .movieData {
-            margin: 2rem;
-
-            .editTab {
-                display: inline-block;
-            }
-        }
+    .player {
+      max-height: 100px;
     }
-}
+    .movieData {
+      margin: 2rem;
 
+      .editTab {
+        display: inline-block;
+      }
+    }
+  }
+}
