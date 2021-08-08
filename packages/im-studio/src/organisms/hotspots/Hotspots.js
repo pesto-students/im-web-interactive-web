@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, memo } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 // Components
@@ -9,10 +10,13 @@ import Table from "imcomponents/atoms/table";
 import Seeker from "imcomponents/organisms/seeker";
 
 // Utils
-import { getFormattedTime } from "imbase/utils/getFormattedTime";
+import { getFormattedTime, countSeconds } from "imbase/utils/getFormattedTime";
 
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+
+// Redux Actions
+import { addHotspot, getMovieByID } from "../../redux/movies/actions";
 
 // icons
 import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
@@ -21,10 +25,12 @@ import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
 import styles from "./hotspots.module.scss";
 
 const Hotspots = (props) => {
+  const dispatch = useDispatch();
   const { tabdata, history } = props;
-  const { id, hotspots } = tabdata;
+  const { id, mId, hotspots } = tabdata;
 
   const [jumpIn, setJumpIn] = useState("0:01");
+  const [stateHotspot, setStateHotspot] = useState(hotspots);
 
   const hotspotSeekRef = useRef(null);
 
@@ -42,6 +48,17 @@ const Hotspots = (props) => {
   const onFinish = (values) => {
     console.log("Success:", values);
     console.log("Success:", jumpIn);
+    const sec = countSeconds(jumpIn);
+    dispatch(
+      addHotspot({
+        id: id,
+        data: {
+          id: "",
+          name: values.name,
+          startPoint: sec,
+        },
+      })
+    );
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -141,7 +158,7 @@ const Hotspots = (props) => {
           <div className={styles.testPlayerDiv}>
             <Seeker
               ref={hotspotSeekRef}
-              videoUrl={`http://www.youtube.com/watch?v=${id}`}
+              videoUrl={`http://www.youtube.com/watch?v=${mId}`}
               setSeekerTime={handleSetJumpIn}
             />
           </div>
@@ -209,4 +226,4 @@ Hotspots.defaultProps = {
   history: EMPTY_OBJECT,
 };
 
-export default Hotspots;
+export default memo(Hotspots);

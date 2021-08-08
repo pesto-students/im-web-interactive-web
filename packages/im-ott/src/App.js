@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 // Components
 import { ErrorBoundary } from "@sentry/react";
 import AppLoader from "imcomponents/molecules/appLoader";
+import { ToastContainer } from "imcomponents/atoms/toaster";
 // import SocketIoTest from "./SocketIoTest";
 
 // Routes
@@ -28,6 +29,7 @@ function App() {
         {/* <SocketIoTest /> */}
         <AppLoader />
         <Routes />
+        <ToastContainer />
       </ErrorBoundary>
     </Router>
   );

@@ -6,7 +6,7 @@ const gqlClient = new ApolloClient({
     process.env.REACT_APP_NODE_ENV !== "development"
       ? process.env.REACT_APP_GRAPH_PROD_API
       : process.env.REACT_APP_GRAPH_DEV_API,
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({ addTypename: false }),
 });
 
 export { gqlClient };

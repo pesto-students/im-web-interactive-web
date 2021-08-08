@@ -7,8 +7,8 @@ const releaseDate = _property("releaseDate");
 const rating = _property("rating");
 const genre = _property("genre");
 const description = _property("description");
-const thumbnail = _property("images.thumbnail");
-const cover = _property("images.cover");
+const thumbnail = _property("thumbnails.high.url");
+const cover = _property("thumbnails.maxres.url");
 
 export default {
   id,

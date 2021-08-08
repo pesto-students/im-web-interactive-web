@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, memo } from "react";
 import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 // Components
@@ -11,12 +12,18 @@ import TextArea from "imcomponents/atoms/textArea";
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
+// Redux Actions
+import { updateMovieByID } from "../../redux/movies/actions";
+
 // Styles
 import styles from "./editTab.module.scss";
 
 const EditTab = (props) => {
+  const dispatch = useDispatch();
   const { tabdata, history } = props;
+  // const [mvData, setMvData] = useState(tabdata);
   const { id, name, title, description, url, genre } = tabdata;
+  // console.log("myda", mvData);
   const formItemLayout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 10 },
@@ -38,6 +45,23 @@ const EditTab = (props) => {
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    // setMvData({
+    //   ...mvData,
+    //   name: values.movie_name,
+    //   title: values.movie_title,
+    //   description: values.movie_description,
+    //   genre: values.movie_genre,
+    // });
+    dispatch(
+      updateMovieByID({
+        ...tabdata,
+        name: values.movie_name,
+        title: values.movie_title,
+        description: values.movie_description,
+        genre: values.movie_genre,
+      })
+    );
+    // TODO Push this data to DB
     history.push("#2");
   };
 
@@ -73,7 +97,7 @@ const EditTab = (props) => {
           name="movie_url"
           rules={[{ required: true, message: "Please input movie url!" }]}
         >
-          <Input placeholder="Enter YouTube URL" />
+          <Input placeholder="Enter YouTube URL" disabled />
         </Form.Item>
         <Form.Item
           label="Title"
@@ -131,4 +155,4 @@ EditTab.defaultProps = {
   history: EMPTY_OBJECT,
 };
 
-export default EditTab;
+export default memo(EditTab);

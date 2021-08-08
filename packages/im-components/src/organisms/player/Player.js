@@ -135,7 +135,7 @@ const Player = (props) => {
         className={cx(styles.reactPlayer, classname)}
         url={state.url || videoUrl}
         width="100%"
-        height="95%"
+        height="90%"
         playing={state.playing}
         controls={state.controls || isHost}
         onPlay={handlePlay}
