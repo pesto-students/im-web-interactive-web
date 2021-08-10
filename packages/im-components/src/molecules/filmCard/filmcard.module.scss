@@ -1,5 +1,6 @@
 .filmcard {
   transition: all 0.3s ease;
+  display: flex;
 
   .relative {
     position: relative;
@@ -53,7 +54,7 @@
       }
 
       .descriptionFeatured {
-        color:#444;
+        color: #444;
         font-size: 1.2rem;
         width: 25rem;
         white-space: nowrap;
@@ -81,5 +82,13 @@
     margin-right: 0.8rem;
     width: calc(45rem * (9 / 16));
     border-radius: 1rem;
-  }  
+  }
+}
+
+.alignRight {
+  flex-direction: row;
+}
+
+.alignBottom {
+  flex-direction: column;
 }
