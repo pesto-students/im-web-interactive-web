@@ -11,8 +11,23 @@ import {
   StarOutlined,
   EditOutlined,
   DeleteOutlined,
-  DownOutlined
+  DownOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 
-export { DownOutlined, EditOutlined, DeleteOutlined, CloudUploadOutlined, FacebookFilled, InstagramOutlined, LeftOutlined, RightOutlined, StarFilled, StarOutlined, StarTwoTone, TwitterOutlined, VideoCameraFilled,
+export {
+  DownOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  CloudUploadOutlined,
+  FacebookFilled,
+  InstagramOutlined,
+  LeftOutlined,
+  RightOutlined,
+  StarFilled,
+  StarOutlined,
+  StarTwoTone,
+  TwitterOutlined,
+  VideoCameraFilled,
+  LogoutOutlined,
 };

@@ -1,0 +1,52 @@
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+}
+
+.apps {
+  width: 100rem;
+  max-width: 100vw;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .appTile {
+    height: 10rem;
+    width: 10rem;
+    border-radius: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .appTitle {
+    font-size: 2.4rem;
+    color: #444;
+    font-weight: bold;
+  }
+}
+
+.appTile + .appTile {
+  margin-right: 1.2rem;
+  margin-left: 1.2rem;
+}
+
+.ottApp {
+  background: rgba(231, 60, 126, 0.4);
+  border: 4px solid rgba(231, 60, 126, 1);
+}
+
+.studioApp {
+  background: rgba(35, 213, 171, 0.4);
+  border: 4px solid rgba(35, 213, 171, 1);
+}

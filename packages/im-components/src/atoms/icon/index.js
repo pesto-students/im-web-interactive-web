@@ -11,5 +11,6 @@ export {
   StarOutlined,
   EditOutlined,
   DeleteOutlined,
-  DownOutlined
+  DownOutlined,
+  LogoutOutlined,
 } from "./Icon";
