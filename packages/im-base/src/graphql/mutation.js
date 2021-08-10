@@ -2,9 +2,9 @@ import { gql } from "@apollo/client";
 
 const CREATE_USER = gql`
   mutation CreateUser(
-    $uid: String
-    $displayName: String
-    $email: String
+    $uid: ID!
+    $displayName: String!
+    $email: String!
     $photoURL: String
     $emailVerified: Boolean
   ) {
