@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
-
-// Constants
-import { EMPTY_OBJECT } from "imbase/constants/base.constants";
-import MOCK_DATA from "imbase/constants/mockYoutubeVideoResponse.json";
 
 // Components
 import Tabs from "imcomponents/atoms/tabs";
@@ -18,76 +16,76 @@ import OverlaysTab from "../../organisms/overlaysTab";
 import PublishTab from "../../organisms/publishTab";
 import TimeTriggersTab from "../../organisms/timeTriggersTab";
 
-// Services
-import youtubeService from "../../services/youtubeService";
+// Redux Actions
+import { getMovieByID } from "../../redux/movies/actions";
 
 // Styles
 import styles from "./editVideo.module.scss";
 
-
 const { TabPane } = Tabs;
 
-const EditVideo = () => {
-    // TODO: save id from params and fetch data with id
-    const [videoData, setVideoData] = useState(EMPTY_OBJECT);
-    const [activeTabKey] = useState("1");
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(EMPTY_OBJECT);
+const EditVideo = (props) => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { loading, movie, error } = useSelector((state) => state.MovieReducer);
+  const { hash } = location;
+  const history = useHistory();
+  const { videoId } = useParams();
+  const [activeTab, setActiveTab] = useState("#1");
 
-    const changeTab = (key) => {
-        // setActiveTabKey(key);
-    };
-
-    useEffect(() => {
-        Promise.resolve(MOCK_DATA)
-            .then((response) => {
-                const video = youtubeService.getVideoDataFromResponse(response);
-                setVideoData(video);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setError(error);
-                setLoading(false);
-            });
-    }, []);
-
-    if (loading) {
-        return <Loader />;
+  console.log(loading);
+  useEffect(() => {
+    if (hash) {
+      setActiveTab(hash);
+    } else {
+      setActiveTab("#1");
     }
+    dispatch(getMovieByID(videoId));
+  }, [dispatch, hash, videoId, location]);
 
-    if (!_isEmpty(error)) {
-        return <Error {...error} />;
-    }
+  const handleChangeTab = (activeKey) => {
+    history.push("edit" + activeKey);
+  };
 
-    return (
-        <div className={styles.container}>
-            <div className={styles.content}>
-                <div className={styles.player}>
-                    {/* TODO: load movie preview */}
-                    <Player url="https://www.youtube.com/watch?v=zT62eVxShsY"></Player>
-                </div>
-                <div className={styles.movieData}>
-                    <Tabs type="card" >
-                        <TabPane className={styles.editTab} tab="Edit Details" key="1">
-                            <EditTab changeTab={changeTab} activeTabKey={activeTabKey} data={videoData} />
-                        </TabPane>
-                        <TabPane tab="Hotspots" key="2">
-                            <Hotspots changeTab={changeTab} activeTabKey={activeTabKey} />
-                        </TabPane>
-                        <TabPane tab="Overlays" key="3">
-                            <OverlaysTab changeTab={changeTab} activeTabKey={activeTabKey} />
-                        </TabPane>
-                        <TabPane tab="Time Triggers" key="4">
-                            <TimeTriggersTab changeTab={changeTab} activeTabKey={activeTabKey} />
-                        </TabPane>
-                        <TabPane tab="Publish" key="5">
-                            <PublishTab changeTab={changeTab} activeTabKey={activeTabKey} />
-                        </TabPane>
-                    </Tabs>
-                </div>
-            </div>
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!_isEmpty(error)) {
+    return <Error {...error} />;
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <div className={styles.player}>
+          <Player
+            isHost={false}
+            videoUrl={`http://www.youtube.com/watch?v=${movie.mId}`}
+          ></Player>
         </div>
-    );
-}
+        <div className={styles.movieData}>
+          <Tabs activeKey={activeTab} type="card" onChange={handleChangeTab}>
+            <TabPane className={styles.editTab} tab="Edit Details" key={"#1"}>
+              <EditTab tabdata={movie} history={history} />
+            </TabPane>
+            <TabPane tab="Hotspots" key={"#2"}>
+              <Hotspots tabdata={movie} history={history} />
+            </TabPane>
+            <TabPane tab="Overlays" key={"#3"}>
+              <OverlaysTab tabdata={movie} history={history} />
+            </TabPane>
+            <TabPane tab="Time Triggers" key={"#4"}>
+              <TimeTriggersTab tabdata={movie} history={history} />
+            </TabPane>
+            <TabPane tab="Publish" key={"#5"}>
+              <PublishTab tabdata={movie} history={history} />
+            </TabPane>
+          </Tabs>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default EditVideo;

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
 
 // Constants
-import { EMPTY_OBJECT, EMPTY_STRING } from "imbase/constants/base.constants";
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
 // Components
 import Button from "imcomponents/atoms/button";
@@ -13,6 +14,9 @@ import { CloudUploadOutlined } from "imcomponents/atoms/icon";
 import Image from "imcomponents/atoms/image";
 import SearchBox from "imcomponents/atoms/searchBox";
 import Error from "imcomponents/molecules/error";
+
+// Redux Actions
+import { addMovie } from "../../redux/movies/actions";
 
 // Styles
 import styles from "./upload.module.scss";
@@ -24,7 +28,10 @@ import { getVideoId, isUploadDisabled } from "./helper/upload.general";
 import youtubeService from "../../services/youtubeService";
 
 const Upload = () => {
-  const [videoId, setVideoId] = useState(EMPTY_STRING);
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
   const [videoDetails, setVideoDetails] = useState(EMPTY_OBJECT);
   const [error, setError] = useState(EMPTY_OBJECT);
   const [isLinkInvalid, setIsLinkInvalid] = useState(false);
@@ -53,7 +60,6 @@ const Upload = () => {
           } else {
             const videoData = youtubeService.getVideoDataFromResponse(response);
             setVideoDetails(videoData);
-            setVideoId(videoIdFromUrl);
             setIsLinkInvalid(false);
           }
         })
@@ -66,6 +72,12 @@ const Upload = () => {
   if (!_isEmpty(error)) {
     return <Error {...error} />;
   }
+
+  const handleUpload = () => {
+    setLoading(true);
+    console.log(videoDetails);
+    dispatch(addMovie(videoDetails, history));
+  };
 
   return (
     <div className={styles.container}>
@@ -87,25 +99,26 @@ const Upload = () => {
           </div>
           {!_isEmpty(videoDetails) && (
             <div className={styles.videoDetails}>
-              <h2 className={styles.title}>{videoDetails.snippet.title}</h2>
+              <h2 className={styles.title}>{videoDetails?.snippet?.title}</h2>
               <Image
                 className={styles.thumbnailImage}
-                src={videoDetails.snippet.thumbnails.high.url}
-                height={videoDetails.snippet.thumbnails.high.height}
-                width={videoDetails.snippet.thumbnails.high.width}
+                src={videoDetails?.snippet?.thumbnails.high.url}
+                height={videoDetails?.snippet?.thumbnails.high.height}
+                width={videoDetails?.snippet?.thumbnails.high.width}
               />
             </div>
           )}
-          <Link to={`/video/${videoId}/edit`}>
-            {/* Send video data to edit page for player*/}
-            <Button
-              className={styles.uploadbutton}
-              label={"Upload"}
-              shape={"round"}
-              disabled={isUploadDisabled(videoDetails)}
-              danger
-            />
-          </Link>
+          {/* <Link to={`/video/${videoId}/create`}> */}
+          <Button
+            className={styles.uploadbutton}
+            label={"Upload"}
+            shape={"round"}
+            disabled={isUploadDisabled(videoDetails)}
+            danger
+            onClick={handleUpload}
+            loading={loading}
+          />
+          {/* </Link> */}
         </div>
       </div>
     </div>
