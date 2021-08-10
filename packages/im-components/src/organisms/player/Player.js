@@ -20,7 +20,7 @@ const Player = (props) => {
   const { classname, videoUrl, isHost } = props;
   const [state, setState] = useState({
     url: null,
-    playing: true,
+    playing: false,
     controls: false,
     light: false,
     muted: false,
@@ -146,7 +146,6 @@ const Player = (props) => {
         onError={(e) => console.log("onError", e)}
         onProgress={handleProgress}
         onDuration={handleDuration}
-        onReady={() => handlePlayPause()}
       />
 
       <div>
@@ -188,14 +187,12 @@ const Player = (props) => {
 Player.propTypes = {
   className: PropTypes.string,
   videoUrl: PropTypes.string,
-  debug: PropTypes.bool,
   isHost: PropTypes.bool,
 };
 
 Player.defaultProps = {
   className: undefined,
-  videoUrl: "https://www.youtube.com/watch?v=bxnYFOixIoc",
-  debug: false,
+  videoUrl: "",
   isHost: true,
 };
 
