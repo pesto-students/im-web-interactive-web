@@ -13,6 +13,14 @@ import {
   DeleteOutlined,
   DownOutlined,
   LogoutOutlined,
+  HomeOutlined,
+  SearchOutlined,
+  TeamOutlined,
+  HomeFilled,
+  BellOutlined,
+  BellFilled,
+  HeartOutlined,
+  HeartFilled,
 } from "@ant-design/icons";
 
 export {
@@ -30,4 +38,12 @@ export {
   TwitterOutlined,
   VideoCameraFilled,
   LogoutOutlined,
+  HomeOutlined,
+  SearchOutlined,
+  TeamOutlined,
+  HomeFilled,
+  BellOutlined,
+  BellFilled,
+  HeartOutlined,
+  HeartFilled,
 };
