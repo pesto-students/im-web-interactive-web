@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 // Components
@@ -6,15 +7,21 @@ import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form";
 import Input from "imcomponents/atoms/input";
 import Table from "imcomponents/atoms/table";
-import { Modal, AntdButton } from "imcomponents/atoms/modal";
 import { Select, Option } from "imcomponents/atoms/select";
 import Seeker from "imcomponents/organisms/seeker";
 
+// Lodash
+import _map from "lodash/map";
+import _isEmpty from "lodash/isEmpty";
+
 // Utils
-import { getFormattedTime } from "imbase/utils/getFormattedTime";
+import { getFormattedTime, countSeconds } from "imbase/utils/getFormattedTime";
 
 // Constants
-import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+import { EMPTY_OBJECT, EMPTY_ARRAY } from "imbase/constants/base.constants";
+
+// Redux Actions
+import { addAction, deleteAction } from "../../redux/movies/actions";
 
 // icons
 import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
@@ -23,14 +30,16 @@ import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
 import styles from "./overlaysTab.module.scss";
 
 const OverlaysTab = (props) => {
-  const { tabdata, history } = props;
-  const { id, overlays, template, templateActions } = tabdata;
-
-  const [jumpIn, setJumpIn] = useState("0:01");
-
-  // Modal
-  const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { tabdata } = props;
+  const { id, mId, overlays, hotspots } = tabdata;
+  const hotspotData = !_isEmpty(hotspots)
+    ? Object.values(hotspots)
+    : EMPTY_ARRAY;
+  const overlayData = !_isEmpty(overlays)
+    ? Object.values(overlays)
+    : EMPTY_ARRAY;
+  const [jumpIn, setJumpIn] = useState("00:00:01");
 
   // Ref for seeker
   const overlaySeekRef = useRef(null);
@@ -52,19 +61,50 @@ const OverlaysTab = (props) => {
       dataIndex: "name",
     },
     {
-      title: "Start Point",
-      dataIndex: "startPoint",
+      title: "Jump Point",
+      dataIndex: "jumpPoint",
     },
     {
       title: "Template",
-      dataIndex: "template",
+      dataIndex: "templateTitle",
+    },
+    {
+      title: "Left Hotspot",
+      dataIndex: "leftActionHotspot",
+      render: (id, data) => (
+        <span>
+          {hotspotData
+            .filter((obj) => obj.id === id)
+            .map((obj) => {
+              if (obj.name) {
+                return obj.name;
+              }
+              return "";
+            })}
+        </span>
+      ),
+    },
+    {
+      title: "Right Hotspot",
+      dataIndex: "rightActionHotspot",
+      render: (id, data) => (
+        <span>
+          {hotspotData
+            .filter((obj) => obj.id === id)
+            .map((obj) => {
+              if (obj.name) {
+                return obj.name;
+              }
+              return "";
+            })}
+        </span>
+      ),
     },
     {
       title: "Action",
       dataIndex: "id",
       render: (id, data) => (
         <div className={styles.buttonContainer}>
-          {/* TODO: buttons working */}
           <span className={styles.editIcon}>
             <EditOutlined onClick={() => handleEdit(id, data)} />
           </span>
@@ -80,20 +120,28 @@ const OverlaysTab = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
-    console.log("Success:", jumpIn);
+    const sec = countSeconds(jumpIn);
+    dispatch(
+      addAction(
+        {
+          id: id,
+          data: {
+            id: values.overlayid,
+            name: values.name,
+            jumpPoint: sec,
+            templateTitle: values.title,
+            leftActionHotspot: values.lefthotspot,
+            rightActionHotspot: values.righthotspot,
+          },
+        },
+        "OVERLAY"
+      )
+    );
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  const onBack = (errorInfo) => {
-    history.push("#2");
-  };
-
-  const onNext = (errorInfo) => {
-    history.push("#4");
+    //TODo SENTRY
+    // console.log("Failed:", errorInfo);
   };
 
   const handleSubmit = () => {
@@ -101,49 +149,35 @@ const OverlaysTab = (props) => {
   };
 
   const handleSetJumpIn = (val) => {
-    console.log(val);
     setJumpIn(val);
   };
 
   const handleReset = () => {
     form.resetFields();
     overlaySeekRef.current.seekTo(0);
-    setJumpIn("0:01");
+    setJumpIn("00:00:01");
   };
 
   const handleEdit = (id, record) => {
-    console.log(id);
     form.setFieldsValue({
-      hotspotid: id,
+      overlayid: id,
       name: record.name,
+      title: record.templateTitle,
+      lefthotspot: record.leftActionHotspot,
+      righthotspot: record.rightActionHotspot,
     });
-    overlaySeekRef.current.seekTo(record.startPoint);
-    const formattedTime = getFormattedTime(record.startPoint);
+    overlaySeekRef.current.seekTo(record.jumpPoint);
+    const formattedTime = getFormattedTime(record.jumpPoint);
     setJumpIn(formattedTime);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (overlayid) => {
     form.resetFields();
     overlaySeekRef.current.seekTo(0);
-    setJumpIn("0:01");
+    setJumpIn("00:00:01");
+    dispatch(deleteAction(id, overlayid, "OVERLAY"));
   };
 
-  const handleAddTemplate = () => {
-    setVisible(true);
-  };
-
-  // Modal
-  const handleCancel = () => {
-    setVisible(false);
-  };
-
-  const handleSave = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setVisible(false);
-    }, 3000);
-  };
   return (
     <div className={styles.container}>
       <Form
@@ -151,6 +185,9 @@ const OverlaysTab = (props) => {
           templateid: "1",
           overlayid: "",
           name: "",
+          title: "",
+          lefthotspot: "",
+          righthotspot: "",
         }}
         {...formItemLayout}
         className={styles.overlaysForm}
@@ -159,6 +196,9 @@ const OverlaysTab = (props) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
+        <Form.Item label="overlayid" name="overlayid" hidden>
+          <Input />
+        </Form.Item>
         <Form.Item
           label="Template"
           name="templateid"
@@ -179,7 +219,7 @@ const OverlaysTab = (props) => {
           <div className={styles.testPlayerDiv}>
             <Seeker
               ref={overlaySeekRef}
-              videoUrl={`http://www.youtube.com/watch?v=${id}`}
+              videoUrl={`http://www.youtube.com/watch?v=${mId}`}
               setSeekerTime={handleSetJumpIn}
             />
           </div>
@@ -192,23 +232,47 @@ const OverlaysTab = (props) => {
             disabled
           />
         </Form.Item>
-        <Form.Item label="Template Action">
-          <Button
-            label="Add/Edit"
-            className={styles.addEditOverlaybutton}
-            shape={"round"}
-            onClick={handleAddTemplate}
-            danger
-          />
+        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="lefthotspot"
+          label="Left Hotspot Action"
+          rules={[{ required: true }]}
+        >
+          <Select placeholder="Select a option and change input text above">
+            {_map(hotspotData, (hotspot) => {
+              if (!_isEmpty(hotspot)) {
+                return (
+                  <Option key={`hotspot-${hotspot.id}`} value={hotspot.id}>
+                    {hotspot.name}
+                  </Option>
+                );
+              }
+            })}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="righthotspot"
+          label="Right Hotspot Action"
+          rules={[{ required: true }]}
+        >
+          <Select
+            placeholder="Select a option and change input text above"
+            allowClear
+          >
+            {_map(hotspotData, (hotspot) => {
+              if (!_isEmpty(hotspot)) {
+                return (
+                  <Option key={`hotspot-${hotspot.id}`} value={hotspot.id}>
+                    {hotspot.name}
+                  </Option>
+                );
+              }
+            })}
+          </Select>
         </Form.Item>
         <Form.Item {...buttonItemLayout}>
-          <Button
-            className={styles.backButton}
-            label={"Back"}
-            shape={"round"}
-            onClick={onBack}
-            ghost
-          />
           <Button
             className={styles.saveButton}
             label={"Save"}
@@ -225,89 +289,16 @@ const OverlaysTab = (props) => {
             }}
             danger
           />
-          <Button
-            className={styles.backButton}
-            label={"Next"}
-            shape={"round"}
-            onClick={onNext}
-            ghost
-          />
         </Form.Item>
       </Form>
 
       <Table
         className={styles.overlaysTable}
         columns={columns}
-        dataSource={overlays}
+        dataSource={overlayData}
         pagination={false}
         bordered
       />
-      <Modal
-        visible={visible}
-        title={"Template Action"}
-        onOk={handleSave}
-        onCancel={handleCancel}
-        footer={[
-          <AntdButton key="back" onClick={handleCancel}>
-            Return
-          </AntdButton>,
-          <AntdButton
-            key="submit"
-            type="danger"
-            loading={loading}
-            onClick={handleSave}
-          >
-            Save
-          </AntdButton>,
-        ]}
-      >
-        <Form
-          initialValues={{
-            templateActionid: "",
-            templateid: "1",
-            overlayid: "",
-            title: "",
-            lefthotspot: "male",
-            righthotspot: "female",
-          }}
-          className={styles.overlaysForm}
-          layout={"horizontal"}
-          form={form}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          labelCol={{ span: 8 }}
-          labelAlign="left"
-        >
-          <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="lefthotspot"
-            label="Left Hotspot Action"
-            rules={[{ required: true }]}
-          >
-            <Select placeholder="Select a option and change input text above">
-              <Option value="male">male</Option>
-              <Option value="female">female</Option>
-              <Option value="other">other</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            name="righthotspot"
-            label="Right Hotspot Action"
-            rules={[{ required: true }]}
-          >
-            <Select
-              placeholder="Select a option and change input text above"
-              allowClear
-            >
-              <Option value="male">male</Option>
-              <Option value="female">female</Option>
-              <Option value="other">other</Option>
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
     </div>
   );
 };

@@ -20,11 +20,11 @@ dotenv.config();
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <ApolloProvider client={gqlClient}>
-        <App />
-      </ApolloProvider>
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    <ApolloProvider client={gqlClient}>
+      <App />
+    </ApolloProvider>
+    {/* </React.StrictMode> */}
   </Provider>,
   document.getElementById("root")
 );

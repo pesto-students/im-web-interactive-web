@@ -6,12 +6,16 @@ import {
   GET_ALL_MOVIES_ERROR,
   GET_ALL_MOVIES_SUCCESS,
   UPDATE_MOVIE_BY_ID,
-  ADD_HOTSPOT,
+  ADD_ACTION,
+  DELETE_ACTION,
 } from "./types";
 
+// Constants
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+
 const INIT_STATE = {
-  movies: {},
-  movie: {},
+  movies: EMPTY_OBJECT,
+  movie: EMPTY_OBJECT,
 };
 
 const MoviesReducer = (state = INIT_STATE, action) => {
@@ -23,7 +27,6 @@ const MoviesReducer = (state = INIT_STATE, action) => {
     case UPDATE_MOVIE_BY_ID:
       return { ...state, ...action.payload, loading: true };
     case GET_MOVIE_SUCCESS:
-      console.log("GET_MOVIE_SUCCESS", action.payload);
       return {
         ...state,
         movie: action.payload.movie,
@@ -41,7 +44,9 @@ const MoviesReducer = (state = INIT_STATE, action) => {
       };
     case GET_ALL_MOVIES_ERROR:
       return { ...state, error: action.payload, loading: false };
-    case ADD_HOTSPOT:
+    case ADD_ACTION:
+      return { ...state, ...action.payload, loading: true };
+    case DELETE_ACTION:
       return { ...state, ...action.payload, loading: true };
     default:
       return { ...state };

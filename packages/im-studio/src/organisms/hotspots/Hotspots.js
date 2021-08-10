@@ -1,5 +1,5 @@
-import React, { useState, useRef, memo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 // Components
@@ -9,6 +9,9 @@ import Input from "imcomponents/atoms/input";
 import Table from "imcomponents/atoms/table";
 import Seeker from "imcomponents/organisms/seeker";
 
+// Lodash
+import _isEmpty from "lodash/isEmpty";
+
 // Utils
 import { getFormattedTime, countSeconds } from "imbase/utils/getFormattedTime";
 
@@ -16,7 +19,7 @@ import { getFormattedTime, countSeconds } from "imbase/utils/getFormattedTime";
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
 // Redux Actions
-import { addHotspot, getMovieByID } from "../../redux/movies/actions";
+import { addAction, deleteAction } from "../../redux/movies/actions";
 
 // icons
 import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
@@ -26,11 +29,10 @@ import styles from "./hotspots.module.scss";
 
 const Hotspots = (props) => {
   const dispatch = useDispatch();
-  const { tabdata, history } = props;
+  const { tabdata } = props;
   const { id, mId, hotspots } = tabdata;
-
-  const [jumpIn, setJumpIn] = useState("0:01");
-  const [stateHotspot, setStateHotspot] = useState(hotspots);
+  const hotspotData = !_isEmpty(hotspots) ? Object.values(hotspots) : [];
+  const [jumpIn, setJumpIn] = useState("00:00:01");
 
   const hotspotSeekRef = useRef(null);
 
@@ -46,31 +48,25 @@ const Hotspots = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
-    console.log("Success:", jumpIn);
     const sec = countSeconds(jumpIn);
     dispatch(
-      addHotspot({
-        id: id,
-        data: {
-          id: "",
-          name: values.name,
-          startPoint: sec,
+      addAction(
+        {
+          id: id,
+          data: {
+            id: values.hotspotid,
+            name: values.name,
+            startPoint: sec,
+          },
         },
-      })
+        "HOTSPOT"
+      )
     );
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  const onBack = (errorInfo) => {
-    history.push("#1");
-  };
-
-  const onNext = (errorInfo) => {
-    history.push("#3");
+    // TODO Sentry Failed
+    // console.log("Failed:", errorInfo);
   };
 
   const handleSubmit = () => {
@@ -84,11 +80,10 @@ const Hotspots = (props) => {
   const handleReset = () => {
     form.resetFields();
     hotspotSeekRef.current.seekTo(0);
-    setJumpIn("0:01");
+    setJumpIn("00:00:01");
   };
 
   const handleEdit = (id, record) => {
-    console.log(id);
     form.setFieldsValue({
       hotspotid: id,
       name: record.name,
@@ -98,10 +93,11 @@ const Hotspots = (props) => {
     setJumpIn(formattedTime);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (hotspotid) => {
     form.resetFields();
     hotspotSeekRef.current.seekTo(0);
-    setJumpIn("0:01");
+    setJumpIn("00:00:01");
+    dispatch(deleteAction(id, hotspotid, "HOTSPOT"));
   };
 
   const columns = [
@@ -118,7 +114,6 @@ const Hotspots = (props) => {
       dataIndex: "id",
       render: (id, data) => (
         <div className={styles.buttonContainer}>
-          {/* TODO: buttons working */}
           <span className={styles.editIcon}>
             <EditOutlined onClick={() => handleEdit(id, data)} />
           </span>
@@ -173,13 +168,6 @@ const Hotspots = (props) => {
         </Form.Item>
         <Form.Item {...buttonItemLayout}>
           <Button
-            className={styles.backButton}
-            label={"Back"}
-            shape={"round"}
-            onClick={onBack}
-            ghost
-          />
-          <Button
             className={styles.saveButton}
             label={"Save"}
             shape={"round"}
@@ -195,20 +183,13 @@ const Hotspots = (props) => {
             }}
             danger
           />
-          <Button
-            className={styles.backButton}
-            label={"Next"}
-            shape={"round"}
-            onClick={onNext}
-            ghost
-          />
         </Form.Item>
       </Form>
 
       <Table
         className={styles.hotspotsTable}
         columns={columns}
-        dataSource={hotspots}
+        dataSource={hotspotData}
         pagination={false}
         bordered
       />
@@ -226,4 +207,4 @@ Hotspots.defaultProps = {
   history: EMPTY_OBJECT,
 };
 
-export default memo(Hotspots);
+export default Hotspots;

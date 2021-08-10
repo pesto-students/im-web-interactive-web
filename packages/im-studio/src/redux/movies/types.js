@@ -7,3 +7,13 @@ export const GET_ALL_MOVIES_SUCCESS = "GET_ALL_MOVIES_SUCCESS";
 export const GET_ALL_MOVIES_ERROR = "GET_ALL_MOVIES_ERROR";
 
 export const ADD_HOTSPOT = "ADD_HOTSPOT";
+export const DELETE_HOTSPOT = "DELETE_HOTSPOT";
+
+export const ADD_OVERLAY = "ADD_OVERLAY";
+export const DELETE_OVERLAY = "DELETE_OVERLAY";
+
+export const ADD_TRIGGER = "ADD_TRIGGER";
+export const DELETE_TRIGGER = "DELETE_TRIGGER";
+
+export const ADD_ACTION = "ADD_ACTION";
+export const DELETE_ACTION = "DELETE_ACTION";

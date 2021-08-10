@@ -1,23 +1,28 @@
-import { all, takeEvery, call, put, fork } from "redux-saga/effects";
+import { all, takeEvery, call, put } from "redux-saga/effects";
 import { gqlClient } from "imbase/graphql/gqlClient";
 import { QUERY_ALL_MOVIES, QUERY_MOVIE_ID } from "../../graphql/queries";
 import {
   CREATE_MOVIE,
   UPDATE_MOVIE_ID,
   CREATE_HOTSPOT,
+  MUTATE_DELETE_HOTSPOT,
+  CREATE_OVERLAY,
+  MUTATE_DELETE_OVERLAY,
+  CREATE_TRIGGER,
+  MUTATE_DELETE_TRIGGER,
 } from "../../graphql/mutation";
 import {
   GET_ALL_MOVIES,
   ADD_MOVIE,
   GET_MOVIE_BY_ID,
   UPDATE_MOVIE_BY_ID,
-  ADD_HOTSPOT,
+  ADD_ACTION,
+  DELETE_ACTION,
 } from "./types";
 import {
   getAllMoviesSuccess,
   getAllMoviesError,
   getMovieSuccess,
-  getMovieByID as getMovieByIDAction,
 } from "./actions";
 import { getCurrentUser } from "imbase/services/firebase";
 
@@ -74,17 +79,6 @@ const updateMovieByIDApi = (movie) => {
     .then((res) => res);
 };
 
-// Hotspot APi
-const addHotspotApi = ({ id, data }) => {
-  return gqlClient.mutate({
-    mutation: CREATE_HOTSPOT,
-    variables: {
-      mid: id,
-      data: data,
-    },
-  });
-};
-
 // Sagas Movies
 function* getAllMovies() {
   const { error, data } = yield call(getAllMoviesFromApi);
@@ -128,23 +122,71 @@ function* updateMovieByID({ payload }) {
   }
 }
 
-// Sagas HotSpots
-function* addHotspot({ payload: { options } }) {
-  const { error, data } = yield call(addHotspotApi, options);
-  console.log(data);
-  console.log(new Date());
+const addActionApi = (apiParams) => {
+  return gqlClient.mutate(apiParams);
+};
+const deleteActionApi = (apiParams) => {
+  return gqlClient.mutate(apiParams);
+};
+
+// Sagas Actions
+function* addAction({ payload: { options, actionType } }) {
+  let mutationParam;
+
+  if (actionType === "HOTSPOT") {
+    mutationParam = CREATE_HOTSPOT;
+  } else if (actionType === "OVERLAY") {
+    mutationParam = CREATE_OVERLAY;
+  } else if (actionType === "TRIGGER") {
+    mutationParam = CREATE_TRIGGER;
+  }
+
+  const apiParams = {
+    mutation: mutationParam,
+    variables: {
+      mid: options.id,
+      data: options.data,
+    },
+  };
+
+  const { data } = yield call(addActionApi, apiParams);
+
   if (data) {
-    console.log("fafadfa");
-    console.log(new Date());
-    const response = yield call(getMovieByIDApi, { id: options.id });
-    console.log(new Date());
-    console.log("11111", response);
+    yield call(getMovieByID, { payload: { id: options.id } });
   } else {
-    console.log(error);
+    // TODO  ADD SENTRY
   }
 }
 
-// Watchers
+function* deleteAction({ payload }) {
+  let mutationParam;
+
+  if (payload.actionType === "HOTSPOT") {
+    mutationParam = MUTATE_DELETE_HOTSPOT;
+  } else if (payload.actionType === "OVERLAY") {
+    mutationParam = MUTATE_DELETE_OVERLAY;
+  } else if (payload.actionType === "TRIGGER") {
+    mutationParam = MUTATE_DELETE_TRIGGER;
+  }
+
+  const apiParams = {
+    mutation: mutationParam,
+    variables: {
+      id: payload.actionid,
+      movieId: payload.id,
+    },
+  };
+
+  const { data } = yield call(deleteActionApi, apiParams);
+    if (data) {
+      yield call(getMovieByID, { payload: { id: payload.id } });
+    } else {
+      // console.log(error);
+      // TODO  ADD SENTRY 
+    }
+}
+
+// Watcher Movie
 function* initGetAllMovies() {
   yield takeEvery(GET_ALL_MOVIES, getAllMovies);
 }
@@ -161,18 +203,22 @@ function* initAddMovie() {
   yield takeEvery(ADD_MOVIE, addMovie);
 }
 
-// Watcher Hotspot
-function* initAddHotspot() {
-  yield takeEvery(ADD_HOTSPOT, addHotspot);
+// Watcher Action
+function* initAddAction() {
+  yield takeEvery(ADD_ACTION, addAction);
+}
+function* initDeleteAction() {
+  yield takeEvery(DELETE_ACTION, deleteAction);
 }
 
 function* moviesSaga() {
   yield all([
-    fork(initGetAllMovies),
-    fork(initAddMovie),
-    fork(initGetMovieByID),
-    fork(initUpdateMovieByID),
-    fork(initAddHotspot),
+    initGetAllMovies(),
+    initAddMovie(),
+    initGetMovieByID(),
+    initUpdateMovieByID(),
+    initAddAction(),
+    initDeleteAction(),
   ]);
 }
 

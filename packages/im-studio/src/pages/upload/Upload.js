@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
 
 // Constants
-import { EMPTY_OBJECT, EMPTY_STRING } from "imbase/constants/base.constants";
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
 // Components
 import Button from "imcomponents/atoms/button";
@@ -32,7 +32,6 @@ const Upload = () => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-  const [videoId, setVideoId] = useState(EMPTY_STRING);
   const [videoDetails, setVideoDetails] = useState(EMPTY_OBJECT);
   const [error, setError] = useState(EMPTY_OBJECT);
   const [isLinkInvalid, setIsLinkInvalid] = useState(false);
@@ -61,7 +60,6 @@ const Upload = () => {
           } else {
             const videoData = youtubeService.getVideoDataFromResponse(response);
             setVideoDetails(videoData);
-            setVideoId(videoIdFromUrl);
             setIsLinkInvalid(false);
           }
         })

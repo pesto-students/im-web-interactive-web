@@ -6,13 +6,11 @@ import {
   GET_ALL_MOVIES_ERROR,
   GET_ALL_MOVIES_SUCCESS,
   UPDATE_MOVIE_BY_ID,
-  ADD_HOTSPOT,
+  ADD_ACTION,
+  DELETE_ACTION,
 } from "./types";
 
-// *********************************
 // Get Movies
-// *********************************
-
 export const getAllMovies = (userid) => ({
   type: GET_ALL_MOVIES,
   payload: { userid },
@@ -38,27 +36,23 @@ export const getAllMoviesError = (data) => ({
   payload: data,
 });
 
-// *********************************
-// Add Movie
-// *********************************
 export const addMovie = (options, history) => ({
   type: ADD_MOVIE,
   payload: { options, history },
 });
 
-// *********************************
-// Update Movie
-// *********************************
 export const updateMovieByID = (movie) => ({
   type: UPDATE_MOVIE_BY_ID,
   payload: movie,
 });
 
+// ACTIONS
+export const addAction = (options, actionType) => ({
+  type: ADD_ACTION,
+  payload: { options, actionType },
+});
 
-// *********************************
-// Add Hotspot
-// *********************************
-export const addHotspot = (options) => ({
-  type: ADD_HOTSPOT,
-  payload: { options },
+export const deleteAction = (id, actionid, actionType) => ({
+  type: DELETE_ACTION,
+  payload: { id, actionid, actionType },
 });

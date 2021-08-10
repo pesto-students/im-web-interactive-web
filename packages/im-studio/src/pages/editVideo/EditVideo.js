@@ -5,10 +5,6 @@ import { useHistory, useParams, useLocation } from "react-router-dom";
 // Lodash
 import _isEmpty from "lodash/isEmpty";
 
-// Constants
-import { EMPTY_OBJECT } from "imbase/constants/base.constants";
-import MOCK_DATA from "imbase/constants/mockDBResponse.json";
-
 // Components
 import Tabs from "imcomponents/atoms/tabs";
 import Error from "imcomponents/molecules/error";
@@ -19,15 +15,6 @@ import Hotspots from "../../organisms/hotspots";
 import OverlaysTab from "../../organisms/overlaysTab";
 import PublishTab from "../../organisms/publishTab";
 import TimeTriggersTab from "../../organisms/timeTriggersTab";
-
-// Utils
-import getDataFromResponse from "imbase/utils/getDataFromResponse";
-
-// Services
-import youtubeService from "../../services/youtubeService";
-
-// Readers
-import MovieReader from "imbase/readers/Movie";
 
 // Redux Actions
 import { getMovieByID } from "../../redux/movies/actions";
@@ -54,7 +41,7 @@ const EditVideo = (props) => {
       setActiveTab("#1");
     }
     dispatch(getMovieByID(videoId));
-  }, [location]);
+  }, [dispatch, hash, videoId, location]);
 
   const handleChangeTab = (activeKey) => {
     history.push("edit" + activeKey);
@@ -72,7 +59,6 @@ const EditVideo = (props) => {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.player}>
-          {/* TODO: load movie preview */}
           <Player
             isHost={false}
             videoUrl={`http://www.youtube.com/watch?v=${movie.mId}`}
@@ -90,10 +76,10 @@ const EditVideo = (props) => {
               <OverlaysTab tabdata={movie} history={history} />
             </TabPane>
             <TabPane tab="Time Triggers" key={"#4"}>
-              <TimeTriggersTab />
+              <TimeTriggersTab tabdata={movie} history={history} />
             </TabPane>
             <TabPane tab="Publish" key={"#5"}>
-              <PublishTab />
+              <PublishTab tabdata={movie} history={history} />
             </TabPane>
           </Tabs>
         </div>

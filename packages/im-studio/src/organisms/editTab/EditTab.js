@@ -1,6 +1,6 @@
-import React, { useState, memo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 // Components
@@ -21,19 +21,18 @@ import styles from "./editTab.module.scss";
 const EditTab = (props) => {
   const dispatch = useDispatch();
   const { tabdata, history } = props;
-  // const [mvData, setMvData] = useState(tabdata);
   const { id, name, title, description, url, genre } = tabdata;
-  // console.log("myda", mvData);
+
   const formItemLayout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 10 },
   };
-  console.log(tabdata);
   const buttonItemLayout = {
     wrapperCol: { span: 10, offset: 2 },
   };
 
   const [form] = Form.useForm();
+
   //initial values
   const initialValues = {
     movie_name: name,
@@ -44,14 +43,6 @@ const EditTab = (props) => {
   };
 
   const onFinish = (values) => {
-    console.log("Success:", values);
-    // setMvData({
-    //   ...mvData,
-    //   name: values.movie_name,
-    //   title: values.movie_title,
-    //   description: values.movie_description,
-    //   genre: values.movie_genre,
-    // });
     dispatch(
       updateMovieByID({
         ...tabdata,
@@ -61,7 +52,6 @@ const EditTab = (props) => {
         genre: values.movie_genre,
       })
     );
-    // TODO Push this data to DB
     history.push("#2");
   };
 
@@ -136,7 +126,6 @@ const EditTab = (props) => {
             label={"Save"}
             shape={"round"}
             onClick={handleSubmit}
-            // TODO: Should sve to DB and move to hoptspots tab
             danger
           />
         </Form.Item>
@@ -155,4 +144,4 @@ EditTab.defaultProps = {
   history: EMPTY_OBJECT,
 };
 
-export default memo(EditTab);
+export default EditTab;

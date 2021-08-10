@@ -49,41 +49,10 @@ const QUERY_ALL_MOVIES = gql`
         data
         rating
       }
-      hotspots {
-        id
-        name
-        startPoint
-      }
-      overlays {
-        id
-        name
-        jumpPoint
-        templateActionId
-      }
-      templateActions {
-        id
-        title
-        leftHotspotId
-        rightHotspotId
-      }
-      triggers {
-        id
-        type
-        name
-        startPoint
-        skipTo
-      }
-      interactiveData {
-        overlayId
-        overlayTemplate
-        overlayName
-        jumpPoint
-        templateTitle
-        templateLeftAction
-        templateRightAction
-        templateLeftLabel
-        templateRightLabel
-      }
+      hotspots
+      overlays
+      triggers
+      interactiveData
     }
   }
 `;
@@ -137,41 +106,10 @@ const QUERY_MOVIE_ID = gql`
         data
         rating
       }
-      hotspots {
-        id
-        name
-        startPoint
-      }
-      overlays {
-        id
-        name
-        jumpPoint
-        templateActionId
-      }
-      templateActions {
-        id
-        title
-        leftHotspotId
-        rightHotspotId
-      }
-      triggers {
-        id
-        type
-        name
-        startPoint
-        skipTo
-      }
-      interactiveData {
-        overlayId
-        overlayTemplate
-        overlayName
-        jumpPoint
-        templateTitle
-        templateLeftAction
-        templateRightAction
-        templateLeftLabel
-        templateRightLabel
-      }
+      hotspots
+      overlays
+      triggers
+      interactiveData
     }
   }
 `;
