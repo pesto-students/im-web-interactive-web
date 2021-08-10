@@ -9,7 +9,7 @@ import EditVideo from "../pages/editVideo";
 import Upload from "../pages/upload";
 
 const AppRoutes = () => {
-  const [ loading, setLoading ] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {

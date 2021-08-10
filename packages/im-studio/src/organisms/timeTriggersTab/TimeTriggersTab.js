@@ -1,192 +1,250 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 // Components
 import Button from "imcomponents/atoms/button";
-import Form from "imcomponents/atoms/form"
+import Form from "imcomponents/atoms/form";
 import Input from "imcomponents/atoms/input";
-import Table from 'imcomponents/atoms/table';
+import Table from "imcomponents/atoms/table";
+import Seeker from "imcomponents/organisms/seeker";
+
+// Lodash
+import _isEmpty from "lodash/isEmpty";
+
+// Utils
+import { getFormattedTime, countSeconds } from "imbase/utils/getFormattedTime";
+
+// Constants
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+
+// Redux Actions
+import { addAction, deleteAction } from "../../redux/movies/actions";
+
+// icons
+import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
 
 // Styles
 import styles from "./timeTriggersTab.module.scss";
 
-const columns = [
-    {
-        title: 'No.',
-        dataIndex: 'serialNumber',
-        width: '5%'
-    },
-    {
-        title: 'Trigger Name',
-        dataIndex: 'triggerName',
-    },
-    {
-        title: 'In Point',
-        dataIndex: 'inPoint',
-        sorter: true
-    },
-    {
-        title: 'Out Point',
-        dataIndex: 'outPoint',
-        sorter: true
-    },
-    {
-        title: 'Type',
-        dataIndex: 'type',
-    },
-    {
-        title: '',
-        dataIndex: 'actions',
-        render: icons => (
-            <div className={styles.buttonContainer}>
-                {/* TODO: buttons working */}
-                {/* <a 
-                className={styles.editIcon}
-                href={"#"}
-            >
-                <EditOutlined />
-            </a>
-            <a 
-                className={styles.deleteIcon}
-                href="#"
-            >
-                <DeleteOutlined />
-            </a> */}
-            </div>
-        )
-    },
-];
-
-
-// TODO: Fetch data from server
-const data = [
-    {
-        key: '1',
-        serialNumber: '1',
-        triggerName: 'Trigger-1',
-        inPoint: '01:00',
-        outPoint: '02:00',
-        type: 'Jump point',
-        actions: 'TODO'
-    },
-    {
-        key: '2',
-        serialNumber: '2',
-        triggerName: 'Trigger-2',
-        inPoint: '03:00',
-        outPoint: '04:00',
-        type: 'Jump point',
-        actions: 'TODO'
-    },
-    {
-        key: '3',
-        serialNumber: '3',
-        triggerName: 'Trigger-3',
-        inPoint: '05:00',
-        outPoint: '06:00',
-        type: 'Jump point',
-        actions: 'TODO'
-    }
-];
-
 const TimeTriggersTab = (props) => {
-    const { changeTab, activeTabKey } = props;
+  const dispatch = useDispatch();
+  const { tabdata } = props;
+  const { id, mId, triggers } = tabdata;
+  const triggerData = !_isEmpty(triggers) ? Object.values(triggers) : [];
+  const [jumpIn, setJumpIn] = useState("00:00:01");
+  const [jumpOut, setJumpOut] = useState("00:00:01");
 
-    const formItemLayout = {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 10 },
-    };
+  const triggerSeekInRef = useRef(null);
+  const triggerSeekOutRef = useRef(null);
 
-    const buttonItemLayout = {
-        wrapperCol: { span: 14, offset: 1 },
-    };
+  const formItemLayout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 10 },
+  };
 
-    const [form] = Form.useForm();
+  const buttonItemLayout = {
+    wrapperCol: { span: 14, offset: 1 },
+  };
 
-    return (
-        <div className={styles.container}>
-            <Form
-                {...formItemLayout}
-                className={styles.timeTriggersForm}
-                layout={"horizontal"}
-                form={form}
-            >
-                <Form.Item label="Type">
-                    <Input
-                        value={"Jump Point"}
-                        disabled={true}
-                    />
-                </Form.Item>
-                <Form.Item label="Label">
-                    <Input
-                        placeholder="Enter label"
-                    />
-                </Form.Item>
-                <Form.Item label="In point">
-                    <div className={styles.testPlayerDiv}>
-                        {/* TODO: Add player */}
-                    </div>
-                </Form.Item>
-                <Form.Item>
-                    <Input
-                        className={styles.jumpInTimer}
-                        placeholder="00:01:00"
-                    />
-                </Form.Item>
-                <Form.Item label="Out point">
-                    <div className={styles.testPlayerDiv}>
-                        {/* TODO: Add player */}
-                    </div>
-                </Form.Item>
-                <Form.Item>
-                    <Input
-                        className={styles.jumpInTimer}
-                        placeholder="00:01:00"
-                    />
-                </Form.Item>
-                <Form.Item {...buttonItemLayout}>
-                    <Button
-                        className={styles.backButton}
-                        label={"Back"}
-                        shape={"round"}
-                        onClick={changeTab((parseInt(activeTabKey) - 1).toString())}
-                    // TODO: Should move to previous tab
-                    />
-                    <Button
-                        className={styles.saveButton}
-                        label={"Save"}
-                        shape={"round"}
-                        onClick={changeTab((parseInt(activeTabKey) + 1).toString())}
-                        // TODO: should save to DB and move to next tab
-                        danger
-                    />
-                    <Button
-                        className={styles.addNewButton}
-                        label={"Add New"}
-                        shape={"round"}
-                        // TODO: Add new time trigger
-                        danger
-                    />
-                </Form.Item>
-            </Form>
-
-            <Table
-                className={styles.timeTriggersTable}
-                columns={columns}
-                dataSource={data}
-                pagination={false}
-                bordered
-            />
-        </div>
+  const [form] = Form.useForm();
+  const onFinish = (values) => {
+    const secIn = countSeconds(jumpIn);
+    const secOut = countSeconds(jumpOut);
+    dispatch(
+      addAction(
+        {
+          id: id,
+          data: {
+            id: values.triggerid,
+            type: values.type,
+            name: values.name,
+            startPoint: secIn,
+            skipTo: secOut,
+          },
+        },
+        "TRIGGER"
+      )
     );
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    // TODO ADD SENTRY
+    // console.log("Failed:", errorInfo);
+  };
+
+  const handleSubmit = () => {
+    form.submit();
+  };
+
+  const handleSetJumpIn = (val) => {
+    setJumpIn(val);
+  };
+
+  const handleSetJumpOut = (val) => {
+    setJumpOut(val);
+  };
+
+  const handleReset = () => {
+    form.resetFields();
+    triggerSeekInRef.current.seekTo(0);
+    triggerSeekOutRef.current.seekTo(0);
+    setJumpIn("00:00:01");
+    setJumpOut("00:00:01");
+  };
+
+  const handleEdit = (id, record) => {
+    form.setFieldsValue({
+      triggerid: id,
+      name: record.name,
+    });
+    triggerSeekInRef.current.seekTo(record.startPoint);
+    triggerSeekOutRef.current.seekTo(record.skipTo);
+    const formattedTimeIn = getFormattedTime(record.startPoint);
+    const formattedTimeOut = getFormattedTime(record.skipTo);
+    setJumpIn(formattedTimeIn);
+    setJumpOut(formattedTimeOut);
+  };
+
+  const handleDelete = (triggerid) => {
+    form.resetFields();
+    triggerSeekInRef.current.seekTo(0);
+    triggerSeekOutRef.current.seekTo(0);
+    setJumpIn("00:00:01");
+    setJumpOut("00:00:01");
+    dispatch(deleteAction(id, triggerid, "TRIGGER"));
+  };
+
+  const columns = [
+    {
+      title: "Trigger Name",
+      dataIndex: "name",
+    },
+    {
+      title: "Start Point",
+      dataIndex: "startPoint",
+    },
+    {
+      title: "Skip To",
+      dataIndex: "skipTo",
+    },
+    {
+      title: "Action",
+      dataIndex: "id",
+      render: (id, data) => (
+        <div className={styles.buttonContainer}>
+          <span className={styles.editIcon}>
+            <EditOutlined onClick={() => handleEdit(id, data)} />
+          </span>
+          <span className={styles.deleteIcon}>
+            <DeleteOutlined onClick={() => handleDelete(id)} />
+          </span>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <div className={styles.container}>
+      <Form
+        {...formItemLayout}
+        className={styles.timeTriggersForm}
+        layout={"horizontal"}
+        form={form}
+        initialValues={{
+          triggerid: "",
+          type: "JUMP_POINT",
+          name: "",
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        <Form.Item label="triggerid" name="triggerid" hidden>
+          <Input />
+        </Form.Item>
+        <Form.Item label="Type" name="type">
+          <Input value={"Jump Point"} disabled={true} />
+        </Form.Item>
+        <Form.Item
+          label="Name"
+          name="name"
+          rules={[{ required: true, message: "Please input trigger name!" }]}
+        >
+          <Input placeholder="Enter hotspot name" />
+        </Form.Item>
+        <Form.Item label="In point">
+          <div className={styles.testPlayerDiv}>
+            <Seeker
+              ref={triggerSeekInRef}
+              videoUrl={`http://www.youtube.com/watch?v=${mId}`}
+              setSeekerTime={handleSetJumpIn}
+            />
+          </div>
+        </Form.Item>
+        <Form.Item>
+          <Input
+            className={styles.jumpInTimer}
+            value={jumpIn}
+            placeholder="00:00:01"
+            disabled
+          />
+        </Form.Item>
+        <Form.Item label="Out point">
+          <div className={styles.testPlayerDiv}>
+            <Seeker
+              ref={triggerSeekOutRef}
+              videoUrl={`http://www.youtube.com/watch?v=${mId}`}
+              setSeekerTime={handleSetJumpOut}
+            />
+          </div>
+        </Form.Item>
+        <Form.Item>
+          <Input
+            className={styles.jumpInTimer}
+            value={jumpOut}
+            placeholder="00:00:01"
+            disabled
+          />
+        </Form.Item>
+        <Form.Item {...buttonItemLayout}>
+          <Button
+            className={styles.saveButton}
+            label={"Save"}
+            shape={"round"}
+            onClick={handleSubmit}
+            danger
+          />
+          <Button
+            className={styles.addNewButton}
+            label={"Add New"}
+            shape={"round"}
+            onClick={() => {
+              handleReset();
+            }}
+            danger
+          />
+        </Form.Item>
+      </Form>
+
+      <Table
+        className={styles.timeTriggersTable}
+        columns={columns}
+        dataSource={triggerData}
+        pagination={false}
+        bordered
+      />
+    </div>
+  );
 };
 
 TimeTriggersTab.propTypes = {
-    changeTab: PropTypes.func
-}
+  tabdata: PropTypes.object,
+  history: PropTypes.object,
+};
 
 TimeTriggersTab.defaultProps = {
-    changeTab: () => { }
-}
+  tabdata: EMPTY_OBJECT,
+  history: EMPTY_OBJECT,
+};
 
 export default TimeTriggersTab;

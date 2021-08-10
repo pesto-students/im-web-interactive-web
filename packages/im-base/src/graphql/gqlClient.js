@@ -1,6 +1,17 @@
 import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: "no-cache",
+    errorPolicy: "ignore",
+  },
+  query: {
+    fetchPolicy: "no-cache",
+    errorPolicy: "all",
+  },
+};
+
 const httpLink = new HttpLink({
   uri:
     process.env.REACT_APP_NODE_ENV !== "development"
@@ -22,7 +33,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 // apollo-client graphql initialization
 const gqlClient = new ApolloClient({
   link: from([errorLink, httpLink]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({ addTypename: false }),
+  defaultOptions: defaultOptions,
 });
 
 export { gqlClient };

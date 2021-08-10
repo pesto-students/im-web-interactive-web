@@ -1,4 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, {
+  useRef,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -6,13 +11,13 @@ import cx from "classnames";
 import ReactPlayer from "react-player/youtube";
 
 // Utils
-import getFormattedTime from "imbase/utils/getFormattedTime";
+import { getFormattedTime } from "imbase/utils/getFormattedTime";
 
 // Styles
 import styles from "./seeker.module.scss";
 
-const Seeker = (props) => {
-  const { className, videoUrl } = props;
+const Seeker = forwardRef((props, ref) => {
+  const { className, videoUrl, setSeekerTime, setHotspotSeconds } = props;
 
   const seekerRef = useRef(null);
 
@@ -21,6 +26,16 @@ const Seeker = (props) => {
   const [duration, setDuration] = useState(true);
 
   const [played, setPlayed] = useState(0);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      seekTo(val) {
+        seekerRef.current.seekTo(val);
+      },
+    }),
+    []
+  );
 
   // seeking video by input range
   const seekVideo = (e) => {
@@ -31,17 +46,23 @@ const Seeker = (props) => {
       setPlaying(false);
       setPlayed(parseFloat(e.target.value));
       seekerRef.current.seekTo(e.target.value);
+      setSeekerTime(getFormattedTime(Math.round(played * duration)));
+      setPlaying(false);
     }
   };
 
   // handle video progress
   const handleProgress = (progress) => {
-    console.log(progress);
+    if (played < progress.played) {
+      setPlaying(false);
+    }
+    // setHotspotSeconds(Math.round(progress.playedSeconds));
     setPlayed(progress.played);
   };
 
   // handle video on duration
   const handleDuration = (duration) => {
+    setPlaying(false);
     console.log("onDuration", duration);
     setDuration(duration);
   };
@@ -58,29 +79,35 @@ const Seeker = (props) => {
         width={"100%"}
         muted="true"
       />
-      <input
-        type="range"
-        min={0}
-        max={0.999999}
-        step={"any"}
-        value={played}
-        onChange={seekVideo}
-      />
-      <time dateTime={`P${Math.round(played * duration)}S`}>
+      <div>
+        <input
+          type="range"
+          min={0}
+          max={0.999999}
+          step={"any"}
+          value={played}
+          onChange={seekVideo}
+        />
+        {/* <time dateTime={`P${Math.round(played * duration)}S`}>
         {getFormattedTime(played * duration)}
-      </time>
+      </time> */}
+      </div>
     </div>
   );
-};
+});
 
 Seeker.propTypes = {
   className: PropTypes.string,
   videoUrl: PropTypes.string,
+  setSeekerTime: PropTypes.func,
+  seekTo: PropTypes.func,
 };
 
 Seeker.defaultProps = {
   className: undefined,
   videoUrl: "https://www.youtube.com/watch?v=vUjihJpWQPE",
+  setSeekerTime: () => {},
+  seekTo: () => {},
 };
 
 export default Seeker;

@@ -15,6 +15,7 @@ import { gqlClient } from "imbase/graphql/gqlClient";
 
 import dotenv from "dotenv";
 
+import "react-toastify/dist/ReactToastify.min.css";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";

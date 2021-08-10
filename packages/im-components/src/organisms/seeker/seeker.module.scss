@@ -5,13 +5,27 @@ $contrast: -5%;
 
 .seekerWrapper {
   margin: 0 auto;
-  padding: 3rem;
 
   .reactSeeker {
     margin-bottom: 1rem;
     background: rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 27rem;
+  }
+
+  .dFlex {
+    display: flex;
+
+    time {
+      width: 15%;
+      float: left;
+      color: grey;
+    }
+
+    input {
+      width: 85%;
+      float: right;
+    }
   }
 
   [type="range"] {

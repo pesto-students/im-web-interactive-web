@@ -11,6 +11,7 @@ import { gqlClient } from "imbase/graphql/gqlClient";
 
 import dotenv from "dotenv";
 
+import "react-toastify/dist/ReactToastify.min.css";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -19,11 +20,11 @@ dotenv.config();
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <ApolloProvider client={gqlClient}>
-        <App />
-      </ApolloProvider>
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    <ApolloProvider client={gqlClient}>
+      <App />
+    </ApolloProvider>
+    {/* </React.StrictMode> */}
   </Provider>,
   document.getElementById("root")
 );

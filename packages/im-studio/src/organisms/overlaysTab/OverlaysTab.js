@@ -1,215 +1,316 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 // Components
 import Button from "imcomponents/atoms/button";
-import Dropdown from "imcomponents/atoms/dropdown";
-import Form from "imcomponents/atoms/form"
+import Form from "imcomponents/atoms/form";
 import Input from "imcomponents/atoms/input";
-import Menu from "imcomponents/atoms/menu";
-import Table from 'imcomponents/atoms/table';
-import { DownOutlined } from "imcomponents/atoms/icon";
+import Table from "imcomponents/atoms/table";
+import { Select, Option } from "imcomponents/atoms/select";
+import Seeker from "imcomponents/organisms/seeker";
+
+// Lodash
+import _map from "lodash/map";
+import _isEmpty from "lodash/isEmpty";
+
+// Utils
+import { getFormattedTime, countSeconds } from "imbase/utils/getFormattedTime";
+
+// Constants
+import { EMPTY_OBJECT, EMPTY_ARRAY } from "imbase/constants/base.constants";
+
+// Redux Actions
+import { addAction, deleteAction } from "../../redux/movies/actions";
+
+// icons
+import { EditOutlined, DeleteOutlined } from "imcomponents/atoms/icon";
 
 // Styles
 import styles from "./overlaysTab.module.scss";
 
-const columns = [
-    {
-        title: 'No.',
-        dataIndex: 'serialNumber',
-        width: '5%'
-    },
-    {
-        title: 'Overlay Name',
-        dataIndex: 'overlayName',
-    },
-    {
-        title: 'Start Point',
-        dataIndex: 'startPoint',
-        sorter: true
-    },
-    {
-        title: 'Template',
-        dataIndex: 'template',
-    },
-    {
-        title: '',
-        dataIndex: 'actions',
-        render: () => (
-            <div className={styles.buttonContainer}>
-                {/* TODO: buttons working */}
-                {/* <a 
-                className={styles.editIcon}
-                href={"#"}
-            >
-                <EditOutlined />
-            </a>
-            <a 
-                className={styles.deleteIcon}
-                href="#"
-            >
-                <DeleteOutlined />
-            </a> */}
-            </div>
-        )
-    },
-];
-
-// TODO: fetch data from server
-const data = [
-    {
-        key: '1',
-        serialNumber: '1',
-        overlayName: 'Overlay-1',
-        startPoint: '01:00',
-        template: 'Sticky_Modal',
-        actions: 'TODO'
-    },
-    {
-        key: '2',
-        serialNumber: '2',
-        overlayName: 'Overlay-2',
-        startPoint: '03:00',
-        template: 'Sticky_Modal',
-        actions: 'TODO',
-    },
-    {
-        key: '3',
-        serialNumber: '3',
-        overlayName: 'Overlay-3',
-        startPoint: '05:00',
-        template: 'Sticky_Modal',
-        actions: 'TODO',
-    },
-    {
-        key: '4',
-        serialNumber: '4',
-        overlayName: 'Overlay-4',
-        startPoint: '07:00',
-        template: 'Sticky_Modal',
-        actions: 'TODO'
-    }
-];
-
 const OverlaysTab = (props) => {
-    const { changeTab, activeTabKey } = props;
+  const dispatch = useDispatch();
+  const { tabdata } = props;
+  const { id, mId, overlays, hotspots } = tabdata;
+  const hotspotData = !_isEmpty(hotspots)
+    ? Object.values(hotspots)
+    : EMPTY_ARRAY;
+  const overlayData = !_isEmpty(overlays)
+    ? Object.values(overlays)
+    : EMPTY_ARRAY;
+  const [jumpIn, setJumpIn] = useState("00:00:01");
 
-    const formItemLayout = {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 10 },
-    };
+  // Ref for seeker
+  const overlaySeekRef = useRef(null);
 
-    const buttonItemLayout = {
-        wrapperCol: { span: 14, offset: 1 },
-    };
+  // Styles for tabs
+  const formItemLayout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 10 },
+  };
 
-    function handleMenuClick(e) {
-        console.log('click', e);
-    }
+  const buttonItemLayout = {
+    wrapperCol: { span: 14, offset: 1 },
+  };
 
-    const menu = (
-        <Menu onClick={handleMenuClick}>
-            <Menu.Item key="1" >
-                1st menu item
-            </Menu.Item>
-            <Menu.Item key="2" >
-                2nd menu item
-            </Menu.Item>
-            <Menu.Item key="3" >
-                3rd menu item
-            </Menu.Item>
-        </Menu>
-    );
-
-    const [form] = Form.useForm();
-
-    return (
-        <div className={styles.container}>
-            <Form
-                {...formItemLayout}
-                className={styles.overlaysForm}
-                layout={"horizontal"}
-                form={form}
-            >
-                <Form.Item label="Change Overlay Template">
-                    <Dropdown overlay={menu} trigger={['click']}>
-                        <Button
-                            className={styles.dropDownButton}
-                            label={"Select template"}
-                            icon={<DownOutlined />}
-                            type={"default"}
-                        >
-
-                        </Button>
-                    </Dropdown>
-                </Form.Item>
-                <Form.Item label="Overlay Name">
-                    <Input
-                        placeholder="Enter overlay name"
-                    />
-                </Form.Item>
-                <Form.Item label="Jump to point in video">
-                    <div className={styles.testPlayerDiv}>
-                        {/* TODO: Add player */}
-                    </div>
-                </Form.Item>
-                <Form.Item>
-                    <Input
-                        className={styles.jumpInTimer}
-                        placeholder="00:01:00"
-                    />
-                </Form.Item>
-                <Form.Item label="Template Action">
-                    <Button
-                        label="Add/Edit"
-                        className={styles.addEditOverlaybutton}
-                        shape={"round"}
-                        danger
-                    />
-                </Form.Item>
-                <Form.Item {...buttonItemLayout}>
-                    <Button
-                        className={styles.backButton}
-                        label={"Back"}
-                        shape={"round"}
-                        onClick={changeTab((parseInt(activeTabKey) - 1).toString())}
-                    // TODO: Should move to previous tab
-                    />
-                    <Button
-                        className={styles.saveButton}
-                        label={"Save"}
-                        shape={"round"}
-                        onClick={changeTab((parseInt(activeTabKey) + 1).toString())}
-                        // TODO: should save to DB and move to next tab
-                        danger
-                    />
-                    <Button
-                        className={styles.addNewButton}
-                        label={"Add New"}
-                        shape={"round"}
-                        // TODO: Add new overlay for template
-                        danger
-                    />
-                </Form.Item>
-            </Form>
-
-            <Table
-                className={styles.overlaysTable}
-                columns={columns}
-                dataSource={data}
-                pagination={false}
-                bordered
-            />
+  // Table Config
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+    },
+    {
+      title: "Jump Point",
+      dataIndex: "jumpPoint",
+    },
+    {
+      title: "Template",
+      dataIndex: "templateTitle",
+    },
+    {
+      title: "Left Hotspot",
+      dataIndex: "leftActionHotspot",
+      render: (id, data) => (
+        <span>
+          {hotspotData
+            .filter((obj) => obj.id === id)
+            .map((obj) => {
+              if (obj.name) {
+                return obj.name;
+              }
+              return "";
+            })}
+        </span>
+      ),
+    },
+    {
+      title: "Right Hotspot",
+      dataIndex: "rightActionHotspot",
+      render: (id, data) => (
+        <span>
+          {hotspotData
+            .filter((obj) => obj.id === id)
+            .map((obj) => {
+              if (obj.name) {
+                return obj.name;
+              }
+              return "";
+            })}
+        </span>
+      ),
+    },
+    {
+      title: "Action",
+      dataIndex: "id",
+      render: (id, data) => (
+        <div className={styles.buttonContainer}>
+          <span className={styles.editIcon}>
+            <EditOutlined onClick={() => handleEdit(id, data)} />
+          </span>
+          <span className={styles.deleteIcon}>
+            <DeleteOutlined onClick={() => handleDelete(id)} />
+          </span>
         </div>
+      ),
+    },
+  ];
+
+  // Form Methods
+  const [form] = Form.useForm();
+
+  const onFinish = (values) => {
+    const sec = countSeconds(jumpIn);
+    dispatch(
+      addAction(
+        {
+          id: id,
+          data: {
+            id: values.overlayid,
+            name: values.name,
+            jumpPoint: sec,
+            templateTitle: values.title,
+            leftActionHotspot: values.lefthotspot,
+            rightActionHotspot: values.righthotspot,
+          },
+        },
+        "OVERLAY"
+      )
     );
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    //TODo SENTRY
+    // console.log("Failed:", errorInfo);
+  };
+
+  const handleSubmit = () => {
+    form.submit();
+  };
+
+  const handleSetJumpIn = (val) => {
+    setJumpIn(val);
+  };
+
+  const handleReset = () => {
+    form.resetFields();
+    overlaySeekRef.current.seekTo(0);
+    setJumpIn("00:00:01");
+  };
+
+  const handleEdit = (id, record) => {
+    form.setFieldsValue({
+      overlayid: id,
+      name: record.name,
+      title: record.templateTitle,
+      lefthotspot: record.leftActionHotspot,
+      righthotspot: record.rightActionHotspot,
+    });
+    overlaySeekRef.current.seekTo(record.jumpPoint);
+    const formattedTime = getFormattedTime(record.jumpPoint);
+    setJumpIn(formattedTime);
+  };
+
+  const handleDelete = (overlayid) => {
+    form.resetFields();
+    overlaySeekRef.current.seekTo(0);
+    setJumpIn("00:00:01");
+    dispatch(deleteAction(id, overlayid, "OVERLAY"));
+  };
+
+  return (
+    <div className={styles.container}>
+      <Form
+        initialValues={{
+          templateid: "1",
+          overlayid: "",
+          name: "",
+          title: "",
+          lefthotspot: "",
+          righthotspot: "",
+        }}
+        {...formItemLayout}
+        className={styles.overlaysForm}
+        layout={"horizontal"}
+        form={form}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        <Form.Item label="overlayid" name="overlayid" hidden>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Template"
+          name="templateid"
+          rules={[{ required: true, message: "Please input overlay name!" }]}
+        >
+          <Select defaultValue="1" disabled>
+            <Option value="1">STICKY_MODAL</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Name"
+          name="name"
+          rules={[{ required: true, message: "Please input overlay name!" }]}
+        >
+          <Input placeholder="Enter overlay name" />
+        </Form.Item>
+        <Form.Item label="Jump to point in video">
+          <div className={styles.testPlayerDiv}>
+            <Seeker
+              ref={overlaySeekRef}
+              videoUrl={`http://www.youtube.com/watch?v=${mId}`}
+              setSeekerTime={handleSetJumpIn}
+            />
+          </div>
+        </Form.Item>
+        <Form.Item>
+          <Input
+            className={styles.jumpInTimer}
+            value={jumpIn}
+            placeholder="00:00:01"
+            disabled
+          />
+        </Form.Item>
+        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="lefthotspot"
+          label="Left Hotspot Action"
+          rules={[{ required: true }]}
+        >
+          <Select placeholder="Select a option and change input text above">
+            {_map(hotspotData, (hotspot) => {
+              if (!_isEmpty(hotspot)) {
+                return (
+                  <Option key={`hotspot-${hotspot.id}`} value={hotspot.id}>
+                    {hotspot.name}
+                  </Option>
+                );
+              }
+            })}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="righthotspot"
+          label="Right Hotspot Action"
+          rules={[{ required: true }]}
+        >
+          <Select
+            placeholder="Select a option and change input text above"
+            allowClear
+          >
+            {_map(hotspotData, (hotspot) => {
+              if (!_isEmpty(hotspot)) {
+                return (
+                  <Option key={`hotspot-${hotspot.id}`} value={hotspot.id}>
+                    {hotspot.name}
+                  </Option>
+                );
+              }
+            })}
+          </Select>
+        </Form.Item>
+        <Form.Item {...buttonItemLayout}>
+          <Button
+            className={styles.saveButton}
+            label={"Save"}
+            shape={"round"}
+            onClick={handleSubmit}
+            danger
+          />
+          <Button
+            className={styles.addNewButton}
+            label={"Add New"}
+            shape={"round"}
+            onClick={() => {
+              handleReset();
+            }}
+            danger
+          />
+        </Form.Item>
+      </Form>
+
+      <Table
+        className={styles.overlaysTable}
+        columns={columns}
+        dataSource={overlayData}
+        pagination={false}
+        bordered
+      />
+    </div>
+  );
 };
 
 OverlaysTab.propTypes = {
-    changeTab: PropTypes.func
-}
+  tabdata: PropTypes.object,
+  history: PropTypes.object,
+};
 
 OverlaysTab.defaultProps = {
-    changeTab: () => { }
-}
+  tabdata: EMPTY_OBJECT,
+  history: EMPTY_OBJECT,
+};
 
 export default OverlaysTab;

@@ -1,90 +1,147 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 // Components
 import Button from "imcomponents/atoms/button";
-import Form from "imcomponents/atoms/form"
+import Form from "imcomponents/atoms/form";
 import Input from "imcomponents/atoms/input";
 import TextArea from "imcomponents/atoms/textArea";
+
+// Constants
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+
+// Redux Actions
+import { updateMovieByID } from "../../redux/movies/actions";
 
 // Styles
 import styles from "./editTab.module.scss";
 
 const EditTab = (props) => {
-    const { changeTab, activeTabKey } = props;
-    const formItemLayout = {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 10 },
-    };
+  const dispatch = useDispatch();
+  const { tabdata, history } = props;
+  const { id, name, title, description, url, genre } = tabdata;
 
-    const buttonItemLayout = {
-        wrapperCol: { span: 10, offset: 2 },
-    };
+  const formItemLayout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 10 },
+  };
+  const buttonItemLayout = {
+    wrapperCol: { span: 10, offset: 2 },
+  };
 
-    const [form] = Form.useForm();
+  const [form] = Form.useForm();
 
-    return (
-        <div className={styles.container}>
-            <Form
-                {...formItemLayout}
-                className={styles.editForm}
-                layout={"horizontal"}
-                form={form}
-            >
-                <Form.Item label="Name">
-                    <Input
-                        placeholder="Enter name"
-                        // TODO: Set value of video name by default
-                    />
-                </Form.Item>
-                <Form.Item label="YouTube URL">
-                    <Input placeholder="Enter YouTube URL" />
-                </Form.Item>
-                <Form.Item label="Title">
-                    <Input
-                        placeholder="Enter title"
-                    // TODO: Set value of video title by default
-                    />
-                </Form.Item>
-                <Form.Item label="Description">
-                    <TextArea
-                        placeholder="Enter description"
-                        // TODO: Set value of video description by default
-                        rows={4}
-                    />
-                </Form.Item>
-                <Form.Item label="Genre">
-                    <Input placeholder="Enter genre" />
-                </Form.Item>
-                <Form.Item {...buttonItemLayout}>
-                    <Link to="/dashboard">
-                        <Button
-                            className={styles.backButton}
-                            label={"Back"}
-                            shape={"round"}
-                        />
-                    </Link>
-                    <Button
-                        className={styles.saveButton}
-                        label={"Save"}
-                        shape={"round"}
-                        onClick={changeTab((parseInt(activeTabKey)+1).toString())}
-                        // TODO: Should sve to DB and move to hoptspots tab 
-                        danger
-                    />
-                </Form.Item>
-            </Form>
-        </div>
+  //initial values
+  const initialValues = {
+    movie_name: name,
+    movie_url: url || `http://www.youtube.com/watch?v=${id}`,
+    movie_title: title,
+    movie_description: description,
+    movie_genre: genre,
+  };
+
+  const onFinish = (values) => {
+    dispatch(
+      updateMovieByID({
+        ...tabdata,
+        name: values.movie_name,
+        title: values.movie_title,
+        description: values.movie_description,
+        genre: values.movie_genre,
+      })
     );
+    history.push("#2");
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  const handleSubmit = () => {
+    form.submit();
+  };
+
+  console.log(initialValues);
+  return (
+    <div className={styles.container}>
+      <Form
+        initialValues={initialValues}
+        {...formItemLayout}
+        className={styles.editForm}
+        layout={"horizontal"}
+        form={form}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        <Form.Item
+          label="Name"
+          name="movie_name"
+          rules={[{ required: true, message: "Please input movie name!" }]}
+        >
+          <Input placeholder="Enter name" />
+        </Form.Item>
+        <Form.Item
+          label="YouTube URL"
+          name="movie_url"
+          rules={[{ required: true, message: "Please input movie url!" }]}
+        >
+          <Input placeholder="Enter YouTube URL" disabled />
+        </Form.Item>
+        <Form.Item
+          label="Title"
+          name="movie_title"
+          rules={[{ required: true, message: "Please input movie title!" }]}
+        >
+          <Input placeholder="Enter title" />
+        </Form.Item>
+        <Form.Item
+          label="Description"
+          name="movie_description"
+          rules={[
+            { required: true, message: "Please input movie description!" },
+          ]}
+        >
+          <TextArea placeholder="Enter description" rows={4} />
+        </Form.Item>
+        <Form.Item
+          label="Genre"
+          name="movie_genre"
+          rules={[{ required: true, message: "Please input movie genre!" }]}
+        >
+          <Input placeholder="Enter genre" />
+        </Form.Item>
+        <Form.Item {...buttonItemLayout}>
+          <Link to="/dashboard">
+            <Button
+              className={styles.backButton}
+              label={"Back"}
+              shape={"round"}
+              ghost
+            />
+          </Link>
+          <Button
+            className={styles.saveButton}
+            label={"Save"}
+            shape={"round"}
+            onClick={handleSubmit}
+            danger
+          />
+        </Form.Item>
+      </Form>
+    </div>
+  );
 };
 
 EditTab.propTypes = {
-    changeTab: PropTypes.func
-}
+  tabdata: PropTypes.object,
+  history: PropTypes.object,
+};
 
 EditTab.defaultProps = {
-    changeTab: () => { }
-}
+  tabdata: EMPTY_OBJECT,
+  history: EMPTY_OBJECT,
+};
 
 export default EditTab;

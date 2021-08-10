@@ -10,6 +10,9 @@ import screenfull from "screenfull";
 import ReactPlayer from "react-player/youtube";
 import Overlay from "../overlay";
 
+// Constants
+import { EMPTY_STRING } from "imbase/constants/base.constants";
+
 // Styles
 import styles from "./player.module.scss";
 
@@ -18,10 +21,9 @@ import { overlayData } from "imbase/constants/mockOverlayData";
 
 const Player = (props) => {
   const { classname, videoUrl, isHost } = props;
-
   const [state, setState] = useState({
     url: null,
-    playing: true,
+    playing: false,
     controls: false,
     light: false,
     muted: false,
@@ -136,7 +138,7 @@ const Player = (props) => {
         className={cx(styles.reactPlayer, classname)}
         url={state.url || videoUrl}
         width="100%"
-        height="95%"
+        height="90%"
         playing={state.playing}
         controls={state.controls || isHost}
         onPlay={handlePlay}
@@ -147,7 +149,6 @@ const Player = (props) => {
         onError={(e) => console.log("onError", e)}
         onProgress={handleProgress}
         onDuration={handleDuration}
-        onReady={() => handlePlayPause()}
       />
 
       <div>
@@ -189,14 +190,12 @@ const Player = (props) => {
 Player.propTypes = {
   className: PropTypes.string,
   videoUrl: PropTypes.string,
-  debug: PropTypes.bool,
   isHost: PropTypes.bool,
 };
 
 Player.defaultProps = {
   className: undefined,
-  videoUrl: "https://www.youtube.com/watch?v=bxnYFOixIoc",
-  debug: false,
+  videoUrl: EMPTY_STRING,
   isHost: true,
 };
 
