@@ -13,7 +13,7 @@ const GoogleLogin = () => {
       className={styles.loginWithGoogleBtn}
       onClick={signInWithGoogle}
     >
-      Sign in with Google
+      Continue with Google
     </button>
   );
 };
