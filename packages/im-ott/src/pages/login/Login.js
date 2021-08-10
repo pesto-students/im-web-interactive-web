@@ -2,16 +2,13 @@ import React, { useContext, useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 // Components
-import Image from "imcomponents/atoms/image";
 import { Title, Label } from "imcomponents/atoms/typography";
 import { isMobile } from "imcomponents/atoms/device";
+import Logo from "imcomponents/molecules/logo";
 import GoogleLogin from "imcomponents/molecules/googleLogin";
 
 // Providers
 import { UserContext } from "imbase/providers/UserProvider";
-
-// Images
-import reel from "imbase/assets/images/reel.png";
 
 // Styles
 import styles from "./login.module.scss";
@@ -32,18 +29,15 @@ const Login = () => {
 
   if (isMobile) {
     return (
-      <div className={styles.containerMobile}>
-        <div className={styles.navbarMobile}>
-          <Label className={styles.logo}>iFlix </Label>
-        </div>
-        <div className={styles.loginForm}>
-          <Title className={styles.title}>Welcome :)</Title>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <Logo />
+          <Title className={styles.title}>Welcome to iFlix</Title>
           <Label className={styles.subTitle}>
             To enjoy watching interactive films, please login with your google
             account
           </Label>
-          <div className={styles.inputField}></div>
-          <div className={styles.inputField}>
+          <div className={styles.googleLogin}>
             <GoogleLogin />
           </div>
         </div>
@@ -53,21 +47,16 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.navbar}>
-        <Label className={styles.logo}>iFlix</Label>
-      </div>
-      <div className={styles.content}>
-        <div className={styles.pictures}>
-          <Image src={reel} className={styles.image} />
-        </div>
-        <div className={styles.loginForm}>
-          <Title className={styles.title}>Welcome :)</Title>
+      <div className={styles.animation}></div>
+      <div className={styles.loginForm}>
+        <div className={styles.content}>
+          <Logo />
+          <Title className={styles.title}>Welcome to iFlix</Title>
           <Label className={styles.subTitle}>
             To enjoy watching interactive films, please login with your google
             account
           </Label>
-          <div className={styles.inputField}></div>
-          <div className={styles.inputField}>
+          <div className={styles.googleLogin}>
             <GoogleLogin />
           </div>
         </div>

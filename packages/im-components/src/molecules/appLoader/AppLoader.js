@@ -4,11 +4,7 @@ import React, { useState } from "react";
 import _noop from "lodash/noop";
 
 // Components
-import Image from "../../atoms/image";
-import { Label } from "../../atoms/typography";
-
-// Images
-import reel from "imbase/assets/images/reel.png";
+import Logo from "../logo";
 
 // Styles
 import styles from "./appLoader.module.scss";
@@ -25,16 +21,9 @@ const AppLoader = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.animation}`}>
       <div className={styles.logo}>
-        <Image src={reel} className={styles.image} />
-        <Label className={styles.title}>
-          <span>i</span>
-          <span>F</span>
-          <span>l</span>
-          <span>i</span>
-          <span>x</span>
-        </Label>
+        <Logo />
       </div>
     </div>
   );
