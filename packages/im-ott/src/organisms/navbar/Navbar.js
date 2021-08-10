@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { isMobile, BrowserView } from "imcomponents/atoms/device";
 
@@ -25,7 +25,8 @@ import styles from "./navbar.module.scss";
 
 function Navbar() {
   const history = useHistory();
-  const [selectedMenu, setSelectedMenu] = useState("home");
+  // const [selectedMenu, setSelectedMenu] = useState("home");
+  const selectedMenu = "home";
   const { setuser } = useContext(UserContext);
 
   const handleLogout = () => {
@@ -67,12 +68,12 @@ function Navbar() {
             icon={NotificationsIcon}
           ></Menu.Item>
 
-          {/* <Menu.Item
-        key={"logout"}
-        className={styles.menuItem}
-        icon={<LogoutOutlined />}
-        onClick={handleLogout}
-      ></Menu.Item> */}
+          <Menu.Item
+            key={"logout"}
+            className={styles.menuItem}
+            icon={<LogoutOutlined />}
+            onClick={handleLogout}
+          ></Menu.Item>
         </Menu>
       </BrowserView>
     </div>
