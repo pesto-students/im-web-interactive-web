@@ -1,12 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { isMobile } from "imcomponents/atoms/device";
+import { isMobile, BrowserView } from "imcomponents/atoms/device";
 
 // Components
 import { Menu } from "antd";
 import Logo from "imcomponents/molecules/logo";
 import { UserContext } from "imbase/providers/UserProvider";
-import { LogoutOutlined } from "imcomponents/atoms/icon";
+import {
+  LogoutOutlined,
+  HomeOutlined,
+  SearchOutlined,
+  HomeFilled,
+  BellOutlined,
+  BellFilled,
+  HeartOutlined,
+  HeartFilled,
+} from "imcomponents/atoms/icon";
 
 // Service
 import { logOut } from "imbase/services/firebase";
@@ -16,6 +25,7 @@ import styles from "./navbar.module.scss";
 
 function Navbar() {
   const history = useHistory();
+  const [selectedMenu, setSelectedMenu] = useState("home");
   const { setuser } = useContext(UserContext);
 
   const handleLogout = () => {
@@ -25,18 +35,47 @@ function Navbar() {
   };
 
   const logoText = isMobile ? "" : "iFlix";
+  const HomeIcon = selectedMenu === "home" ? <HomeFilled /> : <HomeOutlined />;
+  const LikesIcon =
+    selectedMenu === "likes" ? <HeartFilled /> : <HeartOutlined />;
+  const NotificationsIcon =
+    selectedMenu === "notifications" ? <BellFilled /> : <BellOutlined />;
 
   return (
-    <>
+    <div className={styles.container}>
       <Logo text={logoText} />
-      <Menu mode="horizontal" className={styles.floatRight}>
-        <Menu.Item key={"logout"}>
-          <div onClick={() => handleLogout()}>
-            <LogoutOutlined className={styles.logout} />
-          </div>
-        </Menu.Item>
-      </Menu>
-    </>
+      <BrowserView className={styles.browserView}>
+        <Menu mode="horizontal" className={styles.footerMenu}>
+          <Menu.Item
+            className={styles.menuItem}
+            key="home"
+            icon={HomeIcon}
+          ></Menu.Item>
+          <Menu.Item
+            className={styles.menuItem}
+            key="search"
+            icon={<SearchOutlined style={{ fontWeight: "bold" }} />}
+          ></Menu.Item>
+          <Menu.Item
+            className={styles.menuItem}
+            key="likes"
+            icon={LikesIcon}
+          ></Menu.Item>
+          <Menu.Item
+            className={styles.menuItem}
+            key="notifications"
+            icon={NotificationsIcon}
+          ></Menu.Item>
+
+          {/* <Menu.Item
+        key={"logout"}
+        className={styles.menuItem}
+        icon={<LogoutOutlined />}
+        onClick={handleLogout}
+      ></Menu.Item> */}
+        </Menu>
+      </BrowserView>
+    </div>
   );
 }
 

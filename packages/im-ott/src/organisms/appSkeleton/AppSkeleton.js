@@ -2,13 +2,14 @@ import React, { useEffect, useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import cx from "classnames";
-import { isMobile } from "imcomponents/atoms/device";
+import { BrowserView, MobileView, isMobile } from "imcomponents/atoms/device";
 
 // Components
 import { Layout } from "antd";
 import FooterContent from "imcomponents/organisms/footerContent";
 import { UserContext } from "imbase/providers/UserProvider";
 import Navbar from "../navbar";
+import FooterMenu from "./components/footerMenu";
 
 // Styles
 import styles from "./appskeleton.module.scss";
@@ -35,19 +36,19 @@ const AppSkeleton = (props) => {
     [styles.mobileHeader]: isMobile,
   });
 
-  const footerClassName = cx(styles.footer, {
-    [styles.webFooter]: !isMobile,
-    [styles.mobileFooter]: isMobile,
-  });
-
   return (
     <Layout className={styles.container}>
       <Header className={headerClassName}>
         <Navbar />
       </Header>
       <Content className={styles.content}>{children}</Content>
-      <Footer className={footerClassName}>
-        <FooterContent />
+      <Footer className={styles.footer}>
+        <BrowserView className={styles.webFooter}>
+          <FooterContent />
+        </BrowserView>
+        <MobileView className={styles.mobileFooter}>
+          <FooterMenu />
+        </MobileView>
       </Footer>
     </Layout>
   );

@@ -13,4 +13,12 @@ export {
   DeleteOutlined,
   DownOutlined,
   LogoutOutlined,
+  HomeOutlined,
+  SearchOutlined,
+  TeamOutlined,
+  HomeFilled,
+  BellOutlined,
+  BellFilled,
+  HeartOutlined,
+  HeartFilled,
 } from "./Icon";
