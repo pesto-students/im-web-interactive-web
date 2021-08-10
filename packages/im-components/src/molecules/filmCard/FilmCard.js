@@ -14,9 +14,11 @@ import { StarTwoTone } from "imcomponents/atoms/icon";
 import styles from "./filmcard.module.scss";
 
 const FilmCard = (props) => {
-  const { className, title, imgSrc, genre, rating, isFeatured, ...restProps } =
+  const { className, title, imgSrc, genre, rating, isFeatured, description, ...restProps } =
     props;
   const imgStyle = isFeatured ? styles.filmCardImgFeatured : styles.filmCardImg;
+  const descriptionStyle = isFeatured ? styles.descriptionFeatured : styles.description;
+  const titleStyle = isFeatured ? styles.titleFeatured : styles.title;
 
   return (
     <div className={styles.filmcard} {...restProps}>
@@ -24,14 +26,13 @@ const FilmCard = (props) => {
       <div className={styles.relative}>
         <div className={styles.details}>
           <div>
-            <Tag className={styles.tag} color={"#1d1d1d"}>
-              <span>{genre}</span>
-            </Tag>
+              <span className={styles.tag} >{genre && genre.toUpperCase()}</span>
           </div>
           {_times(rating, () => (
             <StarTwoTone twoToneColor="#fff" />
           ))}
-          <p className={styles.title}>{title}</p>
+          <p className={titleStyle}>{title}</p>
+          <p className={descriptionStyle}>{description}</p>
         </div>
       </div>
     </div>
