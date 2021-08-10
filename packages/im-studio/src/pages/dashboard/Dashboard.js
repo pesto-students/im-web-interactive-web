@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, withRouter, useLocation } from "react-router-dom";
 
@@ -12,15 +12,13 @@ import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
 
 // Utils
-import getDataFromResponse from "imbase/utils/getDataFromResponse";
 import { getCurrentUser } from "imbase/services/firebase";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
 
 // Constants
-import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
-import MOCK_DATA from "imbase/constants/mockDataWatchlist.json";
+import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
 // Redux Actions
 import { getAllMovies } from "../../redux/movies/actions";
