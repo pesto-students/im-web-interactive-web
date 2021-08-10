@@ -10,6 +10,9 @@ import screenfull from "screenfull";
 import ReactPlayer from "react-player/youtube";
 import Overlay from "../overlay";
 
+// Constants
+import { EMPTY_STRING } from "imbase/constants/base.constants";
+
 // Styles
 import styles from "./player.module.scss";
 
@@ -192,7 +195,7 @@ Player.propTypes = {
 
 Player.defaultProps = {
   className: undefined,
-  videoUrl: "",
+  videoUrl: EMPTY_STRING,
   isHost: true,
 };
 
