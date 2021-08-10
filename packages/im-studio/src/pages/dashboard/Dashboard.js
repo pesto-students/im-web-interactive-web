@@ -32,6 +32,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   const filmRating = FilmReader.rating(filmDetails);
   const filmGenre = FilmReader.genre(filmDetails);
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
+  const filmDescription = FilmReader.description(filmDetails);
   return (
     <Link to={`video/${filmId}/edit`} className={styles.movieLinks}>
       <FilmCard
@@ -40,6 +41,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
         genre={filmGenre}
         imgSrc={filmImgSrc}
         rating={filmRating}
+        description={filmDescription}
         {...filmDetails}
         className={styles.film}
       />
@@ -52,10 +54,6 @@ const Dashboard = (props) => {
   const currentUser = getCurrentUser()?.uid;
   const dispatch = useDispatch();
   const { loading, movies, error } = useSelector((state) => state.MovieReducer);
-  //   console.log(movies);
-  //   const [loading, setLoading] = useState(true);
-  //   const [films, setFilms] = useState(EMPTY_ARRAY);
-  //   const [error, setError] = useState(EMPTY_OBJECT);
 
   useEffect(() => {
     dispatch(getAllMovies(currentUser));
