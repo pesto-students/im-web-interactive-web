@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 // Components
 import Menu from "imcomponents/atoms/menu";
+import Drawer from "imcomponents/atoms/drawer";
+import Notification from "imcomponents/molecules/notification";
 import {
   HomeOutlined,
   SearchOutlined,
@@ -17,9 +19,17 @@ import styles from "./footerMenu.module.scss";
 
 function FooterMenu() {
   const [selectedMenu, setSelectedMenu] = useState("home");
+  const [visible, setVisible] = useState(false);
 
   const handleClick = (event) => {
     setSelectedMenu(event.key);
+    if (event.key === "notifications") {
+      setVisible(true);
+    }
+  };
+
+  const onClose = () => {
+    setVisible(false);
   };
 
   const HomeIcon = selectedMenu === "home" ? <HomeFilled /> : <HomeOutlined />;
@@ -56,6 +66,17 @@ function FooterMenu() {
           icon={NotificationsIcon}
         ></Menu.Item>
       </Menu>
+      <Drawer
+        title="Notifications"
+        placement={"bottom"}
+        closable={true}
+        onClose={onClose}
+        visible={visible}
+        height={"100vh"}
+        key={"notification-drawer"}
+      >
+        {selectedMenu === "notifications" && <Notification />}
+      </Drawer>
     </div>
   );
 }
