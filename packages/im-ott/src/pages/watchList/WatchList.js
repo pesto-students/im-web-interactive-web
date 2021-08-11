@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { isMobile } from "imcomponents/atoms/device";
 
 // Lodash
 import _map from "lodash/map";
@@ -7,18 +8,19 @@ import _isEmpty from "lodash/isEmpty";
 
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
+import FilmCardMobile from "imcomponents/molecules/filmCardMobile";
 import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
 
-// Utils
-import getDataFromResponse from "imbase/utils/getDataFromResponse";
+// graphql
+import { gqlClient } from "imbase/graphql/gqlClient";
+import { NEW_RELEASES } from "imbase/graphql/queries";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
-import MOCK_DATA from "imbase/constants/mockDataWatchlist.json";
 
 // Styles
 import styles from "./watchList.module.scss";
@@ -29,11 +31,24 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   const filmRating = FilmReader.rating(filmDetails);
   const filmGenre = FilmReader.genre(filmDetails);
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
+
+  if (isMobile) {
+    return (
+      <Link to={`film/${filmId}`}>
+        <FilmCardMobile
+          key={`mobile-${filmId}`}
+          title={filmTitle}
+          genre={filmGenre}
+          imgSrc={filmImgSrc}
+          rating={filmRating}
+          {...filmDetails}
+        />
+      </Link>
+    );
+  }
+
   return (
-    <Link 
-    to={`film/${filmId}`}
-    className={styles.movieLinks}
-    >
+    <Link to={`film/${filmId}`} className={styles.movieLinks}>
       <FilmCard
         key={filmId}
         title={filmTitle}
@@ -53,10 +68,14 @@ const WatchList = () => {
   const [error, setError] = useState(EMPTY_OBJECT);
 
   useEffect(() => {
-    Promise.resolve(MOCK_DATA)
+    setLoading(true);
+    gqlClient
+      .query({
+        query: NEW_RELEASES,
+      })
       .then((response) => {
-        const films = getDataFromResponse(response);
-        setFilms(films);
+        const { data } = response;
+        setFilms(data.filterMovies);
         setLoading(false);
       })
       .catch((error) => {
@@ -73,14 +92,14 @@ const WatchList = () => {
     return <Error {...error} />;
   }
 
-  return <div className={styles.container}>
-  <div className={styles.content}>
-      <h1 className={styles.heading}>Watchlist</h1>
-      <div className={styles.movies}>
-          {_map(films, renderFilm)}
+  return (
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <h1 className={styles.heading}>Watchlist</h1>
+        <div className={styles.movies}>{_map(films, renderFilm)}</div>
       </div>
-  </div>
-</div>;
+    </div>
+  );
 };
 
 export default WatchList;

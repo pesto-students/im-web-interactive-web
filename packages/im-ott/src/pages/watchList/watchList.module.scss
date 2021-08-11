@@ -1,27 +1,39 @@
 .container {
-  padding: 10rem 4rem;
+  padding: 4rem;
 
   .content {
-      display: inline-block;
+    display: inline-block;
 
-      .heading {
-          font-weight: bolder;
-          font-family: monospace;
-          font-size: 2.5rem;
+    .heading {
+      font-weight: bolder;
+      font-family: monospace;
+      font-size: 2.5rem;
+    }
+
+    .movies {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .film {
+        padding: 0rem 0.8rem;
       }
 
-      .movies {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-
-          .film {
-              padding: 0rem 0.8rem;
-          }
-
-          .movieLinks {
-              margin: 0.5rem 0;
-          }
+      .movieLinks {
+        margin: 0.5rem 0;
       }
+    }
+  }
 }
+
+@media only screen and (max-width: 600px) {
+  .container {
+    padding: 2rem;
+
+    .content {
+      .movies {
+        display: block;
+      }
+    }
+  }
 }

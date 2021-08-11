@@ -17,7 +17,7 @@ import FilmReader from "imbase/readers/Film";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
-import { NEW_RELEASES } from "../../graphql/queries";
+import { NEW_RELEASES } from "imbase/graphql/queries";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -85,7 +85,6 @@ const MoviesList = () => {
         query: movieQuery,
       })
       .then((response) => {
-        console.log(response);
         const { data } = response;
         setMovieList(data.filterMovies);
         setLoading(false);
@@ -94,7 +93,7 @@ const MoviesList = () => {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [movieCriteria]);
 
   if (loading) {
     return <Loader />;

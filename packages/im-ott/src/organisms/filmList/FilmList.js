@@ -9,7 +9,7 @@ import _isEmpty from "lodash/isEmpty";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
-import { NEW_RELEASES } from "../../graphql/queries";
+import { NEW_RELEASES } from "imbase/graphql/queries";
 
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { isMobile } from "imcomponents/atoms/device";
 import cx from "classnames";
 
 // Lodash
@@ -14,6 +15,10 @@ import Error from "imcomponents/molecules/error";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
+
+// graphql
+import { gqlClient } from "imbase/graphql/gqlClient";
+import { QUERY_MOVIE_ID } from "imbase/graphql/queries";
 
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -33,10 +38,16 @@ const FilmDetails = (props) => {
   const [filmDetails, setFilmDetails] = useState(EMPTY_OBJECT);
 
   useEffect(() => {
-    Promise.resolve(MOCK_DATA)
+    gqlClient
+      .query({
+        query: QUERY_MOVIE_ID,
+        variables: {
+          id: filmId,
+        },
+      })
       .then((response) => {
-        const filmDetails = getDataFromResponse(response);
-        setFilmDetails(filmDetails[0]);
+        const { data } = response;
+        setFilmDetails(data.movie);
         setLoading(false);
       })
       .catch((error) => {
@@ -62,23 +73,21 @@ const FilmDetails = (props) => {
         />
       </div>
       <div className={styles.metadata}>
-        <div className={styles.thumbnail}>
-          <img
-            src={FilmReader.thumbnail(filmDetails)}
-            alt={`${FilmReader.title(filmDetails)} thumbnail`}
-          />
-        </div>
+        {!isMobile && (
+          <div className={styles.thumbnail}>
+            <img
+              src={FilmReader.thumbnail(filmDetails)}
+              alt={`${FilmReader.title(filmDetails)} thumbnail`}
+            />
+          </div>
+        )}
         <div className={styles.titleMetadata}>
           <div className={styles.ml2}>
-            <Title>{FilmReader.title(filmDetails)}</Title>
+            <Title level={3}>{FilmReader.title(filmDetails)}</Title>
             {_times(FilmReader.rating(filmDetails), () => (
               <StarFilled style={{ color: "yellow" }} />
             ))}
-            <Button
-              className={styles.ml2}
-              label={"Host a Party"}
-              danger
-            ></Button>
+            <Button label={"Play Movie"} danger></Button>
             <Button
               className={styles.ml2}
               label={"Add to Watchlist"}
@@ -88,7 +97,7 @@ const FilmDetails = (props) => {
         </div>
       </div>
       <div className={styles.description}>
-        <Title level={3} className={styles.mb1}>
+        <Title level={5} className={styles.mb1}>
           Overview
         </Title>
         <Label>{FilmReader.description(filmDetails)}</Label>
