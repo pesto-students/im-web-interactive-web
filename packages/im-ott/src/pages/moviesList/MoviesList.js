@@ -42,7 +42,6 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
           imgSrc={filmImgSrc}
           rating={filmRating}
           {...filmDetails}
-          isFeatured={isFeatured}
         />
       </Link>
     );
@@ -57,7 +56,6 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
         imgSrc={filmImgSrc}
         rating={filmRating}
         {...filmDetails}
-        isFeatured={isFeatured}
       />
     </Link>
   );

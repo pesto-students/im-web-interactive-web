@@ -82,6 +82,10 @@
     margin-right: 0.8rem;
     width: calc(45rem * (9 / 16));
     border-radius: 1rem;
+
+    &:hover {
+      transform: scale(1.03);
+    }
   }
 }
 
