@@ -1,9 +1,30 @@
 import { gql } from "@apollo/client";
 
-const HELLO_WORLD = gql`
+const NEW_RELEASES = gql`
   query {
-    hello
+    filterMovies(filter: { key: "isPublished", value: "true" }) {
+      id
+      mId
+      name
+      title
+      description
+      url
+      genre
+      createdAt
+      thumbnails {
+        high {
+          url
+          width
+          height
+        }
+        maxres {
+          url
+          width
+          height
+        }
+      }
+    }
   }
 `;
 
-export { HELLO_WORLD };
+export { NEW_RELEASES };

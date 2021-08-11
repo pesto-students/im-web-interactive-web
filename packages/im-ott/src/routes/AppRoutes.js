@@ -7,6 +7,7 @@ import Player from "imcomponents/organisms/player";
 import AppLoader from "imcomponents/molecules/appLoader";
 import AppSkeleton from "../organisms/appSkeleton";
 import WatchList from "../pages/watchList";
+import MoviesList from "../pages/moviesList";
 import FilmDetails from "../pages/filmDetails";
 import LandingPage from "../pages/landingPage";
 
@@ -33,6 +34,7 @@ const AppRoutes = () => {
         <Route exact path="/film/:filmId" component={FilmDetails} />
         <Route exact path="/player" component={Player} />
         <Route exact path="/player/seeker" component={Seeker} />
+        <Route exact path="/movies/:movieCriteria" component={MoviesList} />
       </Switch>
     </AppSkeleton>
   );

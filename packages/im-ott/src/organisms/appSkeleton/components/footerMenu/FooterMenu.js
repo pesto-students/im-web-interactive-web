@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-
+import { useHistory } from "react-router-dom";
 // Components
 import Menu from "imcomponents/atoms/menu";
 import Drawer from "imcomponents/atoms/drawer";
 import Notification from "imcomponents/molecules/notification";
+import SearchMovie from "imcomponents/molecules/searchMovie";
 import {
   HomeOutlined,
   SearchOutlined,
@@ -18,12 +19,25 @@ import {
 import styles from "./footerMenu.module.scss";
 
 function FooterMenu() {
+  const history = useHistory();
   const [selectedMenu, setSelectedMenu] = useState("home");
+  const [selectedTitle, setSelectedTitle] = useState("");
   const [visible, setVisible] = useState(false);
 
   const handleClick = (event) => {
     setSelectedMenu(event.key);
     if (event.key === "notifications") {
+      setSelectedTitle("Notifications");
+      setVisible(true);
+    }
+    if (event.key === "likes") {
+      history.push("/watchlist");
+    }
+    if (event.key === "home") {
+      history.push("/");
+    }
+    if (event.key === "search") {
+      setSelectedTitle("Search Movie");
       setVisible(true);
     }
   };
@@ -67,7 +81,7 @@ function FooterMenu() {
         ></Menu.Item>
       </Menu>
       <Drawer
-        title="Notifications"
+        title={selectedTitle}
         placement={"bottom"}
         closable={true}
         onClose={onClose}
@@ -75,7 +89,7 @@ function FooterMenu() {
         height={"100vh"}
         key={"notification-drawer"}
       >
-        {selectedMenu === "notifications" && <Notification />}
+        {selectedMenu === "notifications" ? <Notification /> : <SearchMovie />}
       </Drawer>
     </div>
   );
