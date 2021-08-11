@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { isMobile } from "imcomponents/atoms/device";
 
 // Lodash
@@ -12,20 +12,20 @@ import FilmCardMobile from "imcomponents/molecules/filmCardMobile";
 import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
 
+// Readers
+import FilmReader from "imbase/readers/Film";
+
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
 import { NEW_RELEASES } from "imbase/graphql/queries";
-
-// Readers
-import FilmReader from "imbase/readers/Film";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
 
 // Styles
-import styles from "./watchList.module.scss";
+import styles from "./moviesList.module.scss";
 
-const renderFilm = (filmDetails = EMPTY_OBJECT) => {
+const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   const filmId = FilmReader.id(filmDetails);
   const filmTitle = FilmReader.title(filmDetails);
   const filmRating = FilmReader.rating(filmDetails);
@@ -36,7 +36,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
     return (
       <Link to={`film/${filmId}`}>
         <FilmCardMobile
-          key={`mobile-${filmId}`}
+          key={filmId}
           title={filmTitle}
           genre={filmGenre}
           imgSrc={filmImgSrc}
@@ -48,7 +48,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   }
 
   return (
-    <Link to={`film/${filmId}`} className={styles.movieLinks}>
+    <Link to={`film/${filmId}`}>
       <FilmCard
         key={filmId}
         title={filmTitle}
@@ -56,33 +56,44 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
         imgSrc={filmImgSrc}
         rating={filmRating}
         {...filmDetails}
-        className={styles.film}
       />
     </Link>
   );
 };
 
-const WatchList = () => {
+const MoviesList = () => {
+  const { movieCriteria } = useParams();
   const [loading, setLoading] = useState(true);
-  const [films, setFilms] = useState(EMPTY_ARRAY);
+  const [movieList, setMovieList] = useState(EMPTY_ARRAY);
   const [error, setError] = useState(EMPTY_OBJECT);
 
+  let headingName;
+  if (movieCriteria === "new-releases") {
+    headingName = "New Releases";
+  } else {
+    headingName = "Featured";
+  }
+
   useEffect(() => {
+    let movieQuery = NEW_RELEASES;
+    if (movieCriteria === "featured") {
+      movieQuery = NEW_RELEASES;
+    }
     setLoading(true);
     gqlClient
       .query({
-        query: NEW_RELEASES,
+        query: movieQuery,
       })
       .then((response) => {
         const { data } = response;
-        setFilms(data.filterMovies);
+        setMovieList(data.filterMovies);
         setLoading(false);
       })
       .catch((error) => {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [movieCriteria]);
 
   if (loading) {
     return <Loader />;
@@ -94,12 +105,12 @@ const WatchList = () => {
 
   return (
     <div className={styles.container}>
+      <h1 className={styles.heading}>{headingName}</h1>
       <div className={styles.content}>
-        <h1 className={styles.heading}>Watchlist</h1>
-        <div className={styles.movies}>{_map(films, renderFilm)}</div>
+        <div className={styles.movies}>{_map(movieList, renderMovie)}</div>
       </div>
     </div>
   );
 };
 
-export default WatchList;
+export default MoviesList;

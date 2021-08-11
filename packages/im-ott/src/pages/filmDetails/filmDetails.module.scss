@@ -7,7 +7,7 @@
 .description {
   padding: 1rem 4rem;
   position: relative;
-  top: -14rem;
+  top: -8rem;
 }
 
 .metadata {
@@ -18,9 +18,12 @@
 
 .thumbnail {
   width: 20rem;
-  height: 30rem;
+  height: 20rem;
   position: relative;
   top: -15.4rem;
+  img {
+    border-radius: 1.6rem;
+  }
 }
 
 img {
@@ -34,4 +37,19 @@ img {
 
 .mb1 {
   margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .bannerImage {
+    height: 20vh;
+    width: 100vw;
+    min-height: 20rem;
+  }
+  .metadata {
+    padding: 2rem;
+  }
+  .description {
+    text-align: justify;
+    top: 0;
+  }
 }

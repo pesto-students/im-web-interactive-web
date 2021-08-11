@@ -1,6 +1,6 @@
 import { all, takeEvery, call, put } from "redux-saga/effects";
 import { gqlClient } from "imbase/graphql/gqlClient";
-import { HELLO_WORLD } from "../../graphql/queries";
+import { NEW_RELEASES } from "imbase/graphql/queries";
 import { FETCH_MOVIES } from "./types";
 import { fetchMoviesSuccess, fetchMoviesError } from "./actions";
 
@@ -8,7 +8,7 @@ import { fetchMoviesSuccess, fetchMoviesError } from "./actions";
 const getMoviesFromApi = () => {
   return gqlClient
     .query({
-      query: HELLO_WORLD,
+      query: NEW_RELEASES,
     })
     .then((res) => res);
 };

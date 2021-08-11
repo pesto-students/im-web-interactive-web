@@ -19,8 +19,12 @@ function LandingPage(props) {
     <div>
       <Banner />
       <div className={styles.container}>
-        <FilmList label={"New Releases"} />
-        <FilmList label={"Featured Movies"} isFeatured={true} />
+        <FilmList label={"New Releases"} listKey={"new-releases"} />
+        <FilmList
+          label={"Featured Movies"}
+          listKey={"featured"}
+          isFeatured={true}
+        />
       </div>
     </div>
   );

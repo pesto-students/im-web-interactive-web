@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { isMobile } from "imcomponents/atoms/device";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // Lodash
 import _map from "lodash/map";
 import _isEmpty from "lodash/isEmpty";
 
+// graphql
+import { gqlClient } from "imbase/graphql/gqlClient";
+import { NEW_RELEASES } from "imbase/graphql/queries";
+
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
 import { Title } from "imcomponents/atoms/typography";
 import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
-
-// Utils
-import getDataFromResponse from "imbase/utils/getDataFromResponse";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
@@ -26,7 +28,6 @@ import { LeftOutlined, RightOutlined } from "imcomponents/atoms/icon";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
-import MOCK_DATA from "imbase/constants/mockDataWatchlist.json";
 
 // Styles
 import styles from "./filmlist.module.scss";
@@ -54,8 +55,9 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
 };
 
 const FilmList = (props) => {
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
-  const { label, isFeatured } = props;
+  const { label, isFeatured, listKey } = props;
   const [movieList, setMovieList] = useState(EMPTY_ARRAY);
   const [error, setError] = useState(EMPTY_OBJECT);
   const filmListRef = useRef();
@@ -73,17 +75,26 @@ const FilmList = (props) => {
   // Handle Scrolling by increment / decreamenting scroll left
   const handleNav = (direction) => {
     if (direction === "left") {
-      filmListRef.current.scrollLeft -= 500;
+      filmListRef.current.scrollLeft -= 200;
     } else {
-      filmListRef.current.scrollLeft += 500;
+      filmListRef.current.scrollLeft += 200;
     }
   };
 
+  const handleSeeAll = () => {
+    history.push(`/movies/${listKey}`);
+  };
+
   useEffect(() => {
-    Promise.resolve(MOCK_DATA)
+    setLoading(true);
+    gqlClient
+      .query({
+        query: NEW_RELEASES,
+      })
       .then((response) => {
-        const films = getDataFromResponse(response);
-        setMovieList(films);
+        console.log(response);
+        const { data } = response;
+        setMovieList(data.filterMovies);
         setLoading(false);
       })
       .catch((error) => {
@@ -102,25 +113,36 @@ const FilmList = (props) => {
 
   return (
     <div className={styles.mt1}>
-      <Title level={4}>
-        {label} &nbsp; <RightOutlined />
+      <Title level={4} className={styles.menuContainer}>
+        <div className={styles.label}>
+          {label} &nbsp; <RightOutlined />
+        </div>
+        <div className={styles.seeMore} onClick={handleSeeAll}>
+          <p>
+            See all <RightOutlined />
+          </p>
+        </div>
       </Title>
       <div className={filmListContainer}>
-        <div className={styles.filmArrow}>
-          <LeftOutlined
-            style={stylesInline}
-            onClick={() => handleNav("left")}
-          />
-        </div>
+        {!isMobile && (
+          <div className={styles.filmArrow}>
+            <LeftOutlined
+              style={stylesInline}
+              onClick={() => handleNav("left")}
+            />
+          </div>
+        )}
         <div className={styles.navItems} ref={filmListRef}>
           {_map(movieList, (movie) => renderMovie(movie, isFeatured))}
         </div>
-        <div className={styles.filmArrow}>
-          <RightOutlined
-            style={stylesInline}
-            onClick={() => handleNav("right")}
-          />
-        </div>
+        {!isMobile && (
+          <div className={styles.filmArrow}>
+            <RightOutlined
+              style={stylesInline}
+              onClick={() => handleNav("right")}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -129,12 +151,14 @@ const FilmList = (props) => {
 FilmList.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
+  listKey: PropTypes.string,
   isFeatured: PropTypes.bool,
 };
 
 FilmList.defaultProps = {
   className: undefined,
   label: undefined,
+  listKey: undefined,
   isFeatured: false,
 };
 
