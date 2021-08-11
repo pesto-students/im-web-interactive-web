@@ -22,8 +22,6 @@ import { QUERY_MOVIE_ID } from "imbase/graphql/queries";
 
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
-import MOCK_DATA from "imbase/constants/mockDataSingleFilm.json";
-import getDataFromResponse from "imbase/utils/getDataFromResponse";
 
 // Styles
 import styles from "./filmDetails.module.scss";
