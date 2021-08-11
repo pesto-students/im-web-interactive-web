@@ -1,5 +1,6 @@
 .filmcard {
   transition: all 0.3s ease;
+  display: flex;
 
   .relative {
     position: relative;
@@ -12,11 +13,11 @@
       left: 0.8rem;
       text-align: left;
       right: 0;
-      margin-right: 0.8rem;
+      margin-right: 1.6rem;
       opacity: 0.8;
 
       .tag {
-        color: grey;
+        color: #444;
         font-size: 1rem;
         margin-bottom: 0;
       }
@@ -24,7 +25,7 @@
       .title {
         color: black;
         font-size: 1.4rem;
-        font-weight: bold;
+        font-weight: 500;
         width: 22rem;
         white-space: pre-wrap;
         overflow: hidden;
@@ -35,7 +36,7 @@
       .titleFeatured {
         color: black;
         font-size: 1.4rem;
-        font-weight: bold;
+        font-weight: 500;
         width: 25rem;
         white-space: pre-wrap;
         overflow: hidden;
@@ -44,8 +45,8 @@
       }
 
       .description {
-        color: black;
-        font-size: 1rem;
+        color: #444;
+        font-size: 1.2rem;
         width: 22rem;
         white-space: nowrap;
         overflow: hidden;
@@ -53,8 +54,8 @@
       }
 
       .descriptionFeatured {
-        color: black;
-        font-size: 1rem;
+        color: #444;
+        font-size: 1.2rem;
         width: 25rem;
         white-space: nowrap;
         overflow: hidden;
@@ -68,7 +69,7 @@
     object-fit: contain;
     margin-right: 0.8rem;
     width: calc(40rem * (9 / 16));
-    border-radius: 1.5rem;
+    border-radius: 1.6rem;
 
     &:hover {
       transform: scale(1.03);
@@ -81,5 +82,13 @@
     margin-right: 0.8rem;
     width: calc(45rem * (9 / 16));
     border-radius: 1rem;
-  }  
+  }
+}
+
+.alignRight {
+  flex-direction: row;
+}
+
+.alignBottom {
+  flex-direction: column;
 }

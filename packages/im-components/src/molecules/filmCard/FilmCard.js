@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import cx from "classnames";
 
 // Lodash
 import _times from "lodash/times";
-
-// Component
-import Tag from "imcomponents/atoms/tag";
 
 // Icon
 import { StarTwoTone } from "imcomponents/atoms/icon";
@@ -14,26 +12,45 @@ import { StarTwoTone } from "imcomponents/atoms/icon";
 import styles from "./filmcard.module.scss";
 
 const FilmCard = (props) => {
-  const { className, title, imgSrc, genre, rating, isFeatured, description, ...restProps } =
-    props;
+  const {
+    className,
+    title,
+    imgSrc,
+    genre,
+    rating,
+    isFeatured,
+    description,
+    alignRight,
+    showDetails,
+    ...restProps
+  } = props;
+
+  const filmCardContainerClassname = cx(styles.filmcard, {
+    [styles.alignRight]: alignRight,
+    [styles.alignBottom]: !alignRight,
+  });
   const imgStyle = isFeatured ? styles.filmCardImgFeatured : styles.filmCardImg;
-  const descriptionStyle = isFeatured ? styles.descriptionFeatured : styles.description;
+  const descriptionStyle = isFeatured
+    ? styles.descriptionFeatured
+    : styles.description;
   const titleStyle = isFeatured ? styles.titleFeatured : styles.title;
 
   return (
-    <div className={styles.filmcard} {...restProps}>
+    <div className={filmCardContainerClassname}>
       <img className={imgStyle} src={imgSrc} alt={title} />
       <div className={styles.relative}>
-        <div className={styles.details}>
-          <div>
-              <span className={styles.tag} >{genre && genre.toUpperCase()}</span>
+        {showDetails && (
+          <div className={styles.details}>
+            <div>
+              <span className={styles.tag}>{genre && genre.toUpperCase()}</span>
+            </div>
+            {_times(rating, () => (
+              <StarTwoTone twoToneColor="#ffbf00" />
+            ))}
+            <p className={titleStyle}>{title}</p>
+            <p className={descriptionStyle}>{description}</p>
           </div>
-          {_times(rating, () => (
-            <StarTwoTone twoToneColor="#fff" />
-          ))}
-          <p className={titleStyle}>{title}</p>
-          <p className={descriptionStyle}>{description}</p>
-        </div>
+        )}
       </div>
     </div>
   );
