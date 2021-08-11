@@ -116,7 +116,7 @@ const QUERY_MOVIE_ID = gql`
 
 const NEW_RELEASES = gql`
   query {
-    filterMovies(filter: { key: "isPublished", value: "true" }) {
+    getNewReleases {
       id
       mId
       name
@@ -141,4 +141,31 @@ const NEW_RELEASES = gql`
   }
 `;
 
-export { QUERY_ALL_MOVIES, QUERY_MOVIE_ID, NEW_RELEASES };
+const FEATURED_MOVIES = gql`
+  query {
+    getFeatured {
+      id
+      mId
+      name
+      title
+      description
+      url
+      genre
+      createdAt
+      thumbnails {
+        high {
+          url
+          width
+          height
+        }
+        maxres {
+          url
+          width
+          height
+        }
+      }
+    }
+  }
+`;
+
+export { QUERY_ALL_MOVIES, QUERY_MOVIE_ID, NEW_RELEASES, FEATURED_MOVIES };
