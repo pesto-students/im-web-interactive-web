@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import Seeker from "imcomponents/organisms/seeker";
 import Player from "imcomponents/organisms/player";
 import AppLoader from "imcomponents/molecules/appLoader";
+import SearchMovie from "imcomponents/molecules/searchMovie";
 import AppSkeleton from "../organisms/appSkeleton";
 import WatchList from "../pages/watchList";
 import MoviesList from "../pages/moviesList";
@@ -35,6 +36,7 @@ const AppRoutes = () => {
         <Route exact path="/player" component={Player} />
         <Route exact path="/player/seeker" component={Seeker} />
         <Route exact path="/movies/:movieCriteria" component={MoviesList} />
+        <Route exact path="/movie/search" component={SearchMovie} />
       </Switch>
     </AppSkeleton>
   );

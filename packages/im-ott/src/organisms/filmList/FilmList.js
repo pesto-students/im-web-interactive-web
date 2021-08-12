@@ -9,7 +9,7 @@ import _isEmpty from "lodash/isEmpty";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
-import { NEW_RELEASES } from "imbase/graphql/queries";
+import { NEW_RELEASES, FEATURED_MOVIES } from "imbase/graphql/queries";
 
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
@@ -86,22 +86,30 @@ const FilmList = (props) => {
   };
 
   useEffect(() => {
+    let queryMovie = NEW_RELEASES;
+    if (listKey === "featured") {
+      queryMovie = FEATURED_MOVIES;
+    }
     setLoading(true);
     gqlClient
       .query({
-        query: NEW_RELEASES,
+        query: queryMovie,
       })
       .then((response) => {
         console.log(response);
         const { data } = response;
-        setMovieList(data.filterMovies);
+        if (listKey === "featured") {
+          setMovieList(data.getFeatured);
+        } else {
+          setMovieList(data.getNewReleases);
+        }
         setLoading(false);
       })
       .catch((error) => {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [listKey]);
 
   if (loading) {
     return <Loader />;
