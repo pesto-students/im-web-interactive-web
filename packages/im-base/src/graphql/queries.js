@@ -1,8 +1,16 @@
 import { gql } from "@apollo/client";
 
 const QUERY_ALL_MOVIES = gql`
-  query {
-    movies {
+  query getAllMovies(
+    $userId: String
+    $isPublished: Boolean
+    $isFeatured: Boolean
+  ) {
+    movies(
+      userId: $userId
+      isPublished: $isPublished
+      isFeatured: $isFeatured
+    ) {
       id
       mId
       name
