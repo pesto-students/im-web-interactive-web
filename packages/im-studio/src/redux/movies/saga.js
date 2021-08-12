@@ -1,6 +1,6 @@
 import { all, takeEvery, call, put } from "redux-saga/effects";
 import { gqlClient } from "imbase/graphql/gqlClient";
-import { QUERY_ALL_MOVIES, QUERY_MOVIE_ID } from "../../graphql/queries";
+import { QUERY_ALL_MOVIES, QUERY_MOVIE_ID } from "imbase/graphql/queries";
 import {
   CREATE_MOVIE,
   UPDATE_MOVIE_ID,
@@ -10,7 +10,7 @@ import {
   MUTATE_DELETE_OVERLAY,
   CREATE_TRIGGER,
   MUTATE_DELETE_TRIGGER,
-} from "../../graphql/mutation";
+} from "imbase/graphql/mutation";
 import {
   GET_ALL_MOVIES,
   ADD_MOVIE,
@@ -37,6 +37,9 @@ const getAllMoviesFromApi = () => {
   return gqlClient
     .query({
       query: QUERY_ALL_MOVIES,
+      variables: {
+        userId: getCurrentUser().uid,
+      },
     })
     .then((res) => res);
 };
@@ -178,12 +181,12 @@ function* deleteAction({ payload }) {
   };
 
   const { data } = yield call(deleteActionApi, apiParams);
-    if (data) {
-      yield call(getMovieByID, { payload: { id: payload.id } });
-    } else {
-      // console.log(error);
-      // TODO  ADD SENTRY 
-    }
+  if (data) {
+    yield call(getMovieByID, { payload: { id: payload.id } });
+  } else {
+    // console.log(error);
+    // TODO  ADD SENTRY
+  }
 }
 
 // Watcher Movie

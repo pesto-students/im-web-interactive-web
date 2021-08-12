@@ -126,9 +126,7 @@ const FilmList = (props) => {
           {label} &nbsp; <RightOutlined />
         </div>
         <div className={styles.seeMore} onClick={handleSeeAll}>
-          <p>
-            See all <RightOutlined />
-          </p>
+          <p>See all</p>
         </div>
       </Title>
       <div className={filmListContainer}>

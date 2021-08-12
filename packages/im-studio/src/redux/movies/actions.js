@@ -11,9 +11,9 @@ import {
 } from "./types";
 
 // Get Movies
-export const getAllMovies = (userid) => ({
+export const getAllMovies = (userId) => ({
   type: GET_ALL_MOVIES,
-  payload: { userid },
+  payload: { userId },
 });
 
 export const getMovieByID = (id) => ({

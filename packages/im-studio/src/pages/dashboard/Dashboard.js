@@ -33,6 +33,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   const filmGenre = FilmReader.genre(filmDetails);
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
   const filmDescription = FilmReader.description(filmDetails);
+  const filmIsFeatured = false;
   return (
     <Link to={`video/${filmId}/edit`} className={styles.movieLinks}>
       <FilmCard
@@ -43,6 +44,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
         rating={filmRating}
         description={filmDescription}
         {...filmDetails}
+        isFeatured={filmIsFeatured}
         className={styles.film}
       />
     </Link>
