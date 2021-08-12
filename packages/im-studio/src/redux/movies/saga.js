@@ -37,6 +37,9 @@ const getAllMoviesFromApi = () => {
   return gqlClient
     .query({
       query: QUERY_ALL_MOVIES,
+      variables: {
+        userId: getCurrentUser().uid,
+      }
     })
     .then((res) => res);
 };

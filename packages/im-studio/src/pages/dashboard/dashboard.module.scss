@@ -1,26 +1,25 @@
 .container {
+  .content {
+    display: inline-block;
     padding: 8rem 4rem 4rem 4rem;
-    
-    .content {
-        display: inline-block;
 
-        .heading {
-            font-weight: bolder;
-            font-size: 2rem;
-        }
+    .heading {
+      font-weight: bolder;
+      font-size: 2rem;
+    }
 
-        .movies {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+    .movies {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
 
-            .film {
-                padding: 0rem 0.8rem;
-            }
+      .film {
+        padding: 0rem 0.8rem;
+      }
 
-            .movieLinks {
-                margin: 0.5rem 0;
-            }
-        }
+      .movieLinks {
+        margin: 0.5rem 0;
+      }
+    }
   }
 }
