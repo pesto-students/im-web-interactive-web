@@ -13,7 +13,6 @@ import styles from "./filmcard.module.scss";
 
 const FilmCard = (props) => {
   const {
-    className,
     title,
     imgSrc,
     genre,
@@ -22,7 +21,6 @@ const FilmCard = (props) => {
     description,
     alignRight,
     showDetails,
-    ...restProps
   } = props;
 
   const filmCardContainerClassname = cx(styles.filmcard, {

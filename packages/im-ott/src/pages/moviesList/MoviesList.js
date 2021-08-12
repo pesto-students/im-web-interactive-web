@@ -17,7 +17,7 @@ import FilmReader from "imbase/readers/Film";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
-import { NEW_RELEASES } from "imbase/graphql/queries";
+import { NEW_RELEASES, FEATURED_MOVIES } from "imbase/graphql/queries";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -34,7 +34,7 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
 
   if (isMobile) {
     return (
-      <Link to={`film/${filmId}`}>
+      <Link to={`/film/${filmId}`}>
         <FilmCardMobile
           key={filmId}
           title={filmTitle}
@@ -48,7 +48,7 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   }
 
   return (
-    <Link to={`film/${filmId}`}>
+    <Link to={`/film/${filmId}`}>
       <FilmCard
         key={filmId}
         title={filmTitle}
@@ -77,7 +77,7 @@ const MoviesList = () => {
   useEffect(() => {
     let movieQuery = NEW_RELEASES;
     if (movieCriteria === "featured") {
-      movieQuery = NEW_RELEASES;
+      movieQuery = FEATURED_MOVIES;
     }
     setLoading(true);
     gqlClient
@@ -86,7 +86,12 @@ const MoviesList = () => {
       })
       .then((response) => {
         const { data } = response;
-        setMovieList(data.filterMovies);
+        if (movieCriteria === "featured") {
+          setMovieList(data.getFeatured);
+        } else {
+          setMovieList(data.getNewReleases);
+        }
+
         setLoading(false);
       })
       .catch((error) => {
