@@ -145,6 +145,18 @@ const MUTATE_DELETE_TRIGGER = gql`
   }
 `;
 
+const MUTATION_ADD_WATCHLIST = gql`
+  mutation ADD_WATCHLIST($movieId: ID!, $userid: ID!) {
+    addToWatchlist(movieId: $movieId, userId: $userid)
+  }
+`;
+
+const MUTATION_DELETE_WATCHLIST = gql`
+  mutation DELETE_WATCHLIST($movieId: ID!, $userid: ID!) {
+    deleteFromWatchlist(movieId: $movieId, userId: $userid)
+  }
+`;
+
 export {
   CREATE_USER,
   CREATE_MOVIE,
@@ -155,4 +167,6 @@ export {
   MUTATE_DELETE_OVERLAY,
   CREATE_TRIGGER,
   MUTATE_DELETE_TRIGGER,
+  MUTATION_ADD_WATCHLIST,
+  MUTATION_DELETE_WATCHLIST,
 };

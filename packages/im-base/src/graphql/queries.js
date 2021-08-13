@@ -194,10 +194,17 @@ const QUERY_INTERACTIVE_DATA_BY_MOVIE_ID = gql`
   }
 `;
 
+const IS_WATCHLISTED = gql`
+  query isWatchlisted($movieId: ID!, $userId: ID!) {
+    isWatchlisted(movieId: $movieId, userId: $userId)
+  }
+`;
+
 export {
   QUERY_ALL_MOVIES,
   QUERY_MOVIE_ID,
   NEW_RELEASES,
   FEATURED_MOVIES,
   QUERY_INTERACTIVE_DATA_BY_MOVIE_ID,
+  IS_WATCHLISTED,
 };

@@ -14,6 +14,7 @@ import Button from "imcomponents/atoms/button";
 import { Modal } from "imcomponents/atoms/modal";
 import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
+import Watchlist from "../../organisms/watchlist";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
@@ -37,6 +38,7 @@ import { StarFilled } from "imcomponents/atoms/icon";
 const FilmDetails = (props) => {
   const { filmId } = useParams();
   const [loading, setLoading] = useState(true);
+  const [loadingModal, setLoadingModal] = useState(false);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(EMPTY_OBJECT);
   const [filmDetails, setFilmDetails] = useState(EMPTY_OBJECT);
@@ -74,7 +76,7 @@ const FilmDetails = (props) => {
   }
 
   const handlePlay = () => {
-    setLoading(true);
+    setLoadingModal(true);
     gqlClient
       .query({
         query: QUERY_INTERACTIVE_DATA_BY_MOVIE_ID,
@@ -86,11 +88,11 @@ const FilmDetails = (props) => {
         const { data } = response;
         setOverlayDetails(data.getInteractiveData);
         setVisible(true);
-        setLoading(false);
+        setLoadingModal(false);
       })
       .catch((error) => {
         setError(error);
-        setLoading(false);
+        setLoadingModal(false);
       });
   };
 
@@ -125,12 +127,15 @@ const FilmDetails = (props) => {
             {_times(FilmReader.rating(filmDetails), () => (
               <StarFilled style={{ color: "yellow" }} />
             ))}
-            <Button label={"Play Movie"} onClick={handlePlay} danger></Button>
-            <Button
-              className={styles.ml2}
-              label={"Add to Watchlist"}
-              danger
-            ></Button>
+            <div className={styles.btnWrapper}>
+              <Button
+                label={"Play Movie"}
+                onClick={handlePlay}
+                loading={loadingModal}
+                danger
+              ></Button>
+              <Watchlist movieId={filmId} />
+            </div>
           </div>
         </div>
       </div>
