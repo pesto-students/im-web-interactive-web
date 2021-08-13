@@ -11,14 +11,19 @@ import _times from "lodash/times";
 import Loader from "imcomponents/molecules/loader/Loader";
 import { Title, Label } from "imcomponents/atoms/typography";
 import Button from "imcomponents/atoms/button";
+import { Modal } from "imcomponents/atoms/modal";
 import Error from "imcomponents/molecules/error";
+import Player from "imcomponents/organisms/player";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
-import { QUERY_MOVIE_ID } from "imbase/graphql/queries";
+import {
+  QUERY_MOVIE_ID,
+  QUERY_INTERACTIVE_DATA_BY_MOVIE_ID,
+} from "imbase/graphql/queries";
 
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -32,9 +37,15 @@ import { StarFilled } from "imcomponents/atoms/icon";
 const FilmDetails = (props) => {
   const { filmId } = useParams();
   const [loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [error, setError] = useState(EMPTY_OBJECT);
   const [filmDetails, setFilmDetails] = useState(EMPTY_OBJECT);
+  const [overlayDetails, setOverlayDetails] = useState(EMPTY_OBJECT);
 
+  let triggerDetails = EMPTY_OBJECT;
+  if (filmDetails?.triggers) {
+    triggerDetails = filmDetails.triggers;
+  }
   useEffect(() => {
     gqlClient
       .query({
@@ -61,6 +72,31 @@ const FilmDetails = (props) => {
   if (!_isEmpty(error)) {
     return <Error {...error} />;
   }
+
+  const handlePlay = () => {
+    setLoading(true);
+    gqlClient
+      .query({
+        query: QUERY_INTERACTIVE_DATA_BY_MOVIE_ID,
+        variables: {
+          movieId: filmId,
+        },
+      })
+      .then((response) => {
+        const { data } = response;
+        setOverlayDetails(data.getInteractiveData);
+        setVisible(true);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   return (
     <div className={cx("film-details", styles.container)}>
@@ -89,7 +125,7 @@ const FilmDetails = (props) => {
             {_times(FilmReader.rating(filmDetails), () => (
               <StarFilled style={{ color: "yellow" }} />
             ))}
-            <Button label={"Play Movie"} danger></Button>
+            <Button label={"Play Movie"} onClick={handlePlay} danger></Button>
             <Button
               className={styles.ml2}
               label={"Add to Watchlist"}
@@ -104,6 +140,20 @@ const FilmDetails = (props) => {
         </Title>
         <Label>{FilmReader.description(filmDetails)}</Label>
       </div>
+      <Modal
+        title={FilmReader.title(filmDetails)}
+        width={"80vw"}
+        centered
+        visible={visible}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <Player
+          videoUrl={FilmReader.url(filmDetails)}
+          overlayData={overlayDetails}
+          triggerData={triggerDetails}
+        />
+      </Modal>
     </div>
   );
 };
