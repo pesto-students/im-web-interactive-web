@@ -12,25 +12,43 @@ const Banner = () => {
   return (
     <Carousel autoplay>
       <div>
-        <div className={styles.bannerOverlay}>
-          <Title level={3}>King Kong</Title>
-          <Label>
-            King Kong is a 2005 epic monster adventure film co-written,
-            produced, and directed by Peter Jackson. ... Set in 1933, it follows
-            the story of an ambitious filmmaker who coerces his cast and hired
-            ship crew to travel to the mysterious Skull Island.
-          </Label>
-        </div>
-        <Image src="https://picsum.photos/id/237/800/400" height={400} />
+        {/* <div className={styles.bannerOverlay}>
+          <Title level={3}>Intersteller</Title>
+          <Label>n Earth's future, a global crop blight and second Dust Bowl are slowly rendering the planet uninhabitable. Professor Brand (Michael Caine), a brilliant NASA physicist, is working on plans to save mankind by transporting Earth's population to a new home via a wormhole. But first, Brand must send former NASA pilot Cooper (Matthew McConaughey) and a team of researchers through the wormhole and across the galaxy to find out which of three planets could be mankind's new home.</Label>
+        </div> */}
+        <Image
+          src="https://free4kwallpapers.com/uploads/originals/2020/11/14/interstellar-space-wallpaper.jpg"
+          height={500}
+          width={"100%"}
+        />
       </div>
       <div className={styles.bannerContent}>
-        <Image src="https://picsum.photos/id/238/800/400" height={400} />
+        <Image
+          src="https://wallpaperaccess.com/full/788693.jpg"
+          height={500}
+          width={"100%"}
+        />
       </div>
       <div>
-        <Image src="https://picsum.photos/id/239/800/400" height={400} />
+        <Image
+          src="https://wallpaper.dog/large/10915284.jpg"
+          height={500}
+          width={"100%"}
+        />
       </div>
       <div>
-        <Image src="https://picsum.photos/id/240/800/400" height={400} />
+        <Image
+          src="https://wallpaperaccess.com/full/37945.jpg"
+          height={500}
+          width={"100%"}
+        />
+      </div>
+      <div>
+        <Image
+          src="https://wallpapermemory.com/uploads/601/fantastic-four-movie-wallpaper-ultra-hd-4k-70140.jpg"
+          height={500}
+          width={"100%"}
+        />
       </div>
     </Carousel>
   );
