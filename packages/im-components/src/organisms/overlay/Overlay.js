@@ -30,7 +30,6 @@ const Overlay = ({ overlay, currentTime, seekTo }) => {
 
   useEffect(() => {
     return () => {
-      console.log(overlayJumpPoint + 10 - currentTime);
       if (selected === "left" && overlayJumpPoint + 10 - currentTime === 1) {
         seekTo(overlayLeftAction);
       } else if (

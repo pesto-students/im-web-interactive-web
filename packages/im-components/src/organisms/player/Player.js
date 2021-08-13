@@ -8,19 +8,17 @@ import _map from "lodash/map";
 // Components
 import screenfull from "screenfull";
 import ReactPlayer from "react-player/youtube";
+import Progress from "imcomponents/atoms/progress";
 import Overlay from "../overlay";
 
 // Constants
-import { EMPTY_STRING } from "imbase/constants/base.constants";
+import { EMPTY_STRING, EMPTY_OBJECT } from "imbase/constants/base.constants";
 
 // Styles
 import styles from "./player.module.scss";
 
-// Mock Data
-import { overlayData } from "imbase/constants/mockOverlayData";
-
 const Player = (props) => {
-  const { classname, videoUrl, isHost } = props;
+  const { classname, videoUrl, isHost, overlayData, triggerData } = props;
   const [state, setState] = useState({
     url: null,
     playing: false,
@@ -41,17 +39,6 @@ const Player = (props) => {
   // player
   const player = useRef(null);
 
-  // to load url
-  const load = (url) => {
-    setState({
-      ...state,
-      url,
-      played: 0,
-      loaded: 0,
-      pip: false,
-    });
-  };
-
   // to play pause player
   const handlePlayPause = () => {
     setState({ ...state, playing: !state.playing });
@@ -62,27 +49,8 @@ const Player = (props) => {
     setState({ ...state, url: null, playing: false });
   };
 
-  // to show/hide controls
-  const handleToggleControls = () => {
-    const { url } = state;
-    setState(
-      {
-        ...state,
-        controls: !state.controls,
-        url: null,
-      },
-      () => this.load(url)
-    );
-  };
-
-  // to show preview image rather than yt default
-  const handleToggleLight = () => {
-    setState({ ...state, light: !state.light });
-  };
-
   // on play
   const handlePlay = () => {
-    console.log("onPlay");
     if (!state.playing) {
       setState({ ...state, playing: true });
     }
@@ -90,13 +58,21 @@ const Player = (props) => {
 
   // on pause
   const handlePause = () => {
-    console.log("onPause");
     setState({ ...state, playing: false });
   };
 
   // handle progress
   const handleProgress = (stateIn) => {
-    console.log("onProgress", state.playbackRate);
+    if (triggerData) {
+      _map(triggerData, (trigger) => {
+        if (Math.round(state.played * state.duration) === trigger.startPoint) {
+          if (player?.current) {
+            player.current.seekTo(trigger.skipTo);
+          }
+        }
+      });
+    }
+
     // We only want to update time slider if we are not currently seeking
     if (!state.seeking) {
       setState({ ...state, ...stateIn });
@@ -105,14 +81,17 @@ const Player = (props) => {
 
   // handle on ended
   const handleEnded = () => {
-    console.log("onEnded");
     setState({ ...state, playing: false });
   };
 
   // handle on duration
   const handleDuration = (duration) => {
-    console.log("onDuration", duration);
     setState({ ...state, duration });
+  };
+
+  // handle reset
+  const handleReset = () => {
+    player?.current.seekTo(0);
   };
 
   // handle full screen
@@ -125,60 +104,80 @@ const Player = (props) => {
 
   // handle overlay action
   const handleOverlayAction = (seconds) => {
-    console.log("aagate" + seconds);
     if (player?.current) {
       player.current.seekTo(seconds);
     }
   };
 
   return (
-    <div className={styles.playerWrapper} ref={playerWrapper}>
-      <ReactPlayer
-        ref={player}
-        className={cx(styles.reactPlayer, classname)}
-        url={state.url || videoUrl}
-        width="100%"
-        height="90%"
-        playing={state.playing}
-        controls={state.controls || isHost}
-        onPlay={handlePlay}
-        onPause={handlePause}
-        onBuffer={() => console.log("onBuffer")}
-        onSeek={(e) => console.log("onSeek", e)}
-        onEnded={handleEnded}
-        onError={(e) => console.log("onError", e)}
-        onProgress={handleProgress}
-        onDuration={handleDuration}
-      />
+    <div>
+      <div className={styles.playerWrapper} ref={playerWrapper}>
+        <ReactPlayer
+          ref={player}
+          className={cx(styles.reactPlayer, classname)}
+          url={state.url || videoUrl}
+          width="100%"
+          height="100%"
+          playing={state.playing}
+          controls={state.controls || isHost}
+          onPlay={handlePlay}
+          onPause={handlePause}
+          onEnded={handleEnded}
+          onProgress={handleProgress}
+          onDuration={handleDuration}
+        />
 
-      <div>
-        {_map(overlayData, (overlay) => {
-          if (
-            Math.round(state.played * state.duration) > overlay.jumpPoint &&
-            Math.round(state.played * state.duration) < overlay.jumpPoint + 10
-          ) {
-            return (
-              <Overlay
-                key={`overlay-${overlay.id}`}
-                overlay={overlay}
-                currentTime={Math.round(state.played * state.duration)}
-                seekTo={handleOverlayAction}
-              />
-            );
-          }
-        })}
+        <div>
+          {_map(overlayData, (overlay) => {
+            if (
+              Math.round(state.played * state.duration) >= overlay.jumpPoint &&
+              Math.round(state.played * state.duration) <=
+                overlay.jumpPoint + 10
+            ) {
+              return (
+                <Overlay
+                  key={`overlay-${overlay.id}`}
+                  overlay={overlay}
+                  currentTime={Math.round(state.played * state.duration)}
+                  seekTo={handleOverlayAction}
+                />
+              );
+            }
+          })}
+        </div>
       </div>
-
       {state.visible_button_refresh && (
-        <div className={styles.controls}>
-          <div>
-            <button type="button" onClick={() => handlePlayPause()}>
+        <div className={styles.wrapper}>
+          <div className={styles.progress}>
+            <Progress
+              strokeColor={{
+                from: "#23395d",
+                to: "#152238",
+              }}
+              percent={Math.round(state.played * state.duration)}
+              status="active"
+            />
+          </div>
+          <div className={styles.controls}>
+            <button
+              type="button"
+              className={styles.mr1}
+              onClick={() => handlePlayPause()}
+            >
               {state.playing ? "Pause" : "Play"}
             </button>
-          </div>
-          <div>
-            <button type="button" onClick={() => handleClickFullscreen()}>
-              Fullscreen {Math.round(state.played * state.duration)}
+            <button
+              type="button"
+              className={styles.mr1}
+              onClick={() => handleClickFullscreen()}
+            >
+              Fullscreen
+            </button>
+            <button onClick={handleStop} className={styles.mr1}>
+              Stop
+            </button>
+            <button type="button" onClick={() => handleReset()}>
+              Reset
             </button>
           </div>
         </div>
@@ -191,12 +190,16 @@ Player.propTypes = {
   className: PropTypes.string,
   videoUrl: PropTypes.string,
   isHost: PropTypes.bool,
+  overlayData: PropTypes.object,
+  triggerData: PropTypes.object,
 };
 
 Player.defaultProps = {
   className: undefined,
   videoUrl: EMPTY_STRING,
-  isHost: true,
+  isHost: false,
+  overlayData: EMPTY_OBJECT,
+  triggerData: EMPTY_OBJECT,
 };
 
 export default Player;

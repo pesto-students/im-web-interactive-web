@@ -178,4 +178,26 @@ const FEATURED_MOVIES = gql`
   }
 `;
 
-export { QUERY_ALL_MOVIES, QUERY_MOVIE_ID, NEW_RELEASES, FEATURED_MOVIES };
+const QUERY_INTERACTIVE_DATA_BY_MOVIE_ID = gql`
+  query getInteractiveData($movieId: ID!) {
+    getInteractiveData(movieId: $movieId) {
+      overlayId
+      overlayTemplate
+      overlayName
+      jumpPoint
+      templateTitle
+      templateLeftAction
+      templateRightAction
+      templateLeftLabel
+      templateRightLabel
+    }
+  }
+`;
+
+export {
+  QUERY_ALL_MOVIES,
+  QUERY_MOVIE_ID,
+  NEW_RELEASES,
+  FEATURED_MOVIES,
+  QUERY_INTERACTIVE_DATA_BY_MOVIE_ID,
+};
