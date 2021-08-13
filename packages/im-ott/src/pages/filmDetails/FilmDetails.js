@@ -66,7 +66,11 @@ const FilmDetails = (props) => {
     <div className={cx("film-details", styles.container)}>
       <div className={styles.bannerImage}>
         <img
-          src={FilmReader.cover(filmDetails)}
+          src={
+            FilmReader.cover(filmDetails) ||
+            FilmReader.coverStandard(filmDetails) ||
+            FilmReader.coverHigh(filmDetails)
+          }
           alt={`${FilmReader.title(filmDetails)} cover`}
         />
       </div>

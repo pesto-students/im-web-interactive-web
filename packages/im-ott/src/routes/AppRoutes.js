@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import Seeker from "imcomponents/organisms/seeker";
 import Player from "imcomponents/organisms/player";
 import AppLoader from "imcomponents/molecules/appLoader";
-import SearchMovie from "imcomponents/molecules/searchMovie";
+import SearchMovie from "../organisms/searchMovie";
 import AppSkeleton from "../organisms/appSkeleton";
 import WatchList from "../pages/watchList";
 import MoviesList from "../pages/moviesList";

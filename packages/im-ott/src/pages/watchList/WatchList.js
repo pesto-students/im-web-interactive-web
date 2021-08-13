@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { isMobile } from "imcomponents/atoms/device";
 
 // Lodash
 import _map from "lodash/map";
@@ -11,6 +10,7 @@ import FilmCard from "imcomponents/molecules/filmCard";
 import FilmCardMobile from "imcomponents/molecules/filmCardMobile";
 import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
+import { isMobile } from "imcomponents/atoms/device";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
@@ -34,7 +34,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
 
   if (isMobile) {
     return (
-      <Link to={`film/${filmId}`}>
+      <Link to={`/film/${filmId}`}>
         <FilmCardMobile
           key={`mobile-${filmId}`}
           title={filmTitle}
@@ -48,7 +48,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   }
 
   return (
-    <Link to={`film/${filmId}`} className={styles.movieLinks}>
+    <Link to={`/film/${filmId}`} className={styles.movieLinks}>
       <FilmCard
         key={filmId}
         title={filmTitle}
@@ -75,7 +75,7 @@ const WatchList = () => {
       })
       .then((response) => {
         const { data } = response;
-        setFilms(data.filterMovies);
+        setFilms(data.getNewReleases);
         setLoading(false);
       })
       .catch((error) => {

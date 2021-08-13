@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import Menu from "imcomponents/atoms/menu";
 import Drawer from "imcomponents/atoms/drawer";
 import Notification from "imcomponents/molecules/notification";
-import SearchMovie from "imcomponents/molecules/searchMovie";
+import SearchMovie from "../../../searchMovie";
 import {
   HomeOutlined,
   SearchOutlined,

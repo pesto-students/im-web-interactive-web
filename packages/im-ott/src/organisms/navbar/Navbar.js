@@ -49,6 +49,9 @@ function Navbar() {
     if (event.key === "home") {
       history.push("/");
     }
+    if (event.key === "search") {
+      history.push("/movie/search");
+    }
   };
 
   return (
