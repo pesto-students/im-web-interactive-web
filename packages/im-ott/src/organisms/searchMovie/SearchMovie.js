@@ -72,6 +72,8 @@ const SearchMovie = (props) => {
   const [searchValue, setSearchValue] = useState(EMPTY_STRING);
   const [searchClicked, setSearchClicked] = useState(false);
 
+  const searchStyle = isMobile ? styles.searchMobile : styles.search;
+
   useEffect(() => {
     setLoading(true);
     gqlClient
@@ -107,7 +109,7 @@ const SearchMovie = (props) => {
       <div className={styles.searchbox}>
         <SearchBox
           placeholder={"Search Movies"}
-          className={styles.search}
+          className={searchStyle}
           size={"large"}
           onSearch={handleSearch}
           allowClear
