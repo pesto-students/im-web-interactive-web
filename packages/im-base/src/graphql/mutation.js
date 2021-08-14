@@ -51,7 +51,6 @@ const UPDATE_MOVIE_ID = gql`
     updateMovie(id: $id, data: $data) {
       id
       mId
-      name
       title
       description
       url
