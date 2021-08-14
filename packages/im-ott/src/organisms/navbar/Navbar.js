@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { isMobile, BrowserView, MobileView } from "imcomponents/atoms/device";
+import { BrowserView, MobileView } from "imcomponents/atoms/device";
 
 // Components
 import { Menu } from "antd";
