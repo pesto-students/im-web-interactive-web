@@ -1,2 +1,3 @@
-/graphql https://iflix-backend.herokuapp.com/graphql 301
+/graphql/* https://iflix-backend.herokuapp.com/graphql/:splat 200
 /* /index.html 200
+
