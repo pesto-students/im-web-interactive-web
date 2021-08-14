@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 // Lodash
@@ -11,10 +11,11 @@ import FilmCardMobile from "imcomponents/molecules/filmCardMobile";
 import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
 import { isMobile } from "imcomponents/atoms/device";
+import { UserContext } from "imbase/providers/UserProvider";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
-import { NEW_RELEASES } from "imbase/graphql/queries";
+import { GET_WATCHLISTED_MOVIES } from "imbase/graphql/queries";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
@@ -67,22 +68,27 @@ const WatchList = () => {
   const [films, setFilms] = useState(EMPTY_ARRAY);
   const [error, setError] = useState(EMPTY_OBJECT);
 
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
     setLoading(true);
     gqlClient
       .query({
-        query: NEW_RELEASES,
+        query: GET_WATCHLISTED_MOVIES,
+        variables: {
+          userId: user.uid,
+        },
       })
       .then((response) => {
         const { data } = response;
-        setFilms(data.getNewReleases);
+        setFilms(data.getWatchlistedMovies);
         setLoading(false);
       })
       .catch((error) => {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [user.uid]);
 
   if (loading) {
     return <Loader />;

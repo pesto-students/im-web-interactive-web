@@ -33,7 +33,6 @@ const EditVideo = (props) => {
   const { videoId } = useParams();
   const [activeTab, setActiveTab] = useState("#1");
 
-  console.log(loading);
   useEffect(() => {
     if (hash) {
       setActiveTab(hash);

@@ -6,6 +6,9 @@ import "firebase/auth";
 import { gqlClient } from "../graphql/gqlClient";
 import { CREATE_USER } from "../graphql/mutation";
 
+// Sentry
+import * as Sentry from "@sentry/react";
+
 dotenv.config();
 
 // API Keys
@@ -53,7 +56,8 @@ export const signInWithGoogle = () => {
       });
     })
     .catch((error) => {
-      console.log(error.message);
+      Sentry.captureMessage("Error at Login");
+      Sentry.captureException(error);
     });
 };
 
@@ -64,7 +68,8 @@ export const logOut = () => {
       console.log("logged out");
     })
     .catch((error) => {
-      console.log(error.message);
+      Sentry.captureMessage("Error at Logout");
+      Sentry.captureException(error);
     });
 };
 

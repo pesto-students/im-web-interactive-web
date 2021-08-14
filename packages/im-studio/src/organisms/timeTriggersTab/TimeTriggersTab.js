@@ -15,6 +15,9 @@ import _isEmpty from "lodash/isEmpty";
 // Utils
 import { getFormattedTime, countSeconds } from "imbase/utils/getFormattedTime";
 
+// Sentry
+import * as Sentry from "@sentry/react";
+
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
@@ -69,8 +72,8 @@ const TimeTriggersTab = (props) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    // TODO ADD SENTRY
-    // console.log("Failed:", errorInfo);
+    Sentry.captureMessage("User Error at Triggers");
+    Sentry.captureException(errorInfo);
   };
 
   const handleSubmit = () => {

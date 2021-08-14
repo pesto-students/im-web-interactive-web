@@ -200,6 +200,33 @@ const IS_WATCHLISTED = gql`
   }
 `;
 
+const GET_WATCHLISTED_MOVIES = gql`
+  query getWatchlistedMovies($userId: ID!) {
+    getWatchlistedMovies(userId: $userId) {
+      id
+      mId
+      name
+      title
+      description
+      url
+      genre
+      createdAt
+      thumbnails {
+        high {
+          url
+          width
+          height
+        }
+        maxres {
+          url
+          width
+          height
+        }
+      }
+    }
+  }
+`;
+
 export {
   QUERY_ALL_MOVIES,
   QUERY_MOVIE_ID,
@@ -207,4 +234,5 @@ export {
   FEATURED_MOVIES,
   QUERY_INTERACTIVE_DATA_BY_MOVIE_ID,
   IS_WATCHLISTED,
+  GET_WATCHLISTED_MOVIES,
 };

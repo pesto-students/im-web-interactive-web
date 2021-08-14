@@ -9,6 +9,9 @@ import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form";
 
+// Sentry
+import * as Sentry from "@sentry/react";
+
 // Redux Actions
 import { updateMovieByID } from "../../redux/movies/actions";
 
@@ -42,8 +45,8 @@ const PublishTab = (props) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    // TODO SENTRY
-    // console.log("Failed:", errorInfo);
+    Sentry.captureMessage("User Error at Hotspots");
+    Sentry.captureException(errorInfo);
   };
   return (
     <div className={styles.container}>

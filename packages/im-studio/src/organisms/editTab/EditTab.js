@@ -9,6 +9,9 @@ import Form from "imcomponents/atoms/form";
 import Input from "imcomponents/atoms/input";
 import TextArea from "imcomponents/atoms/textArea";
 
+// Sentry
+import * as Sentry from "@sentry/react";
+
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
@@ -56,14 +59,14 @@ const EditTab = (props) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    Sentry.captureMessage("User Error at EditTab");
+    Sentry.captureException(errorInfo);
   };
 
   const handleSubmit = () => {
     form.submit();
   };
 
-  console.log(initialValues);
   return (
     <div className={styles.container}>
       <Form

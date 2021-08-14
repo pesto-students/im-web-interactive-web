@@ -96,7 +96,6 @@ const FilmList = (props) => {
         query: queryMovie,
       })
       .then((response) => {
-        console.log(response);
         const { data } = response;
         if (listKey === "featured") {
           setMovieList(data.getFeatured);
