@@ -4,6 +4,9 @@ import { NEW_RELEASES } from "imbase/graphql/queries";
 import { FETCH_MOVIES } from "./types";
 import { fetchMoviesSuccess, fetchMoviesError } from "./actions";
 
+// Sentry
+import * as Sentry from "@sentry/react";
+
 // Apollo Client
 const getMoviesFromApi = () => {
   return gqlClient
@@ -16,9 +19,10 @@ const getMoviesFromApi = () => {
 function* getMovies() {
   const { error, data } = yield call(getMoviesFromApi);
   if (data) {
-    console.log(data);
     yield put(fetchMoviesSuccess(data));
   } else {
+    Sentry.captureMessage("Saga-OTT: Error at getMovies");
+    Sentry.captureException(error);
     yield put(fetchMoviesError(error));
   }
 }

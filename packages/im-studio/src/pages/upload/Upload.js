@@ -75,7 +75,6 @@ const Upload = () => {
 
   const handleUpload = () => {
     setLoading(true);
-    console.log(videoDetails);
     dispatch(addMovie(videoDetails, history));
   };
 

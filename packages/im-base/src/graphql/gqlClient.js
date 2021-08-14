@@ -1,6 +1,9 @@
 import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 
+// Sentry
+import * as Sentry from "@sentry/react";
+
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: "no-cache",
@@ -21,13 +24,16 @@ const httpLink = new HttpLink({
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) =>
-      console.log(
+    graphQLErrors.forEach(({ message, locations, path }) => {
+      Sentry.captureMessage(
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
-    );
+      );
+    });
 
-  if (networkError) console.log(`[Network error]: ${networkError}`);
+  if (networkError) {
+    Sentry.captureMessage(`[Network error]: ${networkError}`);
+    Sentry.captureException(networkError);
+  }
 });
 
 // apollo-client graphql initialization

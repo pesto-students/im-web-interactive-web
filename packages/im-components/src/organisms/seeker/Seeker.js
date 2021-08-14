@@ -63,7 +63,6 @@ const Seeker = forwardRef((props, ref) => {
   // handle video on duration
   const handleDuration = (duration) => {
     setPlaying(false);
-    console.log("onDuration", duration);
     setDuration(duration);
   };
 

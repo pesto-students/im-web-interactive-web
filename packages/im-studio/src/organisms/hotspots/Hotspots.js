@@ -15,6 +15,9 @@ import _isEmpty from "lodash/isEmpty";
 // Utils
 import { getFormattedTime, countSeconds } from "imbase/utils/getFormattedTime";
 
+// Sentry
+import * as Sentry from "@sentry/react";
+
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
@@ -65,8 +68,8 @@ const Hotspots = (props) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    // TODO Sentry Failed
-    // console.log("Failed:", errorInfo);
+    Sentry.captureMessage("User Error at Hotspots");
+    Sentry.captureException(errorInfo);
   };
 
   const handleSubmit = () => {

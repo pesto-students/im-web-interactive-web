@@ -26,6 +26,9 @@ import {
 } from "./actions";
 import { getCurrentUser } from "imbase/services/firebase";
 
+// Sentry
+import * as Sentry from "@sentry/react";
+
 // Toaster
 import { toast } from "imcomponents/atoms/toaster";
 
@@ -88,6 +91,8 @@ function* getAllMovies() {
   if (data) {
     yield put(getAllMoviesSuccess(data.movies));
   } else {
+    Sentry.captureMessage("Saga: get All movies error");
+    Sentry.captureException(error);
     yield put(getAllMoviesError(error));
   }
 }
@@ -98,18 +103,18 @@ function* addMovie({ payload: { history, options } }) {
     const { addMovie } = data;
     history.push(`/video/${addMovie.id}/edit`);
   } else {
-    console.log(error);
+    Sentry.captureMessage("Saga: add a movie error");
+    Sentry.captureException(error);
   }
 }
 
 function* getMovieByID({ payload }) {
-  console.log("getmoviebyid", payload);
   const { error, data } = yield call(getMovieByIDApi, payload);
-  console.log(data);
   if (data) {
-    console.log("getmoviebydata", data);
     yield put(getMovieSuccess(data));
   } else {
+    Sentry.captureMessage("Saga: get movie by id error");
+    Sentry.captureException(error);
     yield put(getAllMoviesError(error));
   }
 }
@@ -121,6 +126,8 @@ function* updateMovieByID({ payload }) {
     yield put(getMovieSuccess(payload));
     toast.success("Movie Update Successful");
   } else {
+    Sentry.captureMessage("Saga: update movie by id error");
+    Sentry.captureException(error);
     yield put(getAllMoviesError(error));
   }
 }
@@ -157,7 +164,7 @@ function* addAction({ payload: { options, actionType } }) {
   if (data) {
     yield call(getMovieByID, { payload: { id: options.id } });
   } else {
-    // TODO  ADD SENTRY
+    Sentry.captureMessage("Saga: get movie by id didn't receive payload");
   }
 }
 
@@ -184,8 +191,7 @@ function* deleteAction({ payload }) {
   if (data) {
     yield call(getMovieByID, { payload: { id: payload.id } });
   } else {
-    // console.log(error);
-    // TODO  ADD SENTRY
+    Sentry.captureMessage("Saga: delete action didn't receive payload");
   }
 }
 

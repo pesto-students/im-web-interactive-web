@@ -20,6 +20,9 @@ import { getFormattedTime, countSeconds } from "imbase/utils/getFormattedTime";
 // Constants
 import { EMPTY_OBJECT, EMPTY_ARRAY } from "imbase/constants/base.constants";
 
+// Sentry
+import * as Sentry from "@sentry/react";
+
 // Redux Actions
 import { addAction, deleteAction } from "../../redux/movies/actions";
 
@@ -140,8 +143,8 @@ const OverlaysTab = (props) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    //TODo SENTRY
-    // console.log("Failed:", errorInfo);
+    Sentry.captureMessage("User Error at Overlays");
+    Sentry.captureException(errorInfo);
   };
 
   const handleSubmit = () => {
