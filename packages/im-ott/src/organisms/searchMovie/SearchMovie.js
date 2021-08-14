@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 //Components
+import noDataFound from "imbase/assets/images/noDataFound.png";
 import SearchBox from "imcomponents/atoms/searchBox";
+import Image from "imcomponents/atoms/image";
 import { isMobile } from "imcomponents/atoms/device";
 import FilmCard from "imcomponents/molecules/filmCard";
 import FilmCardMobile from "imcomponents/molecules/filmCardMobile";
@@ -68,6 +70,7 @@ const SearchMovie = (props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(EMPTY_OBJECT);
   const [searchValue, setSearchValue] = useState(EMPTY_STRING);
+  const [searchClicked, setSearchClicked] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -92,6 +95,7 @@ const SearchMovie = (props) => {
 
   const handleSearch = (value) => {
     setSearchValue(value);
+    setSearchClicked(true);
   };
 
   if (!_isEmpty(error)) {
@@ -101,7 +105,6 @@ const SearchMovie = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.searchbox}>
-        <h1 className={styles.heading}>Search Movies</h1>
         <SearchBox
           placeholder={"Search Movies"}
           className={styles.search}
@@ -112,9 +115,24 @@ const SearchMovie = (props) => {
       </div>
       {!loading ? (
         <div className={styles.content}>
+          {searchClicked && searchDetails.length === 1 && (
+            <p className={styles.searchResultText}>
+              Found {searchDetails.length} result
+            </p>
+          )}
+          {searchClicked && searchDetails.length > 1 && (
+            <p className={styles.searchResultText}>
+              Found {searchDetails.length} results
+            </p>
+          )}
           <div className={styles.movies}>
             {_map(searchDetails, renderMovie)}
           </div>
+          {searchClicked && searchDetails.length === 0 && (
+            <div className={styles.dataNotFound}>
+              <Image src={noDataFound} />
+            </div>
+          )}
         </div>
       ) : (
         <Loader />
