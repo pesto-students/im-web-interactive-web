@@ -46,8 +46,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
           genre={filmGenre}
           imgSrc={filmImgSrc}
           rating={filmRating}
-          isFeatured={false}
-          alignRight={true}
+          isFeatured={filmIsFeatured}
         />
       </Link>
     );
