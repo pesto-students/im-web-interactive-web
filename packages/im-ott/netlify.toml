@@ -1,0 +1,12 @@
+[[redirects]]
+	from = "https://i-flix-develop.netlify.app/graphql"
+	to = "https://iflix-backend.herokuapp.com/graphql"
+	status = 200
+	force = true
+	query = {path = ":path"} # COMMENT: apply this rule for /old-path?path=example
+
+[[redirects]]
+	from = "https://i-flix-develop.netlify.app/*"
+	to = "/index.html"
+	status = 200
+	force = true
