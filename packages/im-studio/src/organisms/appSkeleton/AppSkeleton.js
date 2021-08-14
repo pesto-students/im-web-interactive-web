@@ -1,12 +1,15 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
+import cx from "classnames";
+import { BrowserView, MobileView, isMobile } from "imcomponents/atoms/device";
 
 // Components
 import { Layout } from "antd";
 import FooterContent from "imcomponents/organisms/footerContent";
 import { UserContext } from "imbase/providers/UserProvider";
 import Navbar from "../navbar";
+import FooterMenu from "./components/footerMenu";
 
 // Styles
 import styles from "./appskeleton.module.scss";
@@ -28,14 +31,24 @@ const AppSkeleton = (props) => {
     return <Redirect to={redirect} />;
   }
 
+  const headerClassName = cx(styles.header, {
+    [styles.webHeader]: !isMobile,
+    [styles.mobileHeader]: isMobile,
+  });
+
   return (
     <Layout className={styles.container}>
-      <Header className={styles.header}>
+      <Header className={headerClassName}>
         <Navbar />
       </Header>
       <Content className={styles.content}>{children}</Content>
       <Footer className={styles.footer}>
-        <FooterContent />
+        <BrowserView className={styles.webFooter}>
+          <FooterContent />
+        </BrowserView>
+        <MobileView className={styles.mobileFooter}>
+          <FooterMenu />
+        </MobileView>
       </Footer>
     </Layout>
   );

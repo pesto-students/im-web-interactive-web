@@ -1,13 +1,4 @@
 .container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .browserView {
-    display: flex;
-  }
-
   .footerMenu {
     display: flex;
   }
@@ -35,8 +26,4 @@
       font-size: 2rem;
     }
   }
-}
-
-.logout {
-  font-size: 200%;
 }

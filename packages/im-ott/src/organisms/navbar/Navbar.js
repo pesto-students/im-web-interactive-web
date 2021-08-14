@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { isMobile, BrowserView } from "imcomponents/atoms/device";
+import { BrowserView, MobileView } from "imcomponents/atoms/device";
 
 // Components
 import { Menu } from "antd";
@@ -34,7 +34,6 @@ function Navbar() {
     history.push("/login");
   };
 
-  const logoText = isMobile ? "" : "iFlix";
   const HomeIcon = selectedMenu === "home" ? <HomeFilled /> : <HomeOutlined />;
   const LikesIcon =
     selectedMenu === "likes" ? <HeartFilled /> : <HeartOutlined />;
@@ -56,7 +55,7 @@ function Navbar() {
 
   return (
     <div className={styles.container}>
-      <Logo text={logoText} />
+      <Logo text={"iFlix"} />
       <BrowserView className={styles.browserView}>
         <Menu
           mode="horizontal"
@@ -83,7 +82,6 @@ function Navbar() {
             key="notifications"
             icon={NotificationsIcon}
           ></Menu.Item>
-
           <Menu.Item
             key={"logout"}
             className={styles.menuItem}
@@ -92,6 +90,20 @@ function Navbar() {
           ></Menu.Item>
         </Menu>
       </BrowserView>
+      <MobileView>
+        <Menu
+          mode="horizontal"
+          className={styles.footerMenu}
+          onClick={handleClick}
+        >
+          <Menu.Item
+            key={"logout"}
+            className={styles.menuItem}
+            icon={<LogoutOutlined />}
+            onClick={handleLogout}
+          ></Menu.Item>
+        </Menu>
+      </MobileView>
     </div>
   );
 }
