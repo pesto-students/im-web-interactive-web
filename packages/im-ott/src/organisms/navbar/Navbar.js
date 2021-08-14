@@ -34,7 +34,6 @@ function Navbar() {
     history.push("/login");
   };
 
-  const logoText = isMobile ? "" : "iFlix";
   const HomeIcon = selectedMenu === "home" ? <HomeFilled /> : <HomeOutlined />;
   const LikesIcon =
     selectedMenu === "likes" ? <HeartFilled /> : <HeartOutlined />;
@@ -56,7 +55,7 @@ function Navbar() {
 
   return (
     <div className={styles.container}>
-      <Logo text={logoText} />
+      <Logo text={"iFlix"} />
       <BrowserView className={styles.browserView}>
         <Menu
           mode="horizontal"
