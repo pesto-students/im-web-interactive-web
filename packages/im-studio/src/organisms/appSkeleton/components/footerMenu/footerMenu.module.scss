@@ -1,0 +1,29 @@
+.container {
+  .footerMenu {
+    display: flex;
+  }
+
+  :global(.ant-menu-item-active) {
+    color: #444 !important;
+  }
+
+  :global(.ant-menu-item-selected) {
+    background-color: white !important;
+  }
+
+  :global(.ant-menu-inline .ant-menu-item::after) {
+    border-right: unset !important;
+  }
+
+  .menuItem {
+    justify-content: center;
+
+    :global(.ant-menu-title-content) {
+      display: none;
+    }
+
+    :global(.ant-menu-item-icon) {
+      font-size: 2rem;
+    }
+  }
+}
