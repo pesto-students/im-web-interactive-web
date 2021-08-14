@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { isMobile, BrowserView } from "imcomponents/atoms/device";
+import { isMobile, BrowserView, MobileView } from "imcomponents/atoms/device";
 
 // Components
 import { Menu } from "antd";
@@ -92,6 +92,20 @@ function Navbar() {
           ></Menu.Item>
         </Menu>
       </BrowserView>
+      <MobileView>
+        <Menu
+          mode="horizontal"
+          className={styles.footerMenu}
+          onClick={handleClick}
+        >
+          <Menu.Item
+            key={"logout"}
+            className={styles.menuItem}
+            icon={<LogoutOutlined />}
+            onClick={handleLogout}
+          ></Menu.Item>
+        </Menu>
+      </MobileView>
     </div>
   );
 }
