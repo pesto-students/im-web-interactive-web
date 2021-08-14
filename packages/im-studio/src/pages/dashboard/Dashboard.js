@@ -7,9 +7,11 @@ import _map from "lodash/map";
 import _isEmpty from "lodash/isEmpty";
 
 // Components
+import { isMobile } from "imcomponents/atoms/device";
 import FilmCard from "imcomponents/molecules/filmCard";
 import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
+import FilmCardMobile from "imcomponents/molecules/filmCardMobile";
 
 // Utils
 import { getCurrentUser } from "imbase/services/firebase";
@@ -34,6 +36,23 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
   const filmDescription = FilmReader.description(filmDetails);
   const filmIsFeatured = false;
+
+  if (isMobile) {
+    return (
+      <Link to={`/film/${filmId}`}>
+        <FilmCardMobile
+          key={filmId}
+          title={filmTitle}
+          genre={filmGenre}
+          imgSrc={filmImgSrc}
+          rating={filmRating}
+          isFeatured={false}
+          alignRight={true}
+        />
+      </Link>
+    );
+  }
+
   return (
     <Link to={`video/${filmId}/edit`} className={styles.movieLinks}>
       <FilmCard

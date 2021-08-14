@@ -83,7 +83,6 @@ function Navbar() {
             key="notifications"
             icon={NotificationsIcon}
           ></Menu.Item>
-
           <Menu.Item
             key={"logout"}
             className={styles.menuItem}
