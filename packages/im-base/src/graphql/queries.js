@@ -15,7 +15,6 @@ const QUERY_ALL_MOVIES = gql`
     ) {
       id
       mId
-      name
       title
       description
       url
@@ -72,7 +71,6 @@ const QUERY_MOVIE_ID = gql`
     movie(id: $id) {
       id
       mId
-      name
       title
       description
       url
@@ -129,7 +127,6 @@ const NEW_RELEASES = gql`
     getNewReleases {
       id
       mId
-      name
       title
       description
       url
@@ -156,7 +153,6 @@ const FEATURED_MOVIES = gql`
     getFeatured {
       id
       mId
-      name
       title
       description
       url

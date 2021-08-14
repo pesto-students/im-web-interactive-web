@@ -24,7 +24,7 @@ import styles from "./editTab.module.scss";
 const EditTab = (props) => {
   const dispatch = useDispatch();
   const { tabdata, history } = props;
-  const { id, name, title, description, url, genre } = tabdata;
+  const { id, title, description, url, genre } = tabdata;
 
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -38,7 +38,6 @@ const EditTab = (props) => {
 
   //initial values
   const initialValues = {
-    movie_name: name,
     movie_url: url || `http://www.youtube.com/watch?v=${id}`,
     movie_title: title,
     movie_description: description,
@@ -49,7 +48,6 @@ const EditTab = (props) => {
     dispatch(
       updateMovieByID({
         ...tabdata,
-        name: values.movie_name,
         title: values.movie_title,
         description: values.movie_description,
         genre: values.movie_genre,
@@ -78,13 +76,6 @@ const EditTab = (props) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item
-          label="Name"
-          name="movie_name"
-          rules={[{ required: true, message: "Please input movie name!" }]}
-        >
-          <Input placeholder="Enter name" />
-        </Form.Item>
         <Form.Item
           label="YouTube URL"
           name="movie_url"
