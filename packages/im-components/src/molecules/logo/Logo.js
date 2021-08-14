@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 // Components
-import { VideoCameraFilled } from "imcomponents/atoms/icon";
+import logo from "imbase/assets/images/logo.png";
+import Image from "imcomponents/atoms/image";
 import { isMobile } from "imcomponents/atoms/device";
 
 // Styles
@@ -19,7 +20,7 @@ const Logo = (props) => {
   return (
     <>
       <Link to={"/"} className={styles.logo}>
-        <VideoCameraFilled className={imgStyle} />
+        <Image src={logo} className={imgStyle} />
         <div className={textStyle}>{text}</div>
       </Link>
     </>
