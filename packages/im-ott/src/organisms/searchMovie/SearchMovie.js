@@ -136,12 +136,14 @@ const SearchMovie = (props) => {
           <div className={styles.movies}>
             {_map(searchDetails, renderMovie)}
           </div>
-          {searchClicked && searchDetails.length === 0 && (
-            <div className={styles.dataNotFound}>
-              <p className={styles.searchResultText}>No results found</p>
-              <Image src={noDataFound} />
-            </div>
-          )}
+          <div>
+            {searchClicked && searchDetails.length === 0 && (
+              <div className={styles.dataNotFound}>
+                <p className={styles.searchResultText}>No results found</p>
+                <Image src={noDataFound} />
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         <Loader />
