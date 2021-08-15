@@ -67,6 +67,7 @@ const OverlaysTab = (props) => {
     {
       title: "Jump Point",
       dataIndex: "jumpPoint",
+      render: (val) => getFormattedTime(val),
     },
     {
       title: "Template",
@@ -163,6 +164,7 @@ const OverlaysTab = (props) => {
   };
 
   const handleEdit = (id, record) => {
+    // Somewhere else, even another file
     form.setFieldsValue({
       overlayid: id,
       name: record.name,

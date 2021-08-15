@@ -47,14 +47,21 @@
     margin: 1rem 2rem;
 
     .buttonContainer {
-      .editButton {
-        margin: 0 10rem;
-        padding: 0 2rem;
+      font-size: 2rem;
+      .editIcon {
+        margin-right: 1rem;
+
+        &:hover {
+          color: green;
+        }
       }
 
-      .deleteButton {
-        margin: 0 1rem;
-        padding: 0 2rem;
+      .deleteIcon {
+        margin-left: 1rem;
+
+        &:hover {
+          color: red;
+        }
       }
     }
   }

@@ -127,10 +127,12 @@ const TimeTriggersTab = (props) => {
     {
       title: "Start Point",
       dataIndex: "startPoint",
+      render: (val) => getFormattedTime(val),
     },
     {
       title: "Skip To",
       dataIndex: "skipTo",
+      render: (val) => getFormattedTime(val),
     },
     {
       title: "Action",

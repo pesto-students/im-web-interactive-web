@@ -112,6 +112,7 @@ const Hotspots = (props) => {
     {
       title: "Start Point",
       dataIndex: "startPoint",
+      render: (val) => getFormattedTime(val),
     },
     {
       title: "Action",
