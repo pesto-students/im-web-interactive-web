@@ -1,0 +1,14 @@
+.wrapper {
+  padding: 4rem;
+  text-align: center;
+
+  .info {
+    padding: 2rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .wrapper {
+    padding: 2rem;
+  }
+}

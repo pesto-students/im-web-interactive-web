@@ -8,6 +8,7 @@ import Form from "imcomponents/atoms/form";
 import Input from "imcomponents/atoms/input";
 import Table from "imcomponents/atoms/table";
 import Seeker from "imcomponents/organisms/seeker";
+import Loader from "imcomponents/molecules/loader";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
@@ -32,7 +33,7 @@ import styles from "./hotspots.module.scss";
 
 const Hotspots = (props) => {
   const dispatch = useDispatch();
-  const { tabdata } = props;
+  const { tabdata, loading } = props;
   const { id, mId, hotspots } = tabdata;
   const hotspotData = !_isEmpty(hotspots) ? Object.values(hotspots) : [];
   const [jumpIn, setJumpIn] = useState("00:00:01");
@@ -111,6 +112,7 @@ const Hotspots = (props) => {
     {
       title: "Start Point",
       dataIndex: "startPoint",
+      render: (val) => getFormattedTime(val),
     },
     {
       title: "Action",
@@ -130,70 +132,73 @@ const Hotspots = (props) => {
 
   return (
     <div className={styles.container}>
-      <Form
-        initialValues={{
-          hotspotid: "",
-          name: "",
-        }}
-        className={styles.hotspotsForm}
-        layout={"horizontal"}
-        form={form}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        {...formItemLayout}
-      >
-        <Form.Item label="hotspotid" name="hotspotid" hidden>
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: "Please input hotspot name!" }]}
+      {loading ? (
+        <Loader />
+      ) : (
+        <Form
+          initialValues={{
+            hotspotid: "",
+            name: "",
+          }}
+          className={styles.hotspotsForm}
+          layout={"horizontal"}
+          form={form}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          {...formItemLayout}
         >
-          <Input placeholder="Enter hotspot name" />
-        </Form.Item>
-        <Form.Item label="Jump to point in video">
-          <div className={styles.testPlayerDiv}>
-            <Seeker
-              ref={hotspotSeekRef}
-              videoUrl={`http://www.youtube.com/watch?v=${mId}`}
-              setSeekerTime={handleSetJumpIn}
+          <Form.Item label="hotspotid" name="hotspotid" hidden>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[{ required: true, message: "Please input hotspot name!" }]}
+          >
+            <Input placeholder="Enter hotspot name" />
+          </Form.Item>
+          <Form.Item label="Jump to point in video">
+            <div className={styles.testPlayerDiv}>
+              <Seeker
+                ref={hotspotSeekRef}
+                videoUrl={`http://www.youtube.com/watch?v=${mId}`}
+                setSeekerTime={handleSetJumpIn}
+              />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Input
+              className={styles.jumpInTimer}
+              value={jumpIn}
+              placeholder="00:00:01"
+              disabled
             />
-          </div>
-        </Form.Item>
-        <Form.Item>
-          <Input
-            className={styles.jumpInTimer}
-            value={jumpIn}
-            placeholder="00:00:01"
-            disabled
-          />
-        </Form.Item>
-        <Form.Item {...buttonItemLayout}>
-          <Button
-            className={styles.saveButton}
-            label={"Save"}
-            shape={"round"}
-            onClick={handleSubmit}
-            danger
-          />
-          <Button
-            className={styles.addNewButton}
-            label={"Add New"}
-            shape={"round"}
-            onClick={() => {
-              handleReset();
-            }}
-            danger
-          />
-        </Form.Item>
-      </Form>
-
+          </Form.Item>
+          <Form.Item {...buttonItemLayout}>
+            <Button
+              className={styles.saveButton}
+              label={"Save"}
+              shape={"round"}
+              onClick={handleSubmit}
+              danger
+            />
+            <Button
+              className={styles.addNewButton}
+              label={"Add New"}
+              shape={"round"}
+              onClick={() => {
+                handleReset();
+              }}
+              danger
+            />
+          </Form.Item>
+        </Form>
+      )}
       <Table
         className={styles.hotspotsTable}
         columns={columns}
         dataSource={hotspotData}
-        pagination={false}
+        pagination={true}
         bordered
       />
     </div>

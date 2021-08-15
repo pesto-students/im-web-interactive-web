@@ -9,6 +9,7 @@ import Input from "imcomponents/atoms/input";
 import Table from "imcomponents/atoms/table";
 import { Select, Option } from "imcomponents/atoms/select";
 import Seeker from "imcomponents/organisms/seeker";
+import Loader from "imcomponents/molecules/loader";
 
 // Lodash
 import _map from "lodash/map";
@@ -34,7 +35,7 @@ import styles from "./overlaysTab.module.scss";
 
 const OverlaysTab = (props) => {
   const dispatch = useDispatch();
-  const { tabdata } = props;
+  const { tabdata, loading } = props;
   const { id, mId, overlays, hotspots } = tabdata;
   const hotspotData = !_isEmpty(hotspots)
     ? Object.values(hotspots)
@@ -66,6 +67,7 @@ const OverlaysTab = (props) => {
     {
       title: "Jump Point",
       dataIndex: "jumpPoint",
+      render: (val) => getFormattedTime(val),
     },
     {
       title: "Template",
@@ -162,6 +164,7 @@ const OverlaysTab = (props) => {
   };
 
   const handleEdit = (id, record) => {
+    // Somewhere else, even another file
     form.setFieldsValue({
       overlayid: id,
       name: record.name,
@@ -183,123 +186,126 @@ const OverlaysTab = (props) => {
 
   return (
     <div className={styles.container}>
-      <Form
-        initialValues={{
-          templateid: "1",
-          overlayid: "",
-          name: "",
-          title: "",
-          lefthotspot: "",
-          righthotspot: "",
-        }}
-        {...formItemLayout}
-        className={styles.overlaysForm}
-        layout={"horizontal"}
-        form={form}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item label="overlayid" name="overlayid" hidden>
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Template"
-          name="templateid"
-          rules={[{ required: true, message: "Please input overlay name!" }]}
+      {loading ? (
+        <Loader />
+      ) : (
+        <Form
+          initialValues={{
+            templateid: "1",
+            overlayid: "",
+            name: "",
+            title: "",
+            lefthotspot: "",
+            righthotspot: "",
+          }}
+          {...formItemLayout}
+          className={styles.overlaysForm}
+          layout={"horizontal"}
+          form={form}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-          <Select defaultValue="1" disabled>
-            <Option value="1">STICKY_MODAL</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: "Please input overlay name!" }]}
-        >
-          <Input placeholder="Enter overlay name" />
-        </Form.Item>
-        <Form.Item label="Jump to point in video">
-          <div className={styles.testPlayerDiv}>
-            <Seeker
-              ref={overlaySeekRef}
-              videoUrl={`http://www.youtube.com/watch?v=${mId}`}
-              setSeekerTime={handleSetJumpIn}
-            />
-          </div>
-        </Form.Item>
-        <Form.Item>
-          <Input
-            className={styles.jumpInTimer}
-            value={jumpIn}
-            placeholder="00:00:01"
-            disabled
-          />
-        </Form.Item>
-        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="lefthotspot"
-          label="Left Hotspot Action"
-          rules={[{ required: true }]}
-        >
-          <Select placeholder="Select a option and change input text above">
-            {_map(hotspotData, (hotspot) => {
-              if (!_isEmpty(hotspot)) {
-                return (
-                  <Option key={`hotspot-${hotspot.id}`} value={hotspot.id}>
-                    {hotspot.name}
-                  </Option>
-                );
-              }
-            })}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="righthotspot"
-          label="Right Hotspot Action"
-          rules={[{ required: true }]}
-        >
-          <Select
-            placeholder="Select a option and change input text above"
-            allowClear
+          <Form.Item label="overlayid" name="overlayid" hidden>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Template"
+            name="templateid"
+            rules={[{ required: true, message: "Please input overlay name!" }]}
           >
-            {_map(hotspotData, (hotspot) => {
-              if (!_isEmpty(hotspot)) {
-                return (
-                  <Option key={`hotspot-${hotspot.id}`} value={hotspot.id}>
-                    {hotspot.name}
-                  </Option>
-                );
-              }
-            })}
-          </Select>
-        </Form.Item>
-        <Form.Item {...buttonItemLayout}>
-          <Button
-            className={styles.saveButton}
-            label={"Save"}
-            shape={"round"}
-            onClick={handleSubmit}
-            danger
-          />
-          <Button
-            className={styles.addNewButton}
-            label={"Add New"}
-            shape={"round"}
-            onClick={() => {
-              handleReset();
-            }}
-            danger
-          />
-        </Form.Item>
-      </Form>
-
+            <Select defaultValue="1" disabled>
+              <Option value="1">STICKY_MODAL</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[{ required: true, message: "Please input overlay name!" }]}
+          >
+            <Input placeholder="Enter overlay name" />
+          </Form.Item>
+          <Form.Item label="Jump to point in video">
+            <div className={styles.testPlayerDiv}>
+              <Seeker
+                ref={overlaySeekRef}
+                videoUrl={`http://www.youtube.com/watch?v=${mId}`}
+                setSeekerTime={handleSetJumpIn}
+              />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Input
+              className={styles.jumpInTimer}
+              value={jumpIn}
+              placeholder="00:00:01"
+              disabled
+            />
+          </Form.Item>
+          <Form.Item name="title" label="Title" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="lefthotspot"
+            label="Left Hotspot Action"
+            rules={[{ required: true }]}
+          >
+            <Select placeholder="Select a option and change input text above">
+              {_map(hotspotData, (hotspot) => {
+                if (!_isEmpty(hotspot)) {
+                  return (
+                    <Option key={`hotspot-${hotspot.id}`} value={hotspot.id}>
+                      {hotspot.name}
+                    </Option>
+                  );
+                }
+              })}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="righthotspot"
+            label="Right Hotspot Action"
+            rules={[{ required: true }]}
+          >
+            <Select
+              placeholder="Select a option and change input text above"
+              allowClear
+            >
+              {_map(hotspotData, (hotspot) => {
+                if (!_isEmpty(hotspot)) {
+                  return (
+                    <Option key={`hotspot-${hotspot.id}`} value={hotspot.id}>
+                      {hotspot.name}
+                    </Option>
+                  );
+                }
+              })}
+            </Select>
+          </Form.Item>
+          <Form.Item {...buttonItemLayout}>
+            <Button
+              className={styles.saveButton}
+              label={"Save"}
+              shape={"round"}
+              onClick={handleSubmit}
+              danger
+            />
+            <Button
+              className={styles.addNewButton}
+              label={"Add New"}
+              shape={"round"}
+              onClick={() => {
+                handleReset();
+              }}
+              danger
+            />
+          </Form.Item>
+        </Form>
+      )}
       <Table
         className={styles.overlaysTable}
         columns={columns}
         dataSource={overlayData}
-        pagination={false}
+        pagination={true}
         bordered
       />
     </div>

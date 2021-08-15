@@ -8,7 +8,6 @@ import _isEmpty from "lodash/isEmpty";
 // Components
 import Tabs from "imcomponents/atoms/tabs";
 import Error from "imcomponents/molecules/error";
-import Loader from "imcomponents/molecules/loader";
 import Player from "imcomponents/organisms/player";
 import EditTab from "../../organisms/editTab";
 import Hotspots from "../../organisms/hotspots";
@@ -46,10 +45,6 @@ const EditVideo = (props) => {
     history.push("edit" + activeKey);
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
   if (!_isEmpty(error)) {
     return <Error {...error} />;
   }
@@ -66,16 +61,24 @@ const EditVideo = (props) => {
         <div className={styles.movieData}>
           <Tabs activeKey={activeTab} type="card" onChange={handleChangeTab}>
             <TabPane className={styles.editTab} tab="Edit Details" key={"#1"}>
-              <EditTab tabdata={movie} history={history} />
+              <EditTab tabdata={movie} history={history} loading={loading} />
             </TabPane>
             <TabPane tab="Hotspots" key={"#2"}>
-              <Hotspots tabdata={movie} history={history} />
+              <Hotspots tabdata={movie} history={history} loading={loading} />
             </TabPane>
             <TabPane tab="Overlays" key={"#3"}>
-              <OverlaysTab tabdata={movie} history={history} />
+              <OverlaysTab
+                tabdata={movie}
+                history={history}
+                loading={loading}
+              />
             </TabPane>
             <TabPane tab="Time Triggers" key={"#4"}>
-              <TimeTriggersTab tabdata={movie} history={history} />
+              <TimeTriggersTab
+                tabdata={movie}
+                history={history}
+                loading={loading}
+              />
             </TabPane>
             <TabPane tab="Publish" key={"#5"}>
               <PublishTab tabdata={movie} history={history} />

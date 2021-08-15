@@ -8,6 +8,7 @@ import Form from "imcomponents/atoms/form";
 import Input from "imcomponents/atoms/input";
 import Table from "imcomponents/atoms/table";
 import Seeker from "imcomponents/organisms/seeker";
+import Loader from "imcomponents/molecules/loader";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
@@ -32,7 +33,7 @@ import styles from "./timeTriggersTab.module.scss";
 
 const TimeTriggersTab = (props) => {
   const dispatch = useDispatch();
-  const { tabdata } = props;
+  const { tabdata, loading } = props;
   const { id, mId, triggers } = tabdata;
   const triggerData = !_isEmpty(triggers) ? Object.values(triggers) : [];
   const [jumpIn, setJumpIn] = useState("00:00:01");
@@ -126,10 +127,12 @@ const TimeTriggersTab = (props) => {
     {
       title: "Start Point",
       dataIndex: "startPoint",
+      render: (val) => getFormattedTime(val),
     },
     {
       title: "Skip To",
       dataIndex: "skipTo",
+      render: (val) => getFormattedTime(val),
     },
     {
       title: "Action",
@@ -149,91 +152,94 @@ const TimeTriggersTab = (props) => {
 
   return (
     <div className={styles.container}>
-      <Form
-        {...formItemLayout}
-        className={styles.timeTriggersForm}
-        layout={"horizontal"}
-        form={form}
-        initialValues={{
-          triggerid: "",
-          type: "JUMP_POINT",
-          name: "",
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item label="triggerid" name="triggerid" hidden>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Type" name="type">
-          <Input value={"Jump Point"} disabled={true} />
-        </Form.Item>
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: "Please input trigger name!" }]}
+      {loading ? (
+        <Loader />
+      ) : (
+        <Form
+          {...formItemLayout}
+          className={styles.timeTriggersForm}
+          layout={"horizontal"}
+          form={form}
+          initialValues={{
+            triggerid: "",
+            type: "JUMP_POINT",
+            name: "",
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-          <Input placeholder="Enter hotspot name" />
-        </Form.Item>
-        <Form.Item label="In point">
-          <div className={styles.testPlayerDiv}>
-            <Seeker
-              ref={triggerSeekInRef}
-              videoUrl={`http://www.youtube.com/watch?v=${mId}`}
-              setSeekerTime={handleSetJumpIn}
+          <Form.Item label="triggerid" name="triggerid" hidden>
+            <Input />
+          </Form.Item>
+          <Form.Item label="Type" name="type">
+            <Input value={"Jump Point"} disabled={true} />
+          </Form.Item>
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[{ required: true, message: "Please input trigger name!" }]}
+          >
+            <Input placeholder="Enter hotspot name" />
+          </Form.Item>
+          <Form.Item label="In point">
+            <div className={styles.testPlayerDiv}>
+              <Seeker
+                ref={triggerSeekInRef}
+                videoUrl={`http://www.youtube.com/watch?v=${mId}`}
+                setSeekerTime={handleSetJumpIn}
+              />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Input
+              className={styles.jumpInTimer}
+              value={jumpIn}
+              placeholder="00:00:01"
+              disabled
             />
-          </div>
-        </Form.Item>
-        <Form.Item>
-          <Input
-            className={styles.jumpInTimer}
-            value={jumpIn}
-            placeholder="00:00:01"
-            disabled
-          />
-        </Form.Item>
-        <Form.Item label="Out point">
-          <div className={styles.testPlayerDiv}>
-            <Seeker
-              ref={triggerSeekOutRef}
-              videoUrl={`http://www.youtube.com/watch?v=${mId}`}
-              setSeekerTime={handleSetJumpOut}
+          </Form.Item>
+          <Form.Item label="Out point">
+            <div className={styles.testPlayerDiv}>
+              <Seeker
+                ref={triggerSeekOutRef}
+                videoUrl={`http://www.youtube.com/watch?v=${mId}`}
+                setSeekerTime={handleSetJumpOut}
+              />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Input
+              className={styles.jumpInTimer}
+              value={jumpOut}
+              placeholder="00:00:01"
+              disabled
             />
-          </div>
-        </Form.Item>
-        <Form.Item>
-          <Input
-            className={styles.jumpInTimer}
-            value={jumpOut}
-            placeholder="00:00:01"
-            disabled
-          />
-        </Form.Item>
-        <Form.Item {...buttonItemLayout}>
-          <Button
-            className={styles.saveButton}
-            label={"Save"}
-            shape={"round"}
-            onClick={handleSubmit}
-            danger
-          />
-          <Button
-            className={styles.addNewButton}
-            label={"Add New"}
-            shape={"round"}
-            onClick={() => {
-              handleReset();
-            }}
-            danger
-          />
-        </Form.Item>
-      </Form>
-
+          </Form.Item>
+          <Form.Item {...buttonItemLayout}>
+            <Button
+              className={styles.saveButton}
+              label={"Save"}
+              shape={"round"}
+              onClick={handleSubmit}
+              danger
+            />
+            <Button
+              className={styles.addNewButton}
+              label={"Add New"}
+              shape={"round"}
+              onClick={() => {
+                handleReset();
+              }}
+              danger
+            />
+          </Form.Item>
+        </Form>
+      )}
       <Table
         className={styles.timeTriggersTable}
         columns={columns}
         dataSource={triggerData}
-        pagination={false}
+        pagination={true}
         bordered
       />
     </div>

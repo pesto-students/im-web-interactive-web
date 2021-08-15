@@ -46,12 +46,20 @@
 
     .buttonContainer {
       font-size: 2rem;
-      .editButton {
+      .editIcon {
         margin-right: 1rem;
+
+        &:hover {
+          color: green;
+        }
       }
 
-      .deleteButton {
+      .deleteIcon {
         margin-left: 1rem;
+
+        &:hover {
+          color: red;
+        }
       }
     }
   }

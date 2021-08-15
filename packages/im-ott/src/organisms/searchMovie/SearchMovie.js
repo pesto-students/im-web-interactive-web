@@ -71,10 +71,14 @@ const SearchMovie = (props) => {
   const [error, setError] = useState(EMPTY_OBJECT);
   const [searchValue, setSearchValue] = useState(EMPTY_STRING);
   const [searchClicked, setSearchClicked] = useState(false);
+  const [searchInit, setSearchInit] = useState(true);
 
   const searchStyle = isMobile ? styles.searchMobile : styles.search;
 
   useEffect(() => {
+    if (_isEmpty(searchValue)) {
+      setSearchInit(true);
+    }
     setLoading(true);
     gqlClient
       .query({
@@ -96,6 +100,7 @@ const SearchMovie = (props) => {
   }, [searchValue]);
 
   const handleSearch = (value) => {
+    setSearchInit(false);
     setSearchValue(value);
     setSearchClicked(true);
   };
@@ -117,12 +122,13 @@ const SearchMovie = (props) => {
       </div>
       {!loading ? (
         <div className={styles.content}>
+          {searchInit && <h1>Frequently Searched Movies</h1>}
           {searchClicked && searchDetails.length === 1 && (
             <p className={styles.searchResultText}>
               Found {searchDetails.length} result
             </p>
           )}
-          {searchClicked && searchDetails.length > 1 && (
+          {!searchInit && searchClicked && searchDetails.length > 1 && (
             <p className={styles.searchResultText}>
               Found {searchDetails.length} results
             </p>
@@ -130,12 +136,14 @@ const SearchMovie = (props) => {
           <div className={styles.movies}>
             {_map(searchDetails, renderMovie)}
           </div>
-          {searchClicked && searchDetails.length === 0 && (
-            <div className={styles.dataNotFound}>
-              <p className={styles.searchResultText}>No results found</p>
-              <Image src={noDataFound} />
-            </div>
-          )}
+          <div>
+            {searchClicked && searchDetails.length === 0 && (
+              <div className={styles.dataNotFound}>
+                <p className={styles.searchResultText}>No results found</p>
+                <Image src={noDataFound} />
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         <Loader />
