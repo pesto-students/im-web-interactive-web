@@ -8,6 +8,7 @@ import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form";
 import Input from "imcomponents/atoms/input";
 import TextArea from "imcomponents/atoms/textArea";
+import Loader from "imcomponents/molecules/loader";
 
 // Sentry
 import * as Sentry from "@sentry/react";
@@ -23,7 +24,7 @@ import styles from "./editTab.module.scss";
 
 const EditTab = (props) => {
   const dispatch = useDispatch();
-  const { tabdata, history } = props;
+  const { tabdata, history, loading } = props;
   const { id, title, description, url, genre } = tabdata;
 
   const formItemLayout = {
@@ -67,63 +68,67 @@ const EditTab = (props) => {
 
   return (
     <div className={styles.container}>
-      <Form
-        initialValues={initialValues}
-        {...formItemLayout}
-        className={styles.editForm}
-        layout={"horizontal"}
-        form={form}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          label="YouTube URL"
-          name="movie_url"
-          rules={[{ required: true, message: "Please input movie url!" }]}
+      {loading ? (
+        <Loader />
+      ) : (
+        <Form
+          initialValues={initialValues}
+          {...formItemLayout}
+          className={styles.editForm}
+          layout={"horizontal"}
+          form={form}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-          <Input placeholder="Enter YouTube URL" disabled />
-        </Form.Item>
-        <Form.Item
-          label="Title"
-          name="movie_title"
-          rules={[{ required: true, message: "Please input movie title!" }]}
-        >
-          <Input placeholder="Enter title" />
-        </Form.Item>
-        <Form.Item
-          label="Description"
-          name="movie_description"
-          rules={[
-            { required: true, message: "Please input movie description!" },
-          ]}
-        >
-          <TextArea placeholder="Enter description" rows={4} />
-        </Form.Item>
-        <Form.Item
-          label="Genre"
-          name="movie_genre"
-          rules={[{ required: true, message: "Please input movie genre!" }]}
-        >
-          <Input placeholder="Enter genre" />
-        </Form.Item>
-        <Form.Item {...buttonItemLayout}>
-          <Link to="/dashboard">
+          <Form.Item
+            label="YouTube URL"
+            name="movie_url"
+            rules={[{ required: true, message: "Please input movie url!" }]}
+          >
+            <Input placeholder="Enter YouTube URL" disabled />
+          </Form.Item>
+          <Form.Item
+            label="Title"
+            name="movie_title"
+            rules={[{ required: true, message: "Please input movie title!" }]}
+          >
+            <Input placeholder="Enter title" />
+          </Form.Item>
+          <Form.Item
+            label="Description"
+            name="movie_description"
+            rules={[
+              { required: true, message: "Please input movie description!" },
+            ]}
+          >
+            <TextArea placeholder="Enter description" rows={4} />
+          </Form.Item>
+          <Form.Item
+            label="Genre"
+            name="movie_genre"
+            rules={[{ required: true, message: "Please input movie genre!" }]}
+          >
+            <Input placeholder="Enter genre" />
+          </Form.Item>
+          <Form.Item {...buttonItemLayout}>
+            <Link to="/dashboard">
+              <Button
+                className={styles.backButton}
+                label={"Back"}
+                shape={"round"}
+                ghost
+              />
+            </Link>
             <Button
-              className={styles.backButton}
-              label={"Back"}
+              className={styles.saveButton}
+              label={"Save"}
               shape={"round"}
-              ghost
+              onClick={handleSubmit}
+              danger
             />
-          </Link>
-          <Button
-            className={styles.saveButton}
-            label={"Save"}
-            shape={"round"}
-            onClick={handleSubmit}
-            danger
-          />
-        </Form.Item>
-      </Form>
+          </Form.Item>
+        </Form>
+      )}
     </div>
   );
 };
