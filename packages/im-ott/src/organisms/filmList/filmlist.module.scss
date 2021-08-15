@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: row;
   max-height: 32rem;
-  // width: 100%;
 
   div {
     align-self: center;
@@ -10,18 +9,19 @@
 
   .label {
     width: 90%;
+    margin-left: 4rem;
   }
 
   .seeMore {
     text-align: right;
 
     p {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       cursor: pointer;
-      color: lightslategrey;
+      color: #344c84;
 
       &:hover {
-        color: slateblue;
+        color: blue;
       }
     }
   }
@@ -30,7 +30,7 @@
     overflow: auto;
     white-space: nowrap;
     scroll-behavior: smooth;
-    min-width: 80vw;
+    min-width: 86vw;
   }
 
   .navItems a {
@@ -38,9 +38,8 @@
     padding: 1.2rem 0;
   }
 
-  .pdfArrow {
+  .filmArrow {
     align-self: center;
-    padding: 1rem;
     cursor: pointer;
   }
 }
@@ -51,4 +50,12 @@
 
 .mt1 {
   margin-top: 3rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .menuContainer {
+    .label {
+      margin-left: 0;
+    }
+  }
 }
