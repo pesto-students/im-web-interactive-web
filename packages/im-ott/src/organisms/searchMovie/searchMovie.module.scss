@@ -2,8 +2,16 @@
   padding: 4rem;
 
   .searchbox {
-    width: 50rem;
     margin-bottom: 5rem;
+    text-align: center;
+
+    .search {
+      width: 50%;
+    }
+
+    .searchMobile {
+      width: 75%;
+    }
 
     h1 {
       float: left;
@@ -17,6 +25,20 @@
       font-weight: bolder;
       font-family: monospace;
       font-size: 2.5rem;
+    }
+
+    .searchResultText {
+      font-size: 1.6rem;
+      color: #444;
+      opacity: 60%;
+    }
+
+    .dataNotFound {
+      text-align: center;
+      width: 45vw;
+      height: 40vh;
+      position: relative;
+      left: 50%;
     }
 
     .movies {
