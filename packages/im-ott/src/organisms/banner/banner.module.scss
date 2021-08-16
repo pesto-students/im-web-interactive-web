@@ -2,6 +2,7 @@
   height: 25rem;
   line-height: 25rem;
   position: relative;
+  overflow: hidden;
 }
 
 .bannerOverlay {
@@ -21,4 +22,13 @@
   h3 {
     color: white;
   }
+}
+
+.thumb {
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  position: relative;
+  left: 50%;
+  top: 50%;
 }

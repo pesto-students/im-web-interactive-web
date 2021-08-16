@@ -18,7 +18,15 @@ import { EMPTY_STRING, EMPTY_OBJECT } from "imbase/constants/base.constants";
 import styles from "./player.module.scss";
 
 const Player = (props) => {
-  const { classname, videoUrl, isHost, overlayData, triggerData } = props;
+  const { classname, videoUrl, isHost, overlayData, triggerData, fullScreen } =
+    props;
+
+  // player wrapper
+  const playerWrapper = useRef(null);
+
+  // player
+  const player = useRef(null);
+
   const [state, setState] = useState({
     url: null,
     playing: false,
@@ -32,12 +40,6 @@ const Player = (props) => {
     seeking: false,
     visible_button_refresh: true,
   });
-
-  // player wrapper
-  const playerWrapper = useRef(null);
-
-  // player
-  const player = useRef(null);
 
   // to play pause player
   const handlePlayPause = () => {
@@ -97,15 +99,21 @@ const Player = (props) => {
   // handle full screen
   // uses screenfull a JavaScript Fullscreen API
   const handleClickFullscreen = () => {
-    if (playerWrapper.current) {
-      screenfull.request(playerWrapper.current);
-    }
+    screenfull.request(playerWrapper.current);
   };
 
   // handle overlay action
   const handleOverlayAction = (seconds) => {
     if (player?.current) {
       player.current.seekTo(seconds);
+    }
+  };
+
+  const handleReady = (seconds) => {
+    if (fullScreen) {
+      if (playerWrapper.current) {
+        screenfull.request(playerWrapper.current);
+      }
     }
   };
 
@@ -125,6 +133,7 @@ const Player = (props) => {
           onEnded={handleEnded}
           onProgress={handleProgress}
           onDuration={handleDuration}
+          onReady={handleReady}
         />
 
         <div>
@@ -192,6 +201,7 @@ Player.propTypes = {
   isHost: PropTypes.bool,
   overlayData: PropTypes.object,
   triggerData: PropTypes.object,
+  fullScreen: PropTypes.bool,
 };
 
 Player.defaultProps = {
@@ -200,6 +210,7 @@ Player.defaultProps = {
   isHost: false,
   overlayData: EMPTY_OBJECT,
   triggerData: EMPTY_OBJECT,
+  fullScreen: false,
 };
 
 export default memo(Player);

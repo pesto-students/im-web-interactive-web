@@ -123,7 +123,7 @@ const FilmList = (props) => {
       <Title level={4} className={styles.menuContainer}>
         <div className={styles.label}>{label}</div>
         <div className={styles.seeMore} onClick={handleSeeAll}>
-          <p>See all</p>
+          <p>See All</p>
         </div>
       </Title>
       <div className={filmListContainer}>
