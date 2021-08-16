@@ -157,6 +157,7 @@ const FilmDetails = (props) => {
           videoUrl={FilmReader.url(filmDetails)}
           overlayData={overlayDetails}
           triggerData={triggerDetails}
+          fullScreen={true}
         />
       </Modal>
     </div>
