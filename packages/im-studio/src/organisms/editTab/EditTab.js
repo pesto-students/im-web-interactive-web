@@ -37,21 +37,13 @@ const EditTab = (props) => {
 
   const [form] = Form.useForm();
 
-  //initial values
-  const initialValues = {
-    movie_url: url || `http://www.youtube.com/watch?v=${id}`,
-    movie_title: title,
-    movie_description: description,
-    movie_genre: genre,
-  };
-
   const onFinish = (values) => {
     dispatch(
       updateMovieByID({
         ...tabdata,
-        title: values.movie_title,
-        description: values.movie_description,
-        genre: values.movie_genre,
+        title: values.movietitle,
+        description: values.moviedescription,
+        genre: values.moviegenre,
       })
     );
     history.push("#2");
@@ -72,7 +64,12 @@ const EditTab = (props) => {
         <Loader />
       ) : (
         <Form
-          initialValues={initialValues}
+          initialValues={{
+            movieurl: url || `http://www.youtube.com/watch?v=${id}`,
+            movietitle: title,
+            moviedescription: description,
+            moviegenre: genre,
+          }}
           {...formItemLayout}
           className={styles.editForm}
           layout={"horizontal"}
@@ -82,21 +79,21 @@ const EditTab = (props) => {
         >
           <Form.Item
             label="YouTube URL"
-            name="movie_url"
+            name="movieurl"
             rules={[{ required: true, message: "Please input movie url!" }]}
           >
             <Input placeholder="Enter YouTube URL" disabled />
           </Form.Item>
           <Form.Item
             label="Title"
-            name="movie_title"
+            name="movietitle"
             rules={[{ required: true, message: "Please input movie title!" }]}
           >
             <Input placeholder="Enter title" />
           </Form.Item>
           <Form.Item
             label="Description"
-            name="movie_description"
+            name="moviedescription"
             rules={[
               { required: true, message: "Please input movie description!" },
             ]}
@@ -105,7 +102,7 @@ const EditTab = (props) => {
           </Form.Item>
           <Form.Item
             label="Genre"
-            name="movie_genre"
+            name="moviegenre"
             rules={[{ required: true, message: "Please input movie genre!" }]}
           >
             <Input placeholder="Enter genre" />

@@ -12,8 +12,13 @@ function LandingPage() {
     <div>
       <Banner />
       <div className={styles.container}>
-        <FilmList label={"New Releases"} listKey={"new-releases"} />
         <FilmList
+          key="new-releases"
+          label={"New Releases"}
+          listKey={"new-releases"}
+        />
+        <FilmList
+          key="featured-movies"
           label={"Featured Movies"}
           listKey={"featured"}
           isFeatured={true}

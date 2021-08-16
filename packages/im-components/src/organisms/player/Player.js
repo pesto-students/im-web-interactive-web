@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, memo } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -202,4 +202,4 @@ Player.defaultProps = {
   triggerData: EMPTY_OBJECT,
 };
 
-export default Player;
+export default memo(Player);
