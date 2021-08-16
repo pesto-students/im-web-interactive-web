@@ -32,7 +32,7 @@ import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
 // Styles
 import styles from "./filmlist.module.scss";
 
-const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
+const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured, label) => {
   const filmId = FilmReader.id(filmDetails);
   const filmTitle = FilmReader.title(filmDetails);
   const filmRating = FilmReader.rating(filmDetails);
@@ -42,7 +42,7 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   return (
     <Link to={`film/${filmId}`}>
       <FilmCard
-        key={filmId}
+        key={label + filmId}
         title={filmTitle}
         genre={filmGenre}
         imgSrc={filmImgSrc}
@@ -136,7 +136,7 @@ const FilmList = (props) => {
           </div>
         )}
         <div className={styles.navItems} ref={filmListRef}>
-          {_map(movieList, (movie) => renderMovie(movie, isFeatured))}
+          {_map(movieList, (movie) => renderMovie(movie, isFeatured, label))}
         </div>
         {!isMobile && (
           <div className={styles.filmArrow}>
