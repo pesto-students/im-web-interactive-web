@@ -11,8 +11,8 @@
   .skeleton {
     margin-right: 2rem;
     margin-top: 1rem;
-    width: calc(40rem * (9 / 16));
-    height: 15rem;
+    min-width: calc(40rem * (9 / 16));
+    min-height: 15rem;
   }
 
   .seeMore {
@@ -60,7 +60,7 @@
   .titleContainer {
     margin-bottom: 0rem;
     justify-content: space-between;
-  
+
     p {
       margin-bottom: 0rem;
     }

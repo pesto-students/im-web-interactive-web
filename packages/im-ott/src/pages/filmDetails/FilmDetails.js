@@ -117,16 +117,16 @@ const FilmDetails = (props) => {
   });
 
   const buttonWrapperClassname = cx(styles.btnWrapper, {
-    [styles.mobileButtonsOrder]: isMobile
-  })
+    [styles.mobileButtonsOrder]: isMobile,
+  });
 
   const buttonClassName = cx(styles.button, {
-    [styles.mobileButton]: isMobile
-  })
+    [styles.mobileButton]: isMobile,
+  });
 
   const titleMarginClassname = cx(styles.titleMargin, {
-    [styles.titleMarginMobile]: isMobile
-  })
+    [styles.titleMarginMobile]: isMobile,
+  });
 
   return (
     <div className={cx("film-details", styles.container)}>

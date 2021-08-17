@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { isMobile } from "imcomponents/atoms/device";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import cx from 'classnames';
+import cx from "classnames";
 
 // Lodash
 import _map from "lodash/map";
@@ -128,7 +128,7 @@ const FilmList = (props) => {
   const filmListContainerClassname = cx(styles.container, {
     [styles.gradientBackground]: !showDetails,
     [styles.mobilePadding]: isMobile,
-  })
+  });
 
   return (
     <div className={filmListContainerClassname}>
@@ -156,7 +156,7 @@ const FilmList = (props) => {
           </div>
         )}
         {loading ? (
-          _times(4, (movie) => (
+          _times(5, (movie) => (
             <Skeleton.Image active={true} className={styles.skeleton} />
           ))
         ) : (
