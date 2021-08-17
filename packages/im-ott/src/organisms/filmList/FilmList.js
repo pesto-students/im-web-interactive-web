@@ -33,7 +33,13 @@ import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
 // Styles
 import styles from "./filmlist.module.scss";
 
-const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured, label) => {
+const renderMovie = (
+  filmDetails = EMPTY_OBJECT,
+  isFeatured,
+  label,
+  showDetails,
+  isDetailsRightAligned
+) => {
   const filmId = FilmReader.id(filmDetails);
   const filmTitle = FilmReader.title(filmDetails);
   const filmRating = FilmReader.rating(filmDetails);
@@ -50,6 +56,8 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured, label) => {
         rating={filmRating}
         {...filmDetails}
         isFeatured={isFeatured}
+        alignRight={isDetailsRightAligned}
+        showDetails={showDetails}
       />
     </Link>
   );
@@ -58,7 +66,8 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured, label) => {
 const FilmList = (props) => {
   const history = useHistory();
   const [loading, setLoading] = useState(true);
-  const { label, isFeatured, listKey } = props;
+  const { label, isFeatured, listKey, showDetails, isDetailsRightAligned } =
+    props;
   const [movieList, setMovieList] = useState(EMPTY_ARRAY);
   const [error, setError] = useState(EMPTY_OBJECT);
   const filmListRef = useRef();
@@ -116,17 +125,21 @@ const FilmList = (props) => {
   }
 
   return (
-    <div className={styles.mt1}>
+    <div className={styles.container}>
       {loading ? (
         <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
       ) : (
-        <Title level={4} className={styles.menuContainer}>
+        <Title
+          level={4}
+          className={`${styles.menuContainer} ${styles.titleContainer}`}
+        >
           <div className={styles.label}>{label}</div>
           <div className={styles.seeMore} onClick={handleSeeAll}>
             <p>See All</p>
           </div>
         </Title>
       )}
+
       <div className={filmListContainer}>
         {!isMobile && (
           <div className={styles.filmArrow}>
@@ -142,7 +155,15 @@ const FilmList = (props) => {
           ))
         ) : (
           <div className={styles.navItems} ref={filmListRef}>
-            {_map(movieList, (movie) => renderMovie(movie, isFeatured, label))}
+            {_map(movieList, (movie) =>
+              renderMovie(
+                movie,
+                isFeatured,
+                label,
+                showDetails,
+                isDetailsRightAligned
+              )
+            )}
           </div>
         )}
         {!isMobile && (
@@ -163,6 +184,8 @@ FilmList.propTypes = {
   label: PropTypes.string,
   listKey: PropTypes.string,
   isFeatured: PropTypes.bool,
+  showDetails: PropTypes.bool,
+  isDetailsRightAligned: PropTypes.bool,
 };
 
 FilmList.defaultProps = {
@@ -170,6 +193,8 @@ FilmList.defaultProps = {
   label: undefined,
   listKey: undefined,
   isFeatured: false,
+  showDetails: false,
+  isDetailsRightAligned: false,
 };
 
 export default FilmList;
