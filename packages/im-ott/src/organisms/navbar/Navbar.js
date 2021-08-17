@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { BrowserView, MobileView } from "imcomponents/atoms/device";
 
 // Components
@@ -24,9 +24,22 @@ import { logOut } from "imbase/services/firebase";
 import styles from "./navbar.module.scss";
 
 function Navbar() {
+  const location = useLocation();
   const history = useHistory();
   const [selectedMenu, setSelectedMenu] = useState("home");
   const { setuser } = useContext(UserContext);
+
+  useEffect(() => {
+    if (location.pathname === "/watchlist") {
+      setSelectedMenu("likes");
+    } else if (location.pathname === "/movie/search") {
+      setSelectedMenu("search");
+    } else if (location.pathname === "/") {
+      setSelectedMenu("home");
+    } else {
+      setSelectedMenu(null);
+    }
+  }, [location]);
 
   const handleLogout = () => {
     logOut();
@@ -81,6 +94,7 @@ function Navbar() {
             className={styles.menuItem}
             key="notifications"
             icon={NotificationsIcon}
+            disabled={true}
           ></Menu.Item>
           <Menu.Item
             key={"logout"}

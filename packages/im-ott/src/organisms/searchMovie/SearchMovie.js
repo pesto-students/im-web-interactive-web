@@ -101,6 +101,9 @@ const SearchMovie = (props) => {
   }, [searchValue]);
 
   const handleSearch = (value) => {
+    if (_isEmpty(value)) {
+      return;
+    }
     setSearchInit(false);
     setSearchValue(value);
     setSearchClicked(true);
@@ -128,16 +131,22 @@ const SearchMovie = (props) => {
         ) : (
           searchInit && <h1>Frequently Searched Movies</h1>
         )}
-        {searchClicked && searchDetails.length === 1 && (
-          <p className={styles.searchResultText}>
-            Found {searchDetails.length} result
-          </p>
-        )}
-        {!searchInit && searchClicked && searchDetails.length > 1 && (
-          <p className={styles.searchResultText}>
-            Found {searchDetails.length} results
-          </p>
-        )}
+        {!loading &&
+          !searchInit &&
+          searchClicked &&
+          searchDetails.length === 1 && (
+            <p className={styles.searchResultText}>
+              Found {searchDetails.length} result
+            </p>
+          )}
+        {!loading &&
+          !searchInit &&
+          searchClicked &&
+          searchDetails.length > 1 && (
+            <p className={styles.searchResultText}>
+              Found {searchDetails.length} results
+            </p>
+          )}
         {loading ? (
           _times(8, (movie) => (
             <Skeleton.Image active={true} className={styles.skeleton} />
@@ -148,12 +157,15 @@ const SearchMovie = (props) => {
           </div>
         )}
         <div>
-          {searchClicked && searchDetails.length === 0 && (
-            <div className={styles.dataNotFound}>
-              <p className={styles.searchResultText}>No results found</p>
-              <Image src={noDataFound} />
-            </div>
-          )}
+          {!loading &&
+            !searchInit &&
+            searchClicked &&
+            searchDetails.length === 0 && (
+              <div className={styles.dataNotFound}>
+                <p className={styles.searchResultText}>No results found</p>
+                <Image src={noDataFound} />
+              </div>
+            )}
         </div>
       </div>
     </div>

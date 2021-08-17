@@ -24,6 +24,7 @@ import {
   CaretRightOutlined,
   PlusOutlined,
   MinusOutlined,
+  PlusCircleOutlined,
 } from "@ant-design/icons";
 
 export {
@@ -52,4 +53,5 @@ export {
   CaretRightOutlined,
   PlusOutlined,
   MinusOutlined,
+  PlusCircleOutlined,
 };

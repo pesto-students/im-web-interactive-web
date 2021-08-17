@@ -13,14 +13,15 @@ import _truncate from "lodash/truncate";
 
 // Components
 import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
+import { CaretRightOutlined } from "imcomponents/atoms/icon";
 import Image from "imcomponents/atoms/image";
 import Skeleton from "imcomponents/atoms/skeleton";
 import { Title, Label } from "imcomponents/atoms/typography";
 import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
 import FilmList from "imcomponents/organisms/filmList";
+import Comments from "../../organisms/comments";
 import Watchlist from "../../organisms/watchlist";
-import { CaretRightOutlined } from "imcomponents/atoms/icon";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
@@ -57,6 +58,7 @@ const FilmDetails = (props) => {
   if (filmDetails?.triggers) {
     triggerDetails = filmDetails.triggers;
   }
+
   useEffect(() => {
     gqlClient
       .query({
@@ -217,6 +219,24 @@ const FilmDetails = (props) => {
         </div>
       </div>
 
+      <div className={styles.comments}>
+        <div className={styles.commentsBorder}>
+          {loading ? (
+            <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
+          ) : (
+            <Title level={5} className={styles.mb1}>
+              Comments
+            </Title>
+          )}
+          {loading ? (
+            <Skeleton width="100%" paragraph={{ rows: 5 }} active={true} />
+          ) : (
+            <>
+              <Comments videoId={filmDetails.mId} />
+            </>
+          )}
+        </div>
+      </div>
       <FilmList
         key="featured-movies"
         label={"More to watch"}
@@ -228,7 +248,6 @@ const FilmDetails = (props) => {
           return `film/${id}`;
         }}
       />
-
       {visible && (
         <Player
           videoUrl={FilmReader.url(filmDetails)}

@@ -160,7 +160,7 @@ const FilmList = (props) => {
           </div>
         )}
         {loading ? (
-          _times(4, (movie) => (
+          _times(5, (movie) => (
             <Skeleton.Image active={true} className={styles.skeleton} />
           ))
         ) : (
