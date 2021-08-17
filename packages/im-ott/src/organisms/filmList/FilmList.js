@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { isMobile } from "imcomponents/atoms/device";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
+import cx from 'classnames';
 
 // Lodash
 import _map from "lodash/map";
@@ -123,6 +124,10 @@ const FilmList = (props) => {
   if (!_isEmpty(error)) {
     return <Error {...error} />;
   }
+
+  const filmListContainerClassname = cx(styles.container, {
+    [styles.gradientBackground]: !showDetails
+  })
 
   return (
     <div className={styles.container}>
