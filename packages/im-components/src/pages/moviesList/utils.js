@@ -40,7 +40,7 @@ const getQueryParams = (movieCriteria, currentUser) => {
       },
     },
     "unpublished-movies": {
-      headingName: "Conitinue Editing",
+      headingName: "Continue Editing",
       query: QUERY_ALL_MOVIES,
       variables: {
         userId: currentUser,
