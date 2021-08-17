@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 // Components
 import { UserContext } from "imbase/providers/UserProvider";
 import Error from "imcomponents/molecules/error";
-import Button from "imcomponents/atoms/button";
+import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
+import { PlusOutlined } from "imcomponents/atoms/icon";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
@@ -16,6 +17,9 @@ import {
   MUTATION_ADD_WATCHLIST,
   MUTATION_DELETE_WATCHLIST,
 } from "imbase/graphql/mutation";
+
+// Styles
+import styles from './watchlist.module.scss'
 
 const Watchlist = (props) => {
   const { className, movieId } = props;
@@ -81,15 +85,12 @@ const Watchlist = (props) => {
   }
 
   return (
-    <div>
-      <Button
-        loading={loading}
-        className={className}
-        label={label}
-        danger
-        onClick={handleWatchlist}
-      ></Button>
-    </div>
+    <Button
+      loading={loading}
+      className={`${styles.button} ${className}`}
+      onClick={handleWatchlist}
+      type={BUTTON_TYPES.TERTIARY}
+    ><PlusOutlined /><span className={styles.label}>{"Watchlist"}</span></Button>
   );
 };
 

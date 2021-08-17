@@ -4,7 +4,7 @@
   max-height: 32rem;
 
   .label {
-    margin-left: 4rem;
+    margin-left: 4.4rem;
     font-size: 1.6rem;
   }
 
@@ -54,7 +54,7 @@
 }
 
 .container {
-  padding: 1rem 2rem;
+  padding: 1rem 0rem;
   margin-bottom: 1rem;
 
   .titleContainer {
@@ -82,4 +82,8 @@
       margin-right: 0;
     }
   }
+}
+
+.mobilePadding {
+  padding: 1rem 2rem;
 }

@@ -12,11 +12,11 @@ import BUTTON_TYPES from "./constants/button.types";
 import BUTTON_SIZES from "./constants/button.sizes";
 
 const Button = (props) => {
-  const { className, label, type, ...restProps } = props;
+  const { className, label, type, children, ...restProps } = props;
   const buttonClassName = getButtonClassName(className, type);
   return (
     <AntdButton {...restProps} type={type} className={buttonClassName}>
-      {label}
+      {label || children}
     </AntdButton>
   );
 };
