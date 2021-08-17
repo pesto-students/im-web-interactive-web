@@ -24,4 +24,5 @@ export {
   CaretRightOutlined,
   PlusOutlined,
   MinusOutlined,
+  PlusCircleOutlined,
 } from "./Icon";

@@ -1,15 +1,16 @@
 .container {
+  .skeletonBanner {
+    min-width: 100vw;
+    min-height: 50vh;
+  }
+
   .bannerImage {
     height: 50vh;
     width: 100vw;
     min-height: 40rem;
-
-    .skeletonBanner {
-      height: 50vh;
-      width: 100vw;
-    }
   }
-  .description {
+  .description,
+  .comments {
     padding: 1rem 4rem;
 
     .descriptionDetails {
@@ -17,7 +18,8 @@
       padding: 2rem 0rem;
     }
 
-    .descriptionBorder {
+    .descriptionBorder,
+    .commentsBorder {
       padding-bottom: 2rem;
       border-bottom: 1px solid #eee;
     }
@@ -78,7 +80,6 @@
     margin-bottom: 1rem;
   }
 }
-
 
 @media only screen and (max-width: 60rem) {
   .container {

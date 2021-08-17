@@ -5,6 +5,13 @@
     margin-bottom: 5rem;
     text-align: center;
 
+    button.showall {
+      height: 4rem;
+      background-color: #f6f6f6;
+      color: #444;
+      border: none;
+    }
+
     .search {
       width: 50%;
     }
@@ -34,6 +41,7 @@
       font-size: 1.6rem;
       color: #444;
       opacity: 0.8;
+      padding-left: 0.5rem;
     }
 
     .dataNotFound {
@@ -67,6 +75,10 @@
     .searchbox {
       width: 100%;
       margin-bottom: 3rem;
+
+      button.showall {
+        margin-top: 1rem;
+      }
     }
 
     .content {

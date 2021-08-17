@@ -1,0 +1,17 @@
+.viewAllCommentsLabel {
+  cursor: pointer;
+
+  &:hover {
+    color: #1890ff;
+  }
+}
+
+@media only screen and (max-width: 60rem) {
+  .viewAllCommentsLabel {
+    color: gray;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    margin-top: 1.2rem;
+  }
+}
