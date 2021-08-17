@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { UserContext } from "imbase/providers/UserProvider";
 import Error from "imcomponents/molecules/error";
 import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
-import { PlusOutlined } from "imcomponents/atoms/icon";
+import { PlusOutlined, MinusOutlined } from "imcomponents/atoms/icon";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
@@ -19,7 +19,7 @@ import {
 } from "imbase/graphql/mutation";
 
 // Styles
-import styles from './watchlist.module.scss'
+import styles from "./watchlist.module.scss";
 
 const Watchlist = (props) => {
   const { className, movieId } = props;
@@ -29,6 +29,7 @@ const Watchlist = (props) => {
 
   const { user } = useContext(UserContext);
   const label = isWatchlisted ? "Remove Watchlist" : "Add Watchlist";
+  const labelIcon = isWatchlisted ? <MinusOutlined /> : <PlusOutlined />;
 
   useEffect(() => {
     gqlClient
@@ -90,7 +91,10 @@ const Watchlist = (props) => {
       className={`${styles.button} ${className}`}
       onClick={handleWatchlist}
       type={BUTTON_TYPES.TERTIARY}
-    ><PlusOutlined /><span className={styles.label}>{"Watchlist"}</span></Button>
+    >
+      {labelIcon}
+      <span className={styles.label}>{label}</span>
+    </Button>
   );
 };
 

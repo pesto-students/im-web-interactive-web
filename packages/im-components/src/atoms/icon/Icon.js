@@ -23,6 +23,7 @@ import {
   HeartFilled,
   CaretRightOutlined,
   PlusOutlined,
+  MinusOutlined,
 } from "@ant-design/icons";
 
 export {
@@ -50,4 +51,5 @@ export {
   HeartFilled,
   CaretRightOutlined,
   PlusOutlined,
+  MinusOutlined,
 };

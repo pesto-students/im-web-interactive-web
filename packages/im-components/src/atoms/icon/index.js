@@ -23,4 +23,5 @@ export {
   HeartFilled,
   CaretRightOutlined,
   PlusOutlined,
+  MinusOutlined,
 } from "./Icon";
