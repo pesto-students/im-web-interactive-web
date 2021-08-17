@@ -1,4 +1,4 @@
-import React, { useRef, useState, memo } from "react";
+import React, { useRef, useState, memo, useEffect } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -18,8 +18,16 @@ import { EMPTY_STRING, EMPTY_OBJECT } from "imbase/constants/base.constants";
 import styles from "./player.module.scss";
 
 const Player = (props) => {
-  const { classname, videoUrl, isHost, overlayData, triggerData, fullScreen } =
-    props;
+  const {
+    classname,
+    videoUrl,
+    isHost,
+    overlayData,
+    triggerData,
+    fullScreen,
+    handleVisible,
+    autoPlay,
+  } = props;
 
   // player wrapper
   const playerWrapper = useRef(null);
@@ -29,7 +37,7 @@ const Player = (props) => {
 
   const [state, setState] = useState({
     url: null,
-    playing: false,
+    playing: autoPlay,
     controls: false,
     light: false,
     muted: false,
@@ -39,6 +47,17 @@ const Player = (props) => {
     playbackRate: 1.0,
     seeking: false,
     visible_button_refresh: true,
+  });
+
+  useEffect(() => {
+    if (screenfull.isEnabled) {
+      screenfull.on("change", () => {
+        if (!screenfull.isFullscreen && fullScreen) {
+          setState({ ...state, url: null, playing: false });
+          handleVisible(false);
+        }
+      });
+    }
   });
 
   // to play pause player
@@ -111,8 +130,13 @@ const Player = (props) => {
 
   const handleReady = (seconds) => {
     if (fullScreen) {
-      if (playerWrapper.current) {
-        screenfull.request(playerWrapper.current);
+      if (screenfull.isEnabled) {
+        if (playerWrapper.current) {
+          screenfull.request(playerWrapper.current);
+        }
+        screenfull.on("error", (event) => {
+          console.error("Failed to enable fullscreen", event);
+        });
       }
     }
   };
@@ -202,6 +226,7 @@ Player.propTypes = {
   overlayData: PropTypes.object,
   triggerData: PropTypes.object,
   fullScreen: PropTypes.bool,
+  handleVisible: PropTypes.func,
 };
 
 Player.defaultProps = {
@@ -211,6 +236,7 @@ Player.defaultProps = {
   overlayData: EMPTY_OBJECT,
   triggerData: EMPTY_OBJECT,
   fullScreen: false,
+  handleVisible: () => {},
 };
 
 export default memo(Player);

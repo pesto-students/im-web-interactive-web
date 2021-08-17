@@ -12,7 +12,6 @@ import _truncate from "lodash/truncate";
 import Skeleton from "imcomponents/atoms/skeleton";
 import { Title, Label } from "imcomponents/atoms/typography";
 import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
-import { Modal } from "imcomponents/atoms/modal";
 import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
 import Watchlist from "../../organisms/watchlist";
@@ -99,8 +98,8 @@ const FilmDetails = (props) => {
       });
   };
 
-  const handleCancel = () => {
-    setVisible(false);
+  const handleVisible = (val) => {
+    setVisible(val);
   };
 
   const handleExpandContent = () => {
@@ -214,27 +213,24 @@ const FilmDetails = (props) => {
           )}
         </div>
       </div>
+
       <FilmList
         key="featured-movies"
         label={"More to watch"}
         listKey={"featured"}
         isFeatured
       />
-      <Modal
-        title={FilmReader.title(filmDetails)}
-        width={"80vw"}
-        centered
-        visible={visible}
-        onCancel={handleCancel}
-        footer={null}
-      >
+
+      {visible && (
         <Player
           videoUrl={FilmReader.url(filmDetails)}
           overlayData={overlayDetails}
           triggerData={triggerDetails}
           fullScreen={true}
+          handleVisible={handleVisible}
+          autoPlay={true}
         />
-      </Modal>
+      )}
     </div>
   );
 };
