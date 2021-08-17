@@ -31,7 +31,7 @@
   }
 
   .navItems {
-    overflow: auto;
+    overflow: hidden;
     white-space: nowrap;
     scroll-behavior: smooth;
     flex: 1;
@@ -60,7 +60,7 @@
   .titleContainer {
     margin-bottom: 0rem;
     justify-content: space-between;
-  
+
     p {
       margin-bottom: 0rem;
     }
