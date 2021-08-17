@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import Axios from "axios";
-import { Image } from "cloudinary-react";
 
 // Components
 import Button from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form";
+import Image from "imcomponents/atoms/image";
 import Input from "imcomponents/atoms/input";
 import TextArea from "imcomponents/atoms/textArea";
 import Loader from "imcomponents/molecules/loader";
@@ -25,18 +24,15 @@ import { updateMovieByID } from "../../redux/movies/actions";
 
 // Styles
 import styles from "./editTab.module.scss";
+import { uploadImageToCloudinary } from "./utils/cloudinary";
 
 const EditTab = (props) => {
   const dispatch = useDispatch();
   const { tabdata, history, loading } = props;
-  const { id, title, description, url, genre } = tabdata;
+  const { mId, title, description, url, genre } = tabdata;
 
-  const [selectedBackgroundId, setSelectedBackgroundId] =
-    useState(EMPTY_STRING);
-  const [selectedThumbnailId, setSelectedThumbnailId] = useState(EMPTY_STRING);
-
-  const cloudName = "iflix-cloud";
-  const key = "yqkzec2f";
+  const [userBackgroundURL, setUserBackgroundURL] = useState(EMPTY_STRING);
+  const [userThumbnailURL, setUserThumbnailURL] = useState(EMPTY_STRING);
 
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -72,17 +68,17 @@ const EditTab = (props) => {
   const handleThumbnailChange = (event) => {
     const image = event.target.files[0];
     if (image) {
-      const formData = new FormData();
-      formData.append("file", image);
-      formData.append("upload_preset", key);
-
-      Axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
-      ).then((response) => {
-        console.log(response);
-        const publicId = response && response.data && response.data.public_id;
-        setSelectedThumbnailId(publicId);
+      uploadImageToCloudinary(image).then((response) => {
+        const data = response && response.data;
+        const { url } = data;
+        setUserThumbnailURL(url);
+        tabdata.thumbnails.userThumbnail = {
+          url,
+          height: 360,
+          width: 480,
+        };
+        console.log("inside thumbnail ");
+        console.log(tabdata);
       });
     }
   };
@@ -90,17 +86,15 @@ const EditTab = (props) => {
   const handleBackgroundChange = (event) => {
     const image = event.target.files[0];
     if (image) {
-      const formData = new FormData();
-      formData.append("file", image);
-      formData.append("upload_preset", key);
-
-      Axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
-      ).then((response) => {
-        console.log(response);
-        const publicId = response && response.data && response.data.public_id;
-        setSelectedBackgroundId(publicId);
+      uploadImageToCloudinary(image).then((response) => {
+        const data = response && response.data;
+        const { url } = data;
+        setUserBackgroundURL(url);
+        tabdata.thumbnails.userBackground = {
+          url,
+          height: 720,
+          width: 1280,
+        };
       });
     }
   };
@@ -112,7 +106,7 @@ const EditTab = (props) => {
       ) : (
         <Form
           initialValues={{
-            movieurl: url || `http://www.youtube.com/watch?v=${id}`,
+            movieurl: url || `http://www.youtube.com/watch?v=${mId}`,
             movietitle: title,
             moviedescription: description,
             moviegenre: genre,
@@ -161,12 +155,11 @@ const EditTab = (props) => {
               id={"uploadedThumbnail"}
               onChange={handleThumbnailChange}
             />
-            {!_isEmpty(selectedThumbnailId) && (
+            {!_isEmpty(userThumbnailURL) && (
               <Image
                 className={styles.uploadImagePreview}
-                cloudName={cloudName}
-                publicId={selectedThumbnailId}
-              ></Image>
+                src={userThumbnailURL}
+              />
             )}
           </Form.Item>
 
@@ -177,15 +170,13 @@ const EditTab = (props) => {
               id={"uploadedBackground"}
               onChange={handleBackgroundChange}
             />
-            {!_isEmpty(selectedBackgroundId) && (
+            {!_isEmpty(userBackgroundURL) && (
               <Image
                 className={styles.uploadImagePreview}
-                cloudName={cloudName}
-                publicId={selectedBackgroundId}
-              ></Image>
+                src={userBackgroundURL}
+              />
             )}
           </Form.Item>
-
           <Form.Item {...buttonItemLayout}>
             <Link to="/dashboard">
               <Button

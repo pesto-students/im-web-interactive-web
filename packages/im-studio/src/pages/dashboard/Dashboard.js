@@ -29,11 +29,13 @@ import { getAllMovies } from "../../redux/movies/actions";
 import styles from "./dashboard.module.scss";
 
 const renderFilm = (filmDetails = EMPTY_OBJECT) => {
+  console.log(filmDetails);
   const filmId = FilmReader.id(filmDetails);
   const filmTitle = FilmReader.title(filmDetails);
   const filmRating = FilmReader.rating(filmDetails);
   const filmGenre = FilmReader.genre(filmDetails);
-  const filmImgSrc = FilmReader.thumbnail(filmDetails);
+  const filmImgSrc =
+    FilmReader.userThumbnail(filmDetails) || FilmReader.thumbnail(filmDetails);
   const filmDescription = FilmReader.description(filmDetails);
   const filmIsFeatured = false;
 

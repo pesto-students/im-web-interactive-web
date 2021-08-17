@@ -44,6 +44,16 @@ const QUERY_ALL_MOVIES = gql`
           width
           height
         }
+        userThumbnail {
+          url
+          width
+          height
+        }
+        userBackground {
+          url
+          width
+          height
+        }
       }
       genre
       rating
@@ -100,6 +110,16 @@ const QUERY_MOVIE_ID = gql`
           width
           height
         }
+        userThumbnail {
+          url
+          width
+          height
+        }
+        userBackground {
+          url
+          width
+          height
+        }
       }
       genre
       rating
@@ -143,6 +163,16 @@ const NEW_RELEASES = gql`
           width
           height
         }
+        userThumbnail {
+          url
+          width
+          height
+        }
+        userBackground {
+          url
+          width
+          height
+        }
       }
     }
   }
@@ -165,6 +195,16 @@ const FEATURED_MOVIES = gql`
           height
         }
         maxres {
+          url
+          width
+          height
+        }
+        userThumbnail {
+          url
+          width
+          height
+        }
+        userBackground {
           url
           width
           height
@@ -213,6 +253,16 @@ const GET_WATCHLISTED_MOVIES = gql`
           height
         }
         maxres {
+          url
+          width
+          height
+        }
+        userThumbnail {
+          url
+          width
+          height
+        }
+        userBackground {
           url
           width
           height
