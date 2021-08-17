@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 // Lodash
 import _map from "lodash/map";
 import _isEmpty from "lodash/isEmpty";
+import _times from "lodash/times";
 
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
 import FilmCardMobile from "imcomponents/molecules/filmCardMobile";
-import Loader from "imcomponents/molecules/loader/Loader";
+import Skeleton from "imcomponents/atoms/skeleton";
 import Error from "imcomponents/molecules/error";
 import { isMobile } from "imcomponents/atoms/device";
 
@@ -92,10 +93,6 @@ const WatchList = () => {
       });
   }, [uid]);
 
-  if (loading) {
-    return <Loader />;
-  }
-
   if (!_isEmpty(error)) {
     return <Error {...error} />;
   }
@@ -103,8 +100,18 @@ const WatchList = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <h1 className={styles.heading}>Watchlist</h1>
-        <div className={styles.movies}>{_map(films, renderFilm)}</div>
+        {loading ? (
+          <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
+        ) : (
+          <h1>Watchlist</h1>
+        )}
+        {loading ? (
+          _times(8, (movie) => (
+            <Skeleton.Image active={true} className={styles.skeleton} />
+          ))
+        ) : (
+          <div className={styles.movies}>{_map(films, renderFilm)}</div>
+        )}
       </div>
     </div>
   );

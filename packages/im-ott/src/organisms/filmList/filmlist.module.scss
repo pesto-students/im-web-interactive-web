@@ -12,8 +12,16 @@
     margin-left: 4rem;
   }
 
+  .skeleton {
+    margin-right: 2rem;
+    margin-top: 1rem;
+    width: calc(40rem * (9 / 16));
+    height: 15rem;
+  }
+
   .seeMore {
     text-align: right;
+    margin-right: 4rem;
 
     p {
       font-size: 1.4rem;
@@ -56,6 +64,11 @@
   .menuContainer {
     .label {
       margin-left: 0;
+    }
+
+    .seeMore {
+      padding-top: 1rem;
+      margin-right: 0;
     }
   }
 }

@@ -1,67 +1,90 @@
-.bannerImage {
-  height: 50vh;
-  width: 100vw;
-  min-height: 40rem;
-}
+.container {
+  .bannerImage {
+    height: 50vh;
+    width: 100vw;
+    min-height: 40rem;
 
-.description {
-  padding: 1rem 4rem;
-  position: relative;
-  top: -8rem;
-}
-
-.metadata {
-  display: flex;
-  flex-direction: row;
-  padding: 1rem 4rem;
-
-  h3 {
-    white-space: pre-wrap;
-  }
-
-  .btnWrapper {
-    display: flex;
-
-    button {
-      margin-right: 0.8rem;
+    .skeletonBanner {
+      height: 50vh;
+      width: 100vw;
     }
   }
-}
-
-.thumbnail {
-  width: 20rem;
-  height: 20rem;
-  position: relative;
-  top: -15.4rem;
-  img {
-    border-radius: 1.6rem;
+  .description {
+    padding: 1rem 4rem;
+    position: relative;
+    top: -8rem;
   }
-}
 
-img {
-  height: 100%;
-  width: 100%;
-}
+  .metadata {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 4rem;
 
-.ml2 {
-  margin-left: 2rem;
-}
+    .skeletonThumbnail {
+      width: 20rem;
+      height: 20rem;
+      position: relative;
+      img {
+        border-radius: 1.6rem;
+      }
+    }
 
-.mb1 {
-  margin-bottom: 1rem;
+    h3 {
+      white-space: pre-wrap;
+    }
+
+    .btnWrapper {
+      display: flex;
+
+      button {
+        margin-right: 0.8rem;
+      }
+    }
+  }
+
+  .thumbnail {
+    width: 20rem;
+    height: 20rem;
+    position: relative;
+    top: -15.4rem;
+    img {
+      border-radius: 1.6rem;
+    }
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .ml2 {
+    margin-left: 2rem;
+  }
+
+  .mb1 {
+    margin-bottom: 1rem;
+  }
 }
 
 @media only screen and (max-width: 60rem) {
-  .bannerImage {
-    height: 20vh;
-    width: 100vw;
-    min-height: 20rem;
-  }
-  .metadata {
-    padding: 2rem;
-  }
-  .description {
-    text-align: justify;
-    top: 0;
+  .container {
+    .bannerImage {
+      height: 20vh;
+      width: 100vw;
+      min-height: 20rem;
+
+      .skeletonBanner {
+        height: 20vh;
+        width: 100vw;
+      }
+    }
+    
+    .metadata {
+      padding: 2rem;
+    }
+    .description {
+      text-align: justify;
+      top: 0;
+    }
   }
 }

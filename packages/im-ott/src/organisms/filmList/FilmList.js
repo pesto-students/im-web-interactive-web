@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 // Lodash
 import _map from "lodash/map";
 import _isEmpty from "lodash/isEmpty";
+import _times from "lodash/times";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
@@ -14,7 +15,7 @@ import { NEW_RELEASES, FEATURED_MOVIES } from "imbase/graphql/queries";
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
 import { Title } from "imcomponents/atoms/typography";
-import Loader from "imcomponents/molecules/loader/Loader";
+import Skeleton from "imcomponents/atoms/skeleton";
 import Error from "imcomponents/molecules/error";
 
 // Readers
@@ -75,9 +76,9 @@ const FilmList = (props) => {
   // Handle Scrolling by increment / decreamenting scroll left
   const handleNav = (direction) => {
     if (direction === "left") {
-      filmListRef.current.scrollLeft -= 200;
+      if (filmListRef.current) filmListRef.current.scrollLeft -= 200;
     } else {
-      filmListRef.current.scrollLeft += 200;
+      if (filmListRef.current) filmListRef.current.scrollLeft += 200;
     }
   };
 
@@ -110,22 +111,22 @@ const FilmList = (props) => {
       });
   }, [listKey]);
 
-  if (loading) {
-    return <Loader />;
-  }
-
   if (!_isEmpty(error)) {
     return <Error {...error} />;
   }
 
   return (
     <div className={styles.mt1}>
-      <Title level={4} className={styles.menuContainer}>
-        <div className={styles.label}>{label}</div>
-        <div className={styles.seeMore} onClick={handleSeeAll}>
-          <p>See All</p>
-        </div>
-      </Title>
+      {loading ? (
+        <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
+      ) : (
+        <Title level={4} className={styles.menuContainer}>
+          <div className={styles.label}>{label}</div>
+          <div className={styles.seeMore} onClick={handleSeeAll}>
+            <p>See All</p>
+          </div>
+        </Title>
+      )}
       <div className={filmListContainer}>
         {!isMobile && (
           <div className={styles.filmArrow}>
@@ -135,9 +136,15 @@ const FilmList = (props) => {
             />
           </div>
         )}
-        <div className={styles.navItems} ref={filmListRef}>
-          {_map(movieList, (movie) => renderMovie(movie, isFeatured, label))}
-        </div>
+        {loading ? (
+          _times(4, (movie) => (
+            <Skeleton.Image active={true} className={styles.skeleton} />
+          ))
+        ) : (
+          <div className={styles.navItems} ref={filmListRef}>
+            {_map(movieList, (movie) => renderMovie(movie, isFeatured, label))}
+          </div>
+        )}
         {!isMobile && (
           <div className={styles.filmArrow}>
             <RightOutlined
