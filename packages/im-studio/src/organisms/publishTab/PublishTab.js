@@ -66,9 +66,7 @@ const PublishTab = (props) => {
           <Button
             className={styles.saveButton}
             label={"Publish"}
-            shape={"round"}
             onClick={onFinish}
-            danger
             disabled={isPublished}
           />
         </Form.Item>

@@ -176,20 +176,16 @@ const Hotspots = (props) => {
           </Form.Item>
           <Form.Item {...buttonItemLayout}>
             <Button
-              className={styles.saveButton}
-              label={"Save"}
-              shape={"round"}
-              onClick={handleSubmit}
-              danger
-            />
-            <Button
               className={styles.addNewButton}
               label={"Add New"}
-              shape={"round"}
               onClick={() => {
                 handleReset();
               }}
-              danger
+            />
+            <Button
+              className={styles.saveButton}
+              label={"Save"}
+              onClick={handleSubmit}
             />
           </Form.Item>
         </Form>
