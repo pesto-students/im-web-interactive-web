@@ -4,9 +4,6 @@ import React from "react";
 import Banner from "../../organisms/banner";
 import FilmList from "../../organisms/filmList";
 
-// Styles
-import styles from "./landingPage.module.scss";
-
 function LandingPage() {
   return (
     <div>
@@ -29,7 +26,7 @@ function LandingPage() {
         listKey={"featured"}
         isFeatured={true}
       />
-      <Banner onlyOne/>
+      <Banner onlyOne />
       <FilmList
         key="featured-movies"
         label={"Featured Movies"}

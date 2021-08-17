@@ -11,7 +11,6 @@ import _times from "lodash/times";
 import Skeleton from "imcomponents/atoms/skeleton";
 import { Title, Label } from "imcomponents/atoms/typography";
 import Button from "imcomponents/atoms/button";
-import { Modal } from "imcomponents/atoms/modal";
 import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
 import Watchlist from "../../organisms/watchlist";
@@ -92,8 +91,8 @@ const FilmDetails = (props) => {
       });
   };
 
-  const handleCancel = () => {
-    setVisible(false);
+  const handleVisible = (val) => {
+    setVisible(val);
   };
 
   return (
@@ -166,21 +165,16 @@ const FilmDetails = (props) => {
           <Label>{FilmReader.description(filmDetails)}</Label>
         )}
       </div>
-      <Modal
-        title={FilmReader.title(filmDetails)}
-        width={"80vw"}
-        centered
-        visible={visible}
-        onCancel={handleCancel}
-        footer={null}
-      >
+      {visible && (
         <Player
           videoUrl={FilmReader.url(filmDetails)}
           overlayData={overlayDetails}
           triggerData={triggerDetails}
           fullScreen={true}
+          handleVisible={handleVisible}
+          autoPlay={true}
         />
-      </Modal>
+      )}
     </div>
   );
 };
