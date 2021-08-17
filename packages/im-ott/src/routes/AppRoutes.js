@@ -6,10 +6,10 @@ import PageNotFound from "imcomponents/atoms/pageNotFound";
 import Seeker from "imcomponents/organisms/seeker";
 import Player from "imcomponents/organisms/player";
 import AppLoader from "imcomponents/molecules/appLoader";
+import MoviesList from "imcomponents/pages/moviesList";
 import SearchMovie from "../organisms/searchMovie";
 import AppSkeleton from "../organisms/appSkeleton";
 import WatchList from "../pages/watchList";
-import MoviesList from "../pages/moviesList";
 import FilmDetails from "../pages/filmDetails";
 import LandingPage from "../pages/landingPage";
 

@@ -26,6 +26,7 @@ const EditTab = (props) => {
   const dispatch = useDispatch();
   const { tabdata, history, loading } = props;
   const { id, title, description, url, genre } = tabdata;
+  console.log(tabdata);
 
   const formItemLayout = {
     labelCol: { span: 4 },

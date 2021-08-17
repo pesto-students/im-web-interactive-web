@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import { isMobile } from "imcomponents/atoms/device";
 import cx from "classnames";
 
+// Graphql
+import { FEATURED_MOVIES } from "imbase/graphql/queries";
+
 // Lodash
 import _isEmpty from "lodash/isEmpty";
 import _times from "lodash/times";
@@ -15,7 +18,7 @@ import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
 import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
 import Watchlist from "../../organisms/watchlist";
-import FilmList from "../../organisms/filmList";
+import FilmList from "imcomponents/organisms/filmList";
 import Image from "imcomponents/atoms/image";
 import { CaretRightOutlined } from "imcomponents/atoms/icon";
 
@@ -117,16 +120,16 @@ const FilmDetails = (props) => {
   });
 
   const buttonWrapperClassname = cx(styles.btnWrapper, {
-    [styles.mobileButtonsOrder]: isMobile
-  })
+    [styles.mobileButtonsOrder]: isMobile,
+  });
 
   const buttonClassName = cx(styles.button, {
-    [styles.mobileButton]: isMobile
-  })
+    [styles.mobileButton]: isMobile,
+  });
 
   const titleMarginClassname = cx(styles.titleMargin, {
-    [styles.titleMarginMobile]: isMobile
-  })
+    [styles.titleMarginMobile]: isMobile,
+  });
 
   return (
     <div className={cx("film-details", styles.container)}>
@@ -219,6 +222,11 @@ const FilmDetails = (props) => {
         label={"More to watch"}
         listKey={"featured"}
         isFeatured
+        query={FEATURED_MOVIES}
+        dataPath={"getFeatured"}
+        linkTo={(id) => {
+          return `film/${id}`;
+        }}
       />
 
       {visible && (

@@ -1,8 +1,11 @@
 import React from "react";
 
+//graphql
+import { NEW_RELEASES, FEATURED_MOVIES } from "imbase/graphql/queries";
+
 // Components
 import Banner from "../../organisms/banner";
-import FilmList from "../../organisms/filmList";
+import FilmList from "imcomponents/organisms/filmList";
 
 function LandingPage() {
   return (
@@ -12,6 +15,11 @@ function LandingPage() {
         key="new-releases"
         label={"New Releases"}
         listKey={"new-releases"}
+        query={NEW_RELEASES}
+        dataPath={"getNewReleases"}
+        linkTo={(id) => {
+          return `film/${id}`;
+        }}
       />
       <FilmList
         key="featured-movies"
@@ -19,12 +27,22 @@ function LandingPage() {
         listKey={"featured"}
         isFeatured={true}
         showDetails
+        query={FEATURED_MOVIES}
+        dataPath={"getFeatured"}
+        linkTo={(id) => {
+          return `film/${id}`;
+        }}
       />
       <FilmList
         key="featured-movies"
         label={"Featured Movies"}
         listKey={"featured"}
         isFeatured={true}
+        query={FEATURED_MOVIES}
+        dataPath={"getFeatured"}
+        linkTo={(id) => {
+          return `film/${id}`;
+        }}
       />
       <Banner onlyOne />
       <FilmList
@@ -34,6 +52,11 @@ function LandingPage() {
         isFeatured={true}
         showDetails
         isDetailsRightAligned
+        query={FEATURED_MOVIES}
+        dataPath={"getFeatured"}
+        linkTo={(id) => {
+          return `film/${id}`;
+        }}
       />
     </div>
   );
