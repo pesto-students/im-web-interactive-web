@@ -4,10 +4,10 @@ import {
   QUERY_ALL_MOVIES,
 } from "imbase/graphql/queries";
 
+// Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
 const getQueryParams = (movieCriteria, currentUser) => {
-  console.log(movieCriteria, currentUser);
   const GET_QUERY_PARAMS = {
     "new-releases": {
       headingName: "New Releases",
@@ -64,7 +64,6 @@ const getQueryParams = (movieCriteria, currentUser) => {
       },
     },
   };
-  console.log(GET_QUERY_PARAMS[movieCriteria]);
 
   return GET_QUERY_PARAMS[movieCriteria];
 };

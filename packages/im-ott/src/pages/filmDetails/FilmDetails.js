@@ -12,14 +12,14 @@ import _times from "lodash/times";
 import _truncate from "lodash/truncate";
 
 // Components
+import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
+import Image from "imcomponents/atoms/image";
 import Skeleton from "imcomponents/atoms/skeleton";
 import { Title, Label } from "imcomponents/atoms/typography";
-import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
 import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
-import Watchlist from "../../organisms/watchlist";
 import FilmList from "imcomponents/organisms/filmList";
-import Image from "imcomponents/atoms/image";
+import Watchlist from "../../organisms/watchlist";
 import { CaretRightOutlined } from "imcomponents/atoms/icon";
 
 // Readers

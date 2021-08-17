@@ -28,7 +28,7 @@ const Watchlist = (props) => {
   const [error, setError] = useState(null);
 
   const { user } = useContext(UserContext);
-  const label = isWatchlisted ? "Remove Watchlist" : "Add Watchlist";
+  const label = isWatchlisted ? "Watchlist" : "Watchlist";
   const labelIcon = isWatchlisted ? <MinusOutlined /> : <PlusOutlined />;
 
   useEffect(() => {

@@ -4,8 +4,8 @@ import React from "react";
 import { NEW_RELEASES, FEATURED_MOVIES } from "imbase/graphql/queries";
 
 // Components
-import Banner from "../../organisms/banner";
 import FilmList from "imcomponents/organisms/filmList";
+import Banner from "../../organisms/banner";
 
 function LandingPage() {
   return (
