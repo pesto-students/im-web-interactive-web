@@ -5,16 +5,18 @@
   display: flex;
   left: 40%;
   text-align: center;
+  border-radius: 1rem;
   background: rgba($color: black, $alpha: 0.6);
 
   .timeLeft {
     position: absolute;
     right: 1rem;
     color: white;
+    font-size: 1.8rem;
   }
 
   .details {
-    padding: 1.2rem;
+    padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -31,7 +33,7 @@
     }
 
     .selected {
-      border: 0.3rem solid green;
+      border: 0.3rem solid gold;
       transform: scale(1.1);
       font-weight: bold;
     }
