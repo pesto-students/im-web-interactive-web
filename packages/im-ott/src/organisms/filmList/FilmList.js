@@ -126,7 +126,8 @@ const FilmList = (props) => {
   }
 
   const filmListContainerClassname = cx(styles.container, {
-    [styles.gradientBackground]: !showDetails
+    [styles.gradientBackground]: !showDetails,
+    [styles.mobilePadding]: isMobile,
   })
 
   return (

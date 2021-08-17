@@ -21,4 +21,7 @@ export {
   BellFilled,
   HeartOutlined,
   HeartFilled,
+  CaretRightOutlined,
+  PlusOutlined,
+  MinusOutlined,
 } from "./Icon";
