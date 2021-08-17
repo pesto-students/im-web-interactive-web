@@ -1,24 +1,4 @@
-.bannerContent {
-  height: 25rem;
-  line-height: 25rem;
-  position: relative;
-}
-
-.bannerOverlay {
-  padding: 3rem;
-  border-radius: 1rem;
-  z-index: 2;
-  position: absolute;
-  top: 12rem;
-  margin-left: 6rem;
-  width: 50rem;
-  text-align: left;
-  background: rgba(0, 0, 0, 0.6);
-
-  h3.ant-typography,
-  .ant-typography h3,
-  span,
-  h3 {
-    color: white;
-  }
+.bannerImage {
+    max-height: 50rem;
+    min-height: 20rem;
 }

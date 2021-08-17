@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, memo, useEffect } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -18,10 +18,26 @@ import { EMPTY_STRING, EMPTY_OBJECT } from "imbase/constants/base.constants";
 import styles from "./player.module.scss";
 
 const Player = (props) => {
-  const { classname, videoUrl, isHost, overlayData, triggerData } = props;
+  const {
+    classname,
+    videoUrl,
+    isHost,
+    overlayData,
+    triggerData,
+    fullScreen,
+    handleVisible,
+    autoPlay,
+  } = props;
+
+  // player wrapper
+  const playerWrapper = useRef(null);
+
+  // player
+  const player = useRef(null);
+
   const [state, setState] = useState({
     url: null,
-    playing: false,
+    playing: autoPlay,
     controls: false,
     light: false,
     muted: false,
@@ -33,11 +49,16 @@ const Player = (props) => {
     visible_button_refresh: true,
   });
 
-  // player wrapper
-  const playerWrapper = useRef(null);
-
-  // player
-  const player = useRef(null);
+  useEffect(() => {
+    if (screenfull.isEnabled) {
+      screenfull.on("change", () => {
+        if (!screenfull.isFullscreen && fullScreen) {
+          setState({ ...state, url: null, playing: false });
+          handleVisible(false);
+        }
+      });
+    }
+  });
 
   // to play pause player
   const handlePlayPause = () => {
@@ -97,15 +118,26 @@ const Player = (props) => {
   // handle full screen
   // uses screenfull a JavaScript Fullscreen API
   const handleClickFullscreen = () => {
-    if (playerWrapper.current) {
-      screenfull.request(playerWrapper.current);
-    }
+    screenfull.request(playerWrapper.current);
   };
 
   // handle overlay action
   const handleOverlayAction = (seconds) => {
     if (player?.current) {
       player.current.seekTo(seconds);
+    }
+  };
+
+  const handleReady = (seconds) => {
+    if (fullScreen) {
+      if (screenfull.isEnabled) {
+        if (playerWrapper.current) {
+          screenfull.request(playerWrapper.current);
+        }
+        screenfull.on("error", (event) => {
+          console.error("Failed to enable fullscreen", event);
+        });
+      }
     }
   };
 
@@ -125,6 +157,7 @@ const Player = (props) => {
           onEnded={handleEnded}
           onProgress={handleProgress}
           onDuration={handleDuration}
+          onReady={handleReady}
         />
 
         <div>
@@ -192,6 +225,8 @@ Player.propTypes = {
   isHost: PropTypes.bool,
   overlayData: PropTypes.object,
   triggerData: PropTypes.object,
+  fullScreen: PropTypes.bool,
+  handleVisible: PropTypes.func,
 };
 
 Player.defaultProps = {
@@ -200,6 +235,8 @@ Player.defaultProps = {
   isHost: false,
   overlayData: EMPTY_OBJECT,
   triggerData: EMPTY_OBJECT,
+  fullScreen: false,
+  handleVisible: () => {},
 };
 
-export default Player;
+export default memo(Player);

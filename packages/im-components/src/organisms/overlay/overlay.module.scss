@@ -1,36 +1,48 @@
 .overlayWrapper {
   position: absolute;
   z-index: 10;
-  bottom: 25%;
-  left: 30%;
+  bottom: 0;
+  display: flex;
+  left: 40%;
   text-align: center;
-  width: calc(50% - 5rem);
-  height: 15rem;
-  background: rgba($color: grey, $alpha: 0.8);
+  background: rgba($color: black, $alpha: 0.6);
+
+  .timeLeft {
+    position: absolute;
+    right: 1rem;
+    color: white;
+  }
 
   .details {
-    padding-top: 2rem;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+
+    h3 {
+      color: white;
+    }
 
     .center {
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-      width: 100%;
-
       button:first-child {
         position: relative;
-        margin-top: 2rem;
         margin-right: 2.5rem;
       }
     }
 
     .selected {
       border: 0.3rem solid green;
-      transform: scale(1.2);
+      transform: scale(1.1);
       font-weight: bold;
     }
   }
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  bottom: 0;
+  width: 100%;
+  height: fit-content;
+  justify-content: center;
 }

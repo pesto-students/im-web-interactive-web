@@ -201,7 +201,6 @@ const GET_WATCHLISTED_MOVIES = gql`
     getWatchlistedMovies(userId: $userId) {
       id
       mId
-      name
       title
       description
       url

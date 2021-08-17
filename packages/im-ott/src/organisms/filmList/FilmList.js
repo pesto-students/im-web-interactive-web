@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { isMobile } from "imcomponents/atoms/device";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
+import cx from 'classnames';
 
 // Lodash
 import _map from "lodash/map";
 import _isEmpty from "lodash/isEmpty";
+import _times from "lodash/times";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
@@ -14,7 +16,7 @@ import { NEW_RELEASES, FEATURED_MOVIES } from "imbase/graphql/queries";
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
 import { Title } from "imcomponents/atoms/typography";
-import Loader from "imcomponents/molecules/loader/Loader";
+import Skeleton from "imcomponents/atoms/skeleton";
 import Error from "imcomponents/molecules/error";
 
 // Readers
@@ -32,7 +34,13 @@ import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
 // Styles
 import styles from "./filmlist.module.scss";
 
-const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
+const renderMovie = (
+  filmDetails = EMPTY_OBJECT,
+  isFeatured,
+  label,
+  showDetails,
+  isDetailsRightAligned
+) => {
   const filmId = FilmReader.id(filmDetails);
   const filmTitle = FilmReader.title(filmDetails);
   const filmRating = FilmReader.rating(filmDetails);
@@ -42,13 +50,15 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   return (
     <Link to={`film/${filmId}`}>
       <FilmCard
-        key={filmId}
+        key={label + filmId}
         title={filmTitle}
         genre={filmGenre}
         imgSrc={filmImgSrc}
         rating={filmRating}
         {...filmDetails}
         isFeatured={isFeatured}
+        alignRight={isDetailsRightAligned}
+        showDetails={showDetails}
       />
     </Link>
   );
@@ -57,14 +67,15 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
 const FilmList = (props) => {
   const history = useHistory();
   const [loading, setLoading] = useState(true);
-  const { label, isFeatured, listKey } = props;
+  const { label, isFeatured, listKey, showDetails, isDetailsRightAligned } =
+    props;
   const [movieList, setMovieList] = useState(EMPTY_ARRAY);
   const [error, setError] = useState(EMPTY_OBJECT);
   const filmListRef = useRef();
   const stylesInline = {
     display: "block",
-    color: "#ccc",
-    fontSize: "4rem",
+    color: "#000",
+    fontSize: "2.4rem",
     twoToneColor: "#fff",
     width: "4rem",
     height: "4rem",
@@ -75,9 +86,9 @@ const FilmList = (props) => {
   // Handle Scrolling by increment / decreamenting scroll left
   const handleNav = (direction) => {
     if (direction === "left") {
-      filmListRef.current.scrollLeft -= 200;
+      if (filmListRef.current) filmListRef.current.scrollLeft -= 200;
     } else {
-      filmListRef.current.scrollLeft += 200;
+      if (filmListRef.current) filmListRef.current.scrollLeft += 200;
     }
   };
 
@@ -110,24 +121,30 @@ const FilmList = (props) => {
       });
   }, [listKey]);
 
-  if (loading) {
-    return <Loader />;
-  }
-
   if (!_isEmpty(error)) {
     return <Error {...error} />;
   }
 
+  const filmListContainerClassname = cx(styles.container, {
+    [styles.gradientBackground]: !showDetails
+  })
+
   return (
-    <div className={styles.mt1}>
-      <Title level={4} className={styles.menuContainer}>
-        <div className={styles.label}>
-          {label} &nbsp; <RightOutlined />
-        </div>
-        <div className={styles.seeMore} onClick={handleSeeAll}>
-          <p>See all</p>
-        </div>
-      </Title>
+    <div className={filmListContainerClassname}>
+      {loading ? (
+        <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
+      ) : (
+        <Title
+          level={4}
+          className={`${styles.menuContainer} ${styles.titleContainer}`}
+        >
+          <div className={styles.label}>{label}</div>
+          <div className={styles.seeMore} onClick={handleSeeAll}>
+            <p>See All</p>
+          </div>
+        </Title>
+      )}
+
       <div className={filmListContainer}>
         {!isMobile && (
           <div className={styles.filmArrow}>
@@ -137,9 +154,23 @@ const FilmList = (props) => {
             />
           </div>
         )}
-        <div className={styles.navItems} ref={filmListRef}>
-          {_map(movieList, (movie) => renderMovie(movie, isFeatured))}
-        </div>
+        {loading ? (
+          _times(4, (movie) => (
+            <Skeleton.Image active={true} className={styles.skeleton} />
+          ))
+        ) : (
+          <div className={styles.navItems} ref={filmListRef}>
+            {_map(movieList, (movie) =>
+              renderMovie(
+                movie,
+                isFeatured,
+                label,
+                showDetails,
+                isDetailsRightAligned
+              )
+            )}
+          </div>
+        )}
         {!isMobile && (
           <div className={styles.filmArrow}>
             <RightOutlined
@@ -158,6 +189,8 @@ FilmList.propTypes = {
   label: PropTypes.string,
   listKey: PropTypes.string,
   isFeatured: PropTypes.bool,
+  showDetails: PropTypes.bool,
+  isDetailsRightAligned: PropTypes.bool,
 };
 
 FilmList.defaultProps = {
@@ -165,6 +198,8 @@ FilmList.defaultProps = {
   label: undefined,
   listKey: undefined,
   isFeatured: false,
+  showDetails: false,
+  isDetailsRightAligned: false,
 };
 
 export default FilmList;

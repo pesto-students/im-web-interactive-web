@@ -8,10 +8,9 @@ import _isEmpty from "lodash/isEmpty";
 import _times from "lodash/times";
 
 // Components
-import Loader from "imcomponents/molecules/loader/Loader";
+import Skeleton from "imcomponents/atoms/skeleton";
 import { Title, Label } from "imcomponents/atoms/typography";
 import Button from "imcomponents/atoms/button";
-import { Modal } from "imcomponents/atoms/modal";
 import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
 import Watchlist from "../../organisms/watchlist";
@@ -67,10 +66,6 @@ const FilmDetails = (props) => {
       });
   }, [filmId]);
 
-  if (loading) {
-    return <Loader />;
-  }
-
   if (!_isEmpty(error)) {
     return <Error {...error} />;
   }
@@ -96,69 +91,90 @@ const FilmDetails = (props) => {
       });
   };
 
-  const handleCancel = () => {
-    setVisible(false);
+  const handleVisible = (val) => {
+    setVisible(val);
   };
 
   return (
     <div className={cx("film-details", styles.container)}>
       <div className={styles.bannerImage}>
-        <img
-          src={
-            FilmReader.cover(filmDetails) ||
-            FilmReader.coverStandard(filmDetails) ||
-            FilmReader.coverHigh(filmDetails)
-          }
-          alt={`${FilmReader.title(filmDetails)} cover`}
-        />
+        {loading ? (
+          <Skeleton.Image className={styles.skeletonBanner} active={true} />
+        ) : (
+          <img
+            src={
+              FilmReader.cover(filmDetails) ||
+              FilmReader.coverStandard(filmDetails) ||
+              FilmReader.coverHigh(filmDetails)
+            }
+            alt={`${FilmReader.title(filmDetails)} cover`}
+          />
+        )}
       </div>
       <div className={styles.metadata}>
         {!isMobile && (
           <div className={styles.thumbnail}>
-            <img
-              src={FilmReader.thumbnail(filmDetails)}
-              alt={`${FilmReader.title(filmDetails)} thumbnail`}
-            />
+            {loading ? (
+              <Skeleton.Image
+                className={styles.skeletonThumbnail}
+                active={true}
+              />
+            ) : (
+              <img
+                src={FilmReader.thumbnail(filmDetails)}
+                alt={`${FilmReader.title(filmDetails)} thumbnail`}
+              />
+            )}
           </div>
         )}
         <div className={styles.titleMetadata}>
           <div className={styles.ml2}>
-            <Title level={3}>{FilmReader.title(filmDetails)}</Title>
+            {loading ? (
+              <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
+            ) : (
+              <Title level={3}>{FilmReader.title(filmDetails)}</Title>
+            )}
             {_times(FilmReader.rating(filmDetails), () => (
               <StarFilled style={{ color: "yellow" }} />
             ))}
-            <div className={styles.btnWrapper}>
-              <Button
-                label={"Play Movie"}
-                onClick={handlePlay}
-                loading={loadingModal}
-                danger
-              ></Button>
-              <Watchlist movieId={filmId} />
-            </div>
+            {!loading && (
+              <div className={styles.btnWrapper}>
+                <Button
+                  label={"Play Movie"}
+                  onClick={handlePlay}
+                  loading={loadingModal}
+                  danger
+                ></Button>
+                <Watchlist movieId={filmId} />
+              </div>
+            )}
           </div>
         </div>
       </div>
       <div className={styles.description}>
-        <Title level={5} className={styles.mb1}>
-          Overview
-        </Title>
-        <Label>{FilmReader.description(filmDetails)}</Label>
+        {loading ? (
+          <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
+        ) : (
+          <Title level={5} className={styles.mb1}>
+            Overview
+          </Title>
+        )}
+        {loading ? (
+          <Skeleton width="100%" paragraph={{ rows: 5 }} active={true} />
+        ) : (
+          <Label>{FilmReader.description(filmDetails)}</Label>
+        )}
       </div>
-      <Modal
-        title={FilmReader.title(filmDetails)}
-        width={"80vw"}
-        centered
-        visible={visible}
-        onCancel={handleCancel}
-        footer={null}
-      >
+      {visible && (
         <Player
           videoUrl={FilmReader.url(filmDetails)}
           overlayData={overlayDetails}
           triggerData={triggerDetails}
+          fullScreen={true}
+          handleVisible={handleVisible}
+          autoPlay={true}
         />
-      </Modal>
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
+import { isMobile } from "imcomponents/atoms/device";
 
 // Lodash
 import _times from "lodash/times";
@@ -23,33 +24,39 @@ const FilmCard = (props) => {
     showDetails,
   } = props;
 
-  const filmCardContainerClassname = cx(styles.filmcard, {
+  const filmCardContainerClassname = cx(styles.filmCard, {
     [styles.alignRight]: alignRight,
     [styles.alignBottom]: !alignRight,
   });
-  const imgStyle = isFeatured ? styles.filmCardImgFeatured : styles.filmCardImg;
-  const descriptionStyle = isFeatured
-    ? styles.descriptionFeatured
-    : styles.description;
-  const titleStyle = isFeatured ? styles.titleFeatured : styles.title;
 
+  const filmImageClassName = cx(styles.filmImage, {
+    [styles.medium]: (isFeatured && isMobile) || (!isFeatured && !isMobile),
+    [styles.large]: isFeatured && !isMobile,
+    [styles.xsmall]: !isFeatured && isMobile,
+  });
+
+  const detailsClassName = cx(styles.details, {
+    [styles.medium]: (isFeatured && isMobile) || (!isFeatured && !isMobile),
+    [styles.large]: isFeatured && !isMobile,
+    [styles.xsmall]: !isFeatured && isMobile,
+    [styles.detailsRightPadding]: alignRight
+  });
   return (
     <div className={filmCardContainerClassname}>
-      <img className={imgStyle} src={imgSrc} alt={title} />
-      <div className={styles.relative}>
-        {showDetails && (
-          <div className={styles.details}>
-            <div>
-              <span className={styles.tag}>{genre && genre.toUpperCase()}</span>
-            </div>
+      <img className={filmImageClassName} src={imgSrc} alt={title} />
+      {showDetails && (
+        <div className={detailsClassName}>
+          <div>
+            <span className={styles.tag}>{genre && genre.toUpperCase()}</span>
+
             {_times(rating, () => (
               <StarTwoTone twoToneColor="#ffbf00" />
             ))}
-            <p className={titleStyle}>{title}</p>
-            <p className={descriptionStyle}>{description}</p>
+            <p className={styles.title}>{title}</p>
+            <p className={styles.description}>{description}</p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

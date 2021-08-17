@@ -3,17 +3,22 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 
 // Components
-import { Title, Label } from "imcomponents/atoms/typography";
+import PageNotFound from "imcomponents/atoms/pageNotFound";
+
+// Lodash
+import _isEmpty from "lodash/isEmpty";
 
 // Styles
 import styles from "./error.module.scss";
 
 const Error = ({ message, className }) => {
   const errorClassName = cx(styles.container, className);
+  if (_isEmpty(message)) {
+    message = "An Error has occured! Please try to refresh or contact support";
+  }
   return (
     <div className={errorClassName}>
-      <Title className={styles.title}>Error</Title>
-      <Label className={styles.message}>{message}</Label>
+      <PageNotFound message={message} />
     </div>
   );
 };

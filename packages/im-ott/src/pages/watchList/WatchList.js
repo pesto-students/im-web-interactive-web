@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Lodash
 import _map from "lodash/map";
 import _isEmpty from "lodash/isEmpty";
+import _times from "lodash/times";
 
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
 import FilmCardMobile from "imcomponents/molecules/filmCardMobile";
-import Loader from "imcomponents/molecules/loader/Loader";
+import Skeleton from "imcomponents/atoms/skeleton";
 import Error from "imcomponents/molecules/error";
 import { isMobile } from "imcomponents/atoms/device";
-import { UserContext } from "imbase/providers/UserProvider";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
@@ -19,6 +19,9 @@ import { GET_WATCHLISTED_MOVIES } from "imbase/graphql/queries";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
+
+// Utils
+import { getCurrentUser } from "imbase/services/firebase";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -68,7 +71,7 @@ const WatchList = () => {
   const [films, setFilms] = useState(EMPTY_ARRAY);
   const [error, setError] = useState(EMPTY_OBJECT);
 
-  const { user } = useContext(UserContext);
+  const uid = getCurrentUser()?.uid;
 
   useEffect(() => {
     setLoading(true);
@@ -76,7 +79,7 @@ const WatchList = () => {
       .query({
         query: GET_WATCHLISTED_MOVIES,
         variables: {
-          userId: user.uid,
+          userId: uid,
         },
       })
       .then((response) => {
@@ -88,11 +91,7 @@ const WatchList = () => {
         setError(error);
         setLoading(false);
       });
-  }, [user.uid]);
-
-  if (loading) {
-    return <Loader />;
-  }
+  }, [uid]);
 
   if (!_isEmpty(error)) {
     return <Error {...error} />;
@@ -101,8 +100,18 @@ const WatchList = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <h1 className={styles.heading}>Watchlist</h1>
-        <div className={styles.movies}>{_map(films, renderFilm)}</div>
+        {loading ? (
+          <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
+        ) : (
+          <h1>Watchlist</h1>
+        )}
+        {loading ? (
+          _times(8, (movie) => (
+            <Skeleton.Image active={true} className={styles.skeleton} />
+          ))
+        ) : (
+          <div className={styles.movies}>{_map(films, renderFilm)}</div>
+        )}
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ import styles from "./logo.module.scss";
 import { EMPTY_STRING } from "imbase/constants/base.constants";
 
 const Logo = (props) => {
-  const { text, children } = props;
+  const { text } = props;
   const textStyle = isMobile ? styles.textMobile : styles.text;
   const imgStyle = isMobile ? styles.imageMobile : styles.image;
   return (

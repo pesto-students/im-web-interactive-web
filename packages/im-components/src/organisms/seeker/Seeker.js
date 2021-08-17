@@ -1,6 +1,7 @@
 import React, {
   useRef,
   useState,
+  useEffect,
   forwardRef,
   useImperativeHandle,
 } from "react";
@@ -17,11 +18,11 @@ import { getFormattedTime } from "imbase/utils/getFormattedTime";
 import styles from "./seeker.module.scss";
 
 const Seeker = forwardRef((props, ref) => {
-  const { className, videoUrl, setSeekerTime, setHotspotSeconds } = props;
+  const { className, videoUrl, setSeekerTime } = props;
 
   const seekerRef = useRef(null);
 
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(null);
 
   const [duration, setDuration] = useState(true);
 
@@ -37,10 +38,18 @@ const Seeker = forwardRef((props, ref) => {
     []
   );
 
+  useEffect(() => {
+    setPlaying(true);
+    const playedTime = Math.round(played * duration) > 2;
+    if (playedTime) {
+      setPlaying(false);
+    }
+  }, [duration, played]);
+
   // seeking video by input range
   const seekVideo = (e) => {
     if (!playing) {
-      setPlaying(true);
+      setPlaying(false);
     }
     if (e.target?.value) {
       setPlaying(false);
@@ -56,7 +65,6 @@ const Seeker = forwardRef((props, ref) => {
     if (played < progress.played) {
       setPlaying(false);
     }
-    // setHotspotSeconds(Math.round(progress.playedSeconds));
     setPlayed(progress.played);
   };
 
@@ -75,6 +83,9 @@ const Seeker = forwardRef((props, ref) => {
         ref={seekerRef}
         onDuration={handleDuration}
         onProgress={handleProgress}
+        onReady={() => {
+          setPlaying(false);
+        }}
         width={"100%"}
         muted="true"
       />
