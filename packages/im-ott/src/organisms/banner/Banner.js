@@ -2,24 +2,32 @@ import React from "react";
 
 // Components
 import { Carousel } from "antd";
-import { isMobile } from "imcomponents/atoms/device";
 import Image from "imcomponents/atoms/image";
 
 // Styles
-import styles from "./banner.module.scss";
+import styles from './banner.module.scss';
 
-const Banner = () => {
-  const imgHeight = isMobile ? 200 : 700;
+// Images
+import BannerImage1 from '../../assets/images/Banner-image-1.jpg';
+import BannerImage2 from '../../assets/images/Banner-image-2.jpg';
+
+const Banner = ({onlyOne}) => {
   return (
     <Carousel autoplay>
       <div>
         <Image
-          src="https://images.hungama.com/c/1/4e5/067/5261782/5261782_1280x800.jpg"
-          height={imgHeight}
+          src={BannerImage1}
           width={"100%"}
-          className={styles.thumb}
+          className={styles.bannerImage}
         />
       </div>
+      {!onlyOne && <div>
+        <Image
+          src={BannerImage2}
+          width={"100%"}
+          className={styles.bannerImage}
+        />
+      </div>}
     </Carousel>
   );
 };

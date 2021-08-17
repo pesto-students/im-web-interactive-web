@@ -1,85 +1,50 @@
-.filmcard {
+.filmCard {
   transition: all 0.3s ease;
   display: flex;
-  margin: 0.4rem 1.6rem 0.4rem 0;
+  margin: 0.4rem;
 
-  .relative {
-    position: relative;
+  .details {
+    opacity: 0.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-    .details {
-      z-index: 10;
-      align-items: center;
-      white-space: nowrap;
-      bottom: 0;
-      left: 0.8rem;
-      text-align: left;
-      right: 0;
-      opacity: 0.8;
+    .tag {
+      color: #444;
+      font-size: 1rem;
+      margin-bottom: 0;
+      display: block;
+    }
 
-      .tag {
-        color: #444;
-        font-size: 1rem;
-        margin-bottom: 0;
-      }
+    .title {
+      color: black;
+      font-size: 1.4rem;
+      font-weight: 500;
+      white-space: pre-wrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+      line-height: 1.6rem;
+      padding: 0.4rem 0rem;
+    }
 
-      .title {
-        color: black;
-        font-size: 1.4rem;
-        font-weight: 500;
-        width: 22rem;
-        white-space: pre-wrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin: 0;
-      }
+    .description {
+      color: #444;
+      font-size: 1.2rem;
+      white-space: pre-wrap;
+      overflow: hidden;
+      line-height: 1.4rem;
+      max-height: 4.2rem;
 
-      .titleFeatured {
-        color: black;
-        font-size: 1.4rem;
-        font-weight: 500;
-        width: 25rem;
-        white-space: pre-wrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin: 0;
-      }
-
-      .description {
-        color: #444;
-        font-size: 1.2rem;
-        width: 22rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .descriptionFeatured {
-        color: #444;
-        font-size: 1.2rem;
-        width: 25rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      p {
+        margin-bottom: 0rem;
       }
     }
   }
 
-  .filmCardImg {
-    max-height: 50rem;
+  .filmImage {
     object-fit: contain;
-    width: calc(40rem * (9 / 16));
-    border-radius: 1.6rem;
-
-    &:hover {
-      transform: scale(1.03);
-    }
-  }
-
-  .filmCardImgFeatured {
-    max-height: 45rem;
-    object-fit: contain;
-    width: calc(45rem * (9 / 16));
-    border-radius: 1rem;
+    border-radius: 1.2rem;
 
     &:hover {
       transform: scale(1.03);
@@ -93,4 +58,25 @@
 
 .alignBottom {
   flex-direction: column;
+}
+
+.xsmall {
+  width: 12rem;
+}
+
+.small {
+  width: 16rem;
+}
+
+.medium {
+  width: 20rem;
+}
+
+.large {
+  width: 24rem;
+}
+
+.detailsRightPadding {
+  padding: 1rem;
+  margin-left: 0.4rem;
 }

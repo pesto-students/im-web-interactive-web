@@ -2,14 +2,10 @@
   display: flex;
   flex-direction: row;
   max-height: 32rem;
-  justify-content: space-between;
-
-  div {
-    align-self: center;
-  }
 
   .label {
     margin-left: 4rem;
+    font-size: 1.6rem;
   }
 
   .skeleton {
@@ -38,7 +34,8 @@
     overflow: auto;
     white-space: nowrap;
     scroll-behavior: smooth;
-    min-width: 86vw;
+    flex: 1;
+    border-bottom: 1px solid #eee;
   }
 
   .navItems a {
@@ -56,8 +53,22 @@
   max-height: 44rem;
 }
 
-.mt1 {
-  margin-top: 3rem;
+.container {
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+
+  .titleContainer {
+    margin-bottom: 0rem;
+    justify-content: space-between;
+  
+    p {
+      margin-bottom: 0rem;
+    }
+  }
+}
+
+.gradientBackground {
+  background-image: linear-gradient(180deg, white, #eee);
 }
 
 @media only screen and (max-width: 60rem) {
