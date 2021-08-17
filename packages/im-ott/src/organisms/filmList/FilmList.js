@@ -48,7 +48,7 @@ const renderMovie = (
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
 
   return (
-    <Link to={`film/${filmId}`}>
+    <Link to={`/film/${filmId}`}>
       <FilmCard
         key={label + filmId}
         title={filmTitle}

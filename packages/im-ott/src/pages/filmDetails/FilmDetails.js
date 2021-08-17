@@ -16,6 +16,7 @@ import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
 import Watchlist from "../../organisms/watchlist";
 import FilmList from "../../organisms/filmList";
+import Comments from "../../organisms/comments";
 import Image from "imcomponents/atoms/image";
 import { CaretRightOutlined } from "imcomponents/atoms/icon";
 
@@ -54,6 +55,7 @@ const FilmDetails = (props) => {
   if (filmDetails?.triggers) {
     triggerDetails = filmDetails.triggers;
   }
+
   useEffect(() => {
     gqlClient
       .query({
@@ -214,13 +216,30 @@ const FilmDetails = (props) => {
         </div>
       </div>
 
+      <div className={styles.comments}>
+        <div className={styles.commentsBorder}>
+          {loading ? (
+            <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
+          ) : (
+            <Title level={5} className={styles.mb1}>
+              Comments
+            </Title>
+          )}
+          {loading ? (
+            <Skeleton width="100%" paragraph={{ rows: 5 }} active={true} />
+          ) : (
+            <>
+              <Comments videoId={filmDetails.mId} />
+            </>
+          )}
+        </div>
+      </div>
       <FilmList
         key="featured-movies"
         label={"More to watch"}
         listKey={"featured"}
         isFeatured
       />
-
       {visible && (
         <Player
           videoUrl={FilmReader.url(filmDetails)}

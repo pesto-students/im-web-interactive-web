@@ -9,7 +9,8 @@
     width: 100vw;
     min-height: 40rem;
   }
-  .description {
+  .description,
+  .comments {
     padding: 1rem 4rem;
 
     .descriptionDetails {
@@ -17,7 +18,8 @@
       padding: 2rem 0rem;
     }
 
-    .descriptionBorder {
+    .descriptionBorder,
+    .commentsBorder {
       padding-bottom: 2rem;
       border-bottom: 1px solid #eee;
     }
