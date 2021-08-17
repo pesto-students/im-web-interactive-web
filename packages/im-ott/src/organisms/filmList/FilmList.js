@@ -130,7 +130,7 @@ const FilmList = (props) => {
   })
 
   return (
-    <div className={styles.container}>
+    <div className={filmListContainerClassname}>
       {loading ? (
         <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
       ) : (
