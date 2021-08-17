@@ -16,7 +16,7 @@ import CommentThread from "../../components/commentThread";
 import youtubeService from "imbase/services/youtubeService";
 
 // Utils
-import getDataFromResponseSingle from "imbase/utils/getDataFromResponseSingle";
+import getYTDataFromResponse from "imbase/utils/getYTDataFromResponse";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -57,8 +57,7 @@ function AllComments({ videoId, onClose, visible }) {
         ...(!_isEmpty(nextPageToken) ? { pageToken: nextPageToken } : {}),
       })
       .then((response) => {
-        const commentsDetails =
-          getDataFromResponseSingle(response) || EMPTY_OBJECT;
+        const commentsDetails = getYTDataFromResponse(response) || EMPTY_OBJECT;
         const nextPageTokenFromResponse = commentsDetails.nextPageToken;
         const commentsList = commentsDetails.items || EMPTY_ARRAY;
         setComments([...comments, ...commentsList]);

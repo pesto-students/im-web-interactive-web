@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
+// Constants
+import { EMPTY_STRING } from "imbase/constants/base.constants";
+
 // Styles
 import styles from "./collapsibleContent.module.scss";
 
@@ -35,7 +38,7 @@ CollapsibleContent.propTypes = {
 };
 
 CollapsibleContent.defaultProps = {
-  text: "",
+  text: EMPTY_STRING,
   limit: 60,
   disabled: false,
 };

@@ -15,7 +15,7 @@ import { isMobile } from "imcomponents/atoms/device";
 import youtubeService from "imbase/services/youtubeService";
 
 // Utils
-import getDataFromResponseSingle from "imbase/utils/getDataFromResponseSingle";
+import getYTDataFromResponse from "imbase/utils/getYTDataFromResponse";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -52,8 +52,7 @@ function Comments({ videoId }) {
     youtubeService
       .getComments({ videoId })
       .then((response) => {
-        const commentsDetails =
-          getDataFromResponseSingle(response) || EMPTY_OBJECT;
+        const commentsDetails = getYTDataFromResponse(response) || EMPTY_OBJECT;
         const commentsList = commentsDetails.items || EMPTY_ARRAY;
         setComments(commentsList);
       })
