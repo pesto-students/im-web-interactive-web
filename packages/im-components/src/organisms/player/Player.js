@@ -27,6 +27,8 @@ const Player = (props) => {
     fullScreen,
     handleVisible,
     autoPlay,
+    containerClassName,
+    playerWrapperClassName,
   } = props;
 
   // player wrapper
@@ -142,8 +144,11 @@ const Player = (props) => {
   };
 
   return (
-    <div>
-      <div className={styles.playerWrapper} ref={playerWrapper}>
+    <div className={containerClassName}>
+      <div
+        className={`${styles.playerWrapper} ${playerWrapperClassName}`}
+        ref={playerWrapper}
+      >
         <ReactPlayer
           ref={player}
           className={cx(styles.reactPlayer, classname)}
@@ -227,6 +232,8 @@ Player.propTypes = {
   triggerData: PropTypes.object,
   fullScreen: PropTypes.bool,
   handleVisible: PropTypes.func,
+  containerClassName: PropTypes.string,
+  playerWrapperClassName: PropTypes.string,
 };
 
 Player.defaultProps = {
@@ -237,6 +244,8 @@ Player.defaultProps = {
   triggerData: EMPTY_OBJECT,
   fullScreen: false,
   handleVisible: () => {},
+  containerClassName: "",
+  playerWrapperClassName: "",
 };
 
 export default memo(Player);
