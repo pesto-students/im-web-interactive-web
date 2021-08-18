@@ -1,17 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
+import cx from "classnames";
+
+//Components
+import { isMobile } from "imcomponents/atoms/device";
 
 //Styles
 import styles from "./pageNotFound.module.scss";
 
 const PageNotFound = (props) => {
   const { url, message, width, height } = props;
-  const style = {
+  let style = {
     width: width,
     height: height,
   };
+
+  const wrapperClassName = cx(styles.wrapper, {
+    [styles.mobileWrapper]: isMobile,
+  });
+
+  if (isMobile) {
+    style = {
+      width: "30rem",
+      height: "auto",
+    };
+  }
   return (
-    <div className={styles.wrapper}>
+    <div className={wrapperClassName}>
       <img src={url} alt={message} style={style} />
       <div className={styles.info}>
         <h3>{message}</h3>
