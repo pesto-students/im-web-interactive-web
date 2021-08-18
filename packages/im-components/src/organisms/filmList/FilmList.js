@@ -142,6 +142,9 @@ const FilmList = (props) => {
     [styles.mobileSeeMore]: isMobile,
   });
 
+  if (!loading && _isEmpty(movieList)) {
+    return null;
+  }
   return (
     <div className={filmListContainerClassname}>
       {loading ? (
