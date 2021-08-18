@@ -51,7 +51,7 @@ const Overlay = ({ overlay, currentTime, seekTo }) => {
   return (
     <div key={overlayId} className={styles.overlayWrapper}>
       <span className={styles.timeLeft}>
-        {overlayJumpPoint + 10 - currentTime}
+        {overlayJumpPoint + 10 - currentTime}s
       </span>
       <div className={styles.details}>
         <h3>{overlayTitle}</h3>

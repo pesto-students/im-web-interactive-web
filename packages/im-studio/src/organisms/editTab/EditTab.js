@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 // Components
-import Button from "imcomponents/atoms/button";
+import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form";
 import Input from "imcomponents/atoms/input";
 import TextArea from "imcomponents/atoms/textArea";
@@ -112,16 +112,13 @@ const EditTab = (props) => {
               <Button
                 className={styles.backButton}
                 label={"Back"}
-                shape={"round"}
-                ghost
+                type={BUTTON_TYPES.TERTIARY}
               />
             </Link>
             <Button
               className={styles.saveButton}
               label={"Save"}
-              shape={"round"}
               onClick={handleSubmit}
-              danger
             />
           </Form.Item>
         </Form>
