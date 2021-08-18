@@ -131,24 +131,29 @@ const Player = (props) => {
   };
 
   const handleReady = (seconds) => {
-    if (fullScreen) {
-      if (screenfull.isEnabled) {
-        if (playerWrapper.current) {
-          screenfull.request(playerWrapper.current);
-        }
-        screenfull.on("error", (event) => {
-          console.error("Failed to enable fullscreen", event);
-        });
-      }
-    }
+    // NOTE: Keeping this code for a while may need to comeback to use this
+    // Only Works on Chrome
+    // if (fullScreen) {
+    //   if (screenfull.isEnabled) {
+    //     if (playerWrapper.current) {
+    //       screenfull.request(playerWrapper.current);
+    //     }
+    //     screenfull.on("error", (event) => {
+    //       console.error("Failed to enable fullscreen", event);
+    //     });
+    //   }
+    // }
   };
+
+  const playerContentClassname = cx({
+    [styles.playerWrapper]: !fullScreen,
+    [playerWrapperClassName]: !fullScreen,
+    [styles.webFullScreenWrapper]: fullScreen,
+  });
 
   return (
     <div className={containerClassName}>
-      <div
-        className={`${styles.playerWrapper} ${playerWrapperClassName}`}
-        ref={playerWrapper}
-      >
+      <div className={playerContentClassname} ref={playerWrapper}>
         <ReactPlayer
           ref={player}
           className={cx(styles.reactPlayer, classname)}
@@ -232,7 +237,7 @@ Player.propTypes = {
   triggerData: PropTypes.object,
   fullScreen: PropTypes.bool,
   handleVisible: PropTypes.func,
-  disableExternalButtons: PropTypes.Boolean,
+  disableExternalButtons: PropTypes.bool,
   containerClassName: PropTypes.string,
   playerWrapperClassName: PropTypes.string,
 };

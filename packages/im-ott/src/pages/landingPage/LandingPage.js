@@ -18,7 +18,7 @@ function LandingPage() {
         query={NEW_RELEASES}
         dataPath={"getNewReleases"}
         linkTo={(id) => {
-          return `film/${id}`;
+          return `/film/${id}`;
         }}
       />
       <FilmList
@@ -30,7 +30,7 @@ function LandingPage() {
         query={FEATURED_MOVIES}
         dataPath={"getFeatured"}
         linkTo={(id) => {
-          return `film/${id}`;
+          return `/film/${id}`;
         }}
       />
       <FilmList
@@ -41,7 +41,7 @@ function LandingPage() {
         query={FEATURED_MOVIES}
         dataPath={"getFeatured"}
         linkTo={(id) => {
-          return `film/${id}`;
+          return `/film/${id}`;
         }}
       />
       <Banner onlyOne />
@@ -55,7 +55,7 @@ function LandingPage() {
         query={FEATURED_MOVIES}
         dataPath={"getFeatured"}
         linkTo={(id) => {
-          return `film/${id}`;
+          return `/film/${id}`;
         }}
       />
     </div>

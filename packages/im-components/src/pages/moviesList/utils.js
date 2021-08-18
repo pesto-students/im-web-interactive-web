@@ -15,7 +15,7 @@ const getQueryParams = (movieCriteria, currentUser) => {
       variables: EMPTY_OBJECT,
       dataPath: "getNewReleases",
       linkTo: (id) => {
-        return `film/${id}`;
+        return `/film/${id}`;
       },
     },
     featured: {
@@ -24,7 +24,7 @@ const getQueryParams = (movieCriteria, currentUser) => {
       dataPath: "getFeatured",
       variables: EMPTY_OBJECT,
       linkTo: (id) => {
-        return `film/${id}`;
+        return `/film/${id}`;
       },
     },
     "published-movies": {

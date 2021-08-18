@@ -1,15 +1,15 @@
 .container {
   padding: 4rem;
 
-  .skeleton {
-    margin-right: 2rem;
-    margin-top: 1rem;
-    width: calc(40rem * (9 / 16));
-    height: 15rem;
-  }
-
   .content {
     display: inline-block;
+
+    .skeleton {
+      margin-right: 2rem;
+      margin-top: 1rem;
+      width: calc(40rem * (9 / 16));
+      height: 15rem;
+    }
 
     .movies {
       display: flex;

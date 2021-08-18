@@ -68,7 +68,7 @@ function AllComments({ videoId, onClose, visible }) {
       .catch((error) => {
         console.log(`Error: Failed to load all comments, ${error}`);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId, currentPageNumber]);
 
   const handleLoadMoreComments = () => {
@@ -88,6 +88,7 @@ function AllComments({ videoId, onClose, visible }) {
         headerStyle={headerStyles}
         height={"100vh"}
         width={"100vw"}
+        destroyOnClose={true}
       >
         <div className={styles.commentsList}>
           {_map(comments, renderComment)}
@@ -109,6 +110,7 @@ function AllComments({ videoId, onClose, visible }) {
         headerStyle={headerStyles}
         height={"100vh"}
         width={"40vw"}
+        destroyOnClose={true}
       >
         <div className={styles.commentsList}>
           {_map(comments, renderComment)}
