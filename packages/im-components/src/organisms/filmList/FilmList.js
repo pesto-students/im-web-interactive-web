@@ -134,6 +134,14 @@ const FilmList = (props) => {
     [styles.mobilePadding]: isMobile,
   });
 
+  const labelClassname = cx(styles.label, {
+    [styles.mobileLabel]: isMobile,
+  });
+
+  const seeMoreClassname = cx(styles.seeMore, {
+    [styles.mobileSeeMore]: isMobile,
+  });
+
   return (
     <div className={filmListContainerClassname}>
       {loading ? (
@@ -143,8 +151,8 @@ const FilmList = (props) => {
           level={4}
           className={`${styles.menuContainer} ${styles.titleContainer}`}
         >
-          <div className={styles.label}>{label}</div>
-          <div className={styles.seeMore} onClick={handleSeeAll}>
+          <div className={labelClassname}>{label}</div>
+          <div className={seeMoreClassname} onClick={handleSeeAll}>
             <p>See All</p>
           </div>
         </Title>

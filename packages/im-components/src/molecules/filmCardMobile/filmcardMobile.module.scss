@@ -1,5 +1,6 @@
 .filmCardRowMobile {
   margin-top: 1rem;
+  flex-wrap: nowrap !important;
 
   .imageWrapper {
     width: 8rem;
@@ -10,8 +11,6 @@
   }
 
   .textWrapper {
-    width: 60%;
-
     p {
       color: #444;
       max-height: 6.6rem;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import cx from "classnames";
 
 // Lodash
 import _map from "lodash/map";
@@ -73,12 +74,16 @@ function Comments({ videoId }) {
     return "This movie does not have any comments yet!";
   }
 
+  const viewAllCommentsClassname = cx(styles.viewAllCommentsLabel, {
+    [styles.mobileViewAllCommentsLable]: isMobile,
+  });
+
   return (
     <div className={styles.container}>
       {_map(comments, renderComment(!isMobile))}
 
       <Label
-        className={styles.viewAllCommentsLabel}
+        className={viewAllCommentsClassname}
         onClick={handleViewAllComments}
       >
         {`View all comments`}

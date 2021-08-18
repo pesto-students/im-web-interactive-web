@@ -81,29 +81,6 @@
   }
 }
 
-@media only screen and (max-width: 60rem) {
-  .container {
-    .bannerImage {
-      height: 20vh;
-      width: 100vw;
-      min-height: 20rem;
-
-      .skeletonBanner {
-        height: 20vh;
-        width: 100vw;
-      }
-    }
-
-    .metadata {
-      padding: 2rem;
-    }
-    .description {
-      text-align: justify;
-      top: 0;
-    }
-  }
-}
-
 .viewMoreText {
   color: gray;
   font-weight: 600;

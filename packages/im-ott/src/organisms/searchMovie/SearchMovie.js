@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import cx from "classnames";
 
 //Components
 import noDataFound from "imbase/assets/images/noDataFound.png";
@@ -74,8 +75,6 @@ const SearchMovie = (props) => {
   const [searchClicked, setSearchClicked] = useState(false);
   const [searchInit, setSearchInit] = useState(true);
 
-  const searchStyle = isMobile ? styles.searchMobile : styles.search;
-
   useEffect(() => {
     if (_isEmpty(searchValue)) {
       setSearchInit(true);
@@ -113,12 +112,24 @@ const SearchMovie = (props) => {
     return <Error {...error} />;
   }
 
+  const containerClassName = cx(styles.container, {
+    [styles.mobileContainer]: isMobile,
+  });
+
+  const headingClassName = cx({
+    [styles.mobileHeading]: isMobile,
+  });
+
+  const searchBoxClassName = cx(styles.searchbox, {
+    [styles.webSearchBox]: !isMobile,
+    [styles.mobileSearchBox]: isMobile,
+  });
+
   return (
-    <div className={styles.container}>
-      <div className={styles.searchbox}>
+    <div className={containerClassName}>
+      <div className={searchBoxClassName}>
         <SearchBox
           placeholder={"Search Movies"}
-          className={searchStyle}
           size={"large"}
           onSearch={handleSearch}
           allowClear
@@ -129,7 +140,9 @@ const SearchMovie = (props) => {
         {loading ? (
           <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
         ) : (
-          searchInit && <h1>Frequently Searched Movies</h1>
+          searchInit && (
+            <h1 className={headingClassName}>Frequently Searched Movies</h1>
+          )
         )}
         {!loading &&
           !searchInit &&
