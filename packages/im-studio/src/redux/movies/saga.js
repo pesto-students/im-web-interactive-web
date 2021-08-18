@@ -26,6 +26,9 @@ import {
 } from "./actions";
 import { getCurrentUser } from "imbase/services/firebase";
 
+// Lodash
+import _isEmpty from "lodash/isEmpty";
+
 // Sentry
 import * as Sentry from "@sentry/react";
 
@@ -162,6 +165,12 @@ function* addAction({ payload: { options, actionType } }) {
   const { data } = yield call(addActionApi, apiParams);
 
   if (data) {
+    if (_isEmpty(options.id)) {
+      toast.success(`${actionType} Created!`);
+    } else {
+      toast.success(`${actionType} Updated!`);
+    }
+
     yield call(getMovieByID, { payload: { id: options.id } });
   } else {
     Sentry.captureMessage("Saga: get movie by id didn't receive payload");
@@ -189,6 +198,7 @@ function* deleteAction({ payload }) {
 
   const { data } = yield call(deleteActionApi, apiParams);
   if (data) {
+    toast.success(`${payload.actionType} Deleted!`);
     yield call(getMovieByID, { payload: { id: payload.id } });
   } else {
     Sentry.captureMessage("Saga: delete action didn't receive payload");

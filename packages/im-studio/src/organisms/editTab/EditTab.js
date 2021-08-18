@@ -36,6 +36,13 @@ const EditTab = (props) => {
   };
 
   const [form] = Form.useForm();
+  
+  form.setFieldsValue({
+    movieurl: url || `http://www.youtube.com/watch?v=${id}`,
+    movietitle: title,
+    moviedescription: description,
+    moviegenre: genre,
+  });
 
   const onFinish = (values) => {
     dispatch(
