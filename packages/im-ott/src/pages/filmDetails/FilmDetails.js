@@ -22,6 +22,8 @@ import Player from "imcomponents/organisms/player";
 import FilmList from "imcomponents/organisms/filmList";
 import Comments from "../../organisms/comments";
 import Watchlist from "../../organisms/watchlist";
+import Image from "imcomponents/atoms/image";
+import { CaretRightOutlined, PlusOutlined } from "imcomponents/atoms/icon";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
@@ -81,6 +83,11 @@ const FilmDetails = (props) => {
   if (!_isEmpty(error)) {
     return <Error {...error} />;
   }
+
+  const handleCreateWatchParty = () => {
+    const { history } = props;
+    history.push("/watchparty/create/1234");
+  };
 
   const handlePlay = () => {
     setLoadingModal(true);
@@ -182,6 +189,14 @@ const FilmDetails = (props) => {
                 >
                   <CaretRightOutlined />{" "}
                   <span className={styles.playMovieLabel}>{"Play Movie"}</span>
+                </Button>
+                <Button
+                  onClick={handleCreateWatchParty}
+                  type={BUTTON_TYPES.TERTIARY}
+                  className={buttonClassName}
+                >
+                  <PlusOutlined />{" "}
+                  <span className={styles.playMovieLabel}>{"Watch Party"}</span>
                 </Button>
                 <Watchlist movieId={filmId} />
               </div>

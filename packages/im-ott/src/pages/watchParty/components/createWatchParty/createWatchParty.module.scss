@@ -1,0 +1,115 @@
+.container {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  z-index: 9999;
+  top: 0;
+}
+
+.playerContainer {
+  flex: 1;
+  background-image: url("data:image/jpeg;base64,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");
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.4rem;
+
+  .movieDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .movieTitleDetails {
+      display: flex;
+      flex-direction: column;
+
+      .movietitle {
+        color: white;
+        font-weight: 500;
+        margin-top: 0.4rem;
+      }
+
+      .watchPartyLabel {
+        color: #d2d2d2;
+        font-weight: 500;
+        font-size: 1.6rem;
+      }
+    }
+
+    .movieImage {
+      width: 32rem;
+      max-width: 40rem;
+    }
+  }
+
+  .watchPartyTips {
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 4rem;
+  }
+}
+
+.settingscontainer {
+  min-width: 28rem;
+  max-width: 32rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.4rem 1.6rem;
+  color: #444;
+
+  .settings {
+    padding: 1.6rem 0rem;
+  }
+
+  .bordered {
+    border-bottom: 1px solid #d2d2d2;
+  }
+
+  .title {
+    font-size: 3.6rem;
+    font-weight: bold;
+    color: #444;
+    white-space: pre-wrap;
+  }
+
+  .label {
+    font-size: 1.6rem;
+  }
+
+  .inviteFriendsTitle {
+    font-size: 2.4rem;
+    span {
+      color: #444;
+      margin-right: 1.2rem;
+    }
+    .infoIcon {
+      color: #1a90ff;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+  }
+
+  .createWatchPartyButton {
+    margin-top: 2rem;
+    height: 4rem;
+    .createWatchPartyButtonLabel {
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+}

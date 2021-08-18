@@ -1,0 +1,44 @@
+.container {
+  height: fit-content;
+  min-width: 40rem;
+  width: 60rem;
+  min-height: 12rem;
+
+  .titleContainer {
+    .title {
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      border-bottom: 1px solid #d2d2d2;
+      padding-bottom: 1.2rem;
+    }
+  }
+  .tipContainer {
+    height: 12rem;
+    text-align: left;
+    .tip {
+      font-size: 1.6rem;
+      color: #d2d2d2;
+      text-align: left;
+    }
+  }
+
+  :global(.ant-carousel .slick-dots) {
+    justify-content: left;
+    margin-left: 0rem;
+  }
+
+  :global(.ant-carousel .slick-dots) {
+    li {
+      button {
+        height: 1.6rem;
+        width: 1.6rem;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  :global(.ant-carousel .slick-dots li.slick-active) {
+    width: 1.6rem;
+  }
+}
