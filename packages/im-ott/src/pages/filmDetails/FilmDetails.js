@@ -13,7 +13,7 @@ import _truncate from "lodash/truncate";
 
 // Components
 import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
-import { CaretRightOutlined } from "imcomponents/atoms/icon";
+import { CaretRightOutlined, PlusOutlined } from "imcomponents/atoms/icon";
 import Image from "imcomponents/atoms/image";
 import Skeleton from "imcomponents/atoms/skeleton";
 import { Title, Label } from "imcomponents/atoms/typography";
@@ -22,8 +22,6 @@ import Player from "imcomponents/organisms/player";
 import FilmList from "imcomponents/organisms/filmList";
 import Comments from "../../organisms/comments";
 import Watchlist from "../../organisms/watchlist";
-import Image from "imcomponents/atoms/image";
-import { CaretRightOutlined, PlusOutlined } from "imcomponents/atoms/icon";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
