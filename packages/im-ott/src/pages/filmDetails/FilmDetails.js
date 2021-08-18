@@ -3,22 +3,25 @@ import { useParams } from "react-router-dom";
 import { isMobile } from "imcomponents/atoms/device";
 import cx from "classnames";
 
+// Graphql
+import { FEATURED_MOVIES } from "imbase/graphql/queries";
+
 // Lodash
 import _isEmpty from "lodash/isEmpty";
 import _times from "lodash/times";
 import _truncate from "lodash/truncate";
 
 // Components
+import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
+import { CaretRightOutlined, PlusOutlined } from "imcomponents/atoms/icon";
+import Image from "imcomponents/atoms/image";
 import Skeleton from "imcomponents/atoms/skeleton";
 import { Title, Label } from "imcomponents/atoms/typography";
-import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
 import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
-import Watchlist from "../../organisms/watchlist";
-import FilmList from "../../organisms/filmList";
+import FilmList from "imcomponents/organisms/filmList";
 import Comments from "../../organisms/comments";
-import Image from "imcomponents/atoms/image";
-import { CaretRightOutlined, PlusOutlined } from "imcomponents/atoms/icon";
+import Watchlist from "../../organisms/watchlist";
 
 // Readers
 import FilmReader from "imbase/readers/Film";
@@ -252,6 +255,11 @@ const FilmDetails = (props) => {
         label={"More to watch"}
         listKey={"featured"}
         isFeatured
+        query={FEATURED_MOVIES}
+        dataPath={"getFeatured"}
+        linkTo={(id) => {
+          return `film/${id}`;
+        }}
       />
       {visible && (
         <Player

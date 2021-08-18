@@ -14,11 +14,20 @@
       .uploadLinkInput {
         width: 50%;
       }
+
+      .uploadLinkInputMobile {
+        width: 80%;
+      }
     }
 
     .uploadIcon {
       padding-bottom: 1rem;
-      font-size: 1500%;
+      font-size: 800%;
+    }
+
+    .uploadIconMobile {
+      padding-bottom: 1rem;
+      font-size: 400%;
     }
 
     .error {
@@ -30,9 +39,22 @@
       min-width: 12rem;
       filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
     }
+  }
+}
 
-    .videoDetails {
-      margin-bottom: 2rem;
+.videoDetailsModal {
+  .videoDetails {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+}
+
+.videoDetailsDrawer {
+  .videoDetails {
+    margin-bottom: 2rem;
+
+    .drawerButton {
+      margin-right: 1rem;
     }
   }
 }
