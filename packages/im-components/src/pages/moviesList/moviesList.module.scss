@@ -1,14 +1,15 @@
 .container {
   padding: 4rem;
 
+  .skeleton {
+    margin-right: 2rem;
+    margin-top: 1rem;
+    width: calc(40rem * (9 / 16));
+    height: 15rem;
+  }
+
   .content {
     display: inline-block;
-
-    .heading {
-      font-weight: bolder;
-      font-family: monospace;
-      font-size: 2.5rem;
-    }
 
     .movies {
       display: flex;
@@ -25,4 +26,3 @@
     }
   }
 }
-
