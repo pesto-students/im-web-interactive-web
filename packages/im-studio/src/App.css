@@ -36,3 +36,19 @@ html {
     transform: rotate(360deg);
   }
 }
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+*::-webkit-scrollbar-track {
+  background: #eee;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #29282a;
+  border-radius: 0.7rem;
+  border: 0.1rem solid #eee;
+}
