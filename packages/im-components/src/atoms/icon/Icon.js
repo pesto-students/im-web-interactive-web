@@ -25,6 +25,8 @@ import {
   PlusOutlined,
   MinusOutlined,
   PlusCircleOutlined,
+  EyeOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 
 export {
@@ -54,4 +56,6 @@ export {
   PlusOutlined,
   MinusOutlined,
   PlusCircleOutlined,
+  EyeOutlined,
+  InfoCircleOutlined,
 };

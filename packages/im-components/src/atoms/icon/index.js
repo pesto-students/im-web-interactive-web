@@ -25,4 +25,6 @@ export {
   PlusOutlined,
   MinusOutlined,
   PlusCircleOutlined,
+  EyeOutlined,
+  InfoCircleOutlined,
 } from "./Icon";

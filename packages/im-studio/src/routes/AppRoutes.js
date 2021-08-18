@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 // Components
+import MoviesList from "imcomponents/pages/moviesList/MoviesList";
 import AppLoader from "imcomponents/molecules/appLoader";
 import AppSkeleton from "../organisms/appSkeleton";
 import Dashboard from "../pages/dashboard";
@@ -31,6 +32,7 @@ const AppRoutes = () => {
         </Route>
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/upload" component={Upload} />
+        <Route exact path="/movies/:movieCriteria" component={MoviesList} />
         <Route exact path="/video/:videoId/edit" component={EditVideo} />
       </Switch>
     </AppSkeleton>

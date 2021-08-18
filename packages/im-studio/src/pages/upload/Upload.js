@@ -9,11 +9,15 @@ import _isEmpty from "lodash/isEmpty";
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
 
 // Components
-import Button from "imcomponents/atoms/button";
+import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
 import { CloudUploadOutlined } from "imcomponents/atoms/icon";
+import { BrowserView, MobileView, isMobile } from "imcomponents/atoms/device";
+import Drawer from "imcomponents/atoms/drawer";
 import Image from "imcomponents/atoms/image";
+import { Modal } from "imcomponents/atoms/modal";
 import SearchBox from "imcomponents/atoms/searchBox";
 import Error from "imcomponents/molecules/error";
+import Loader from "imcomponents/molecules/loader/Loader";
 
 // Redux Actions
 import { addMovie } from "../../redux/movies/actions";
@@ -22,7 +26,7 @@ import { addMovie } from "../../redux/movies/actions";
 import styles from "./upload.module.scss";
 
 // Helpers
-import { getVideoId, isUploadDisabled } from "./helper/upload.general";
+import { getVideoId } from "./helper/upload.general";
 
 // Services
 import youtubeService from "../../services/youtubeService";
@@ -35,6 +39,10 @@ const Upload = () => {
   const [videoDetails, setVideoDetails] = useState(EMPTY_OBJECT);
   const [error, setError] = useState(EMPTY_OBJECT);
   const [isLinkInvalid, setIsLinkInvalid] = useState(false);
+  const inputStyle = isMobile
+    ? styles.uploadLinkInputmobile
+    : styles.uploadLinkInput;
+  const iconStyle = isMobile ? styles.uploadIconMobile : styles.uploadIcon;
 
   const handleSearch = (value, event) => {
     if (_isEmpty(value)) {
@@ -48,8 +56,10 @@ const Upload = () => {
         return;
       }
 
+      setLoading(true);
       Promise.resolve(youtubeService.getMovieById({ videoId: videoIdFromUrl }))
         .then((response) => {
+          setLoading(false);
           if (
             _isEmpty(response) ||
             _isEmpty(response.data) ||
@@ -73,53 +83,98 @@ const Upload = () => {
     return <Error {...error} />;
   }
 
-  const handleUpload = () => {
+  const handleOk = () => {
     setLoading(true);
     dispatch(addMovie(videoDetails, history));
   };
 
+  const handleCancel = () => {
+    setVideoDetails(EMPTY_OBJECT);
+  };
+
   return (
     <div className={styles.container}>
-      <div className={styles.content}>
-        <div className={styles.center}>
-          <CloudUploadOutlined className={styles.uploadIcon} />
-          <h1>Paste a Youtube link below to start</h1>
-          <div className={styles.inputField}>
-            <SearchBox
-              placeholder={"Enter youtube link"}
-              className={styles.uploadLinkInput}
-              size={"large"}
-              onSearch={handleSearch}
-              allowClear
-            />
-            {isLinkInvalid && (
-              <p className={styles.error}>This link is invalid</p>
-            )}
-          </div>
-          {!_isEmpty(videoDetails) && (
-            <div className={styles.videoDetails}>
-              <h2 className={styles.title}>{videoDetails?.snippet?.title}</h2>
-              <Image
-                className={styles.thumbnailImage}
-                src={videoDetails?.snippet?.thumbnails.high.url}
-                height={videoDetails?.snippet?.thumbnails.high.height}
-                width={videoDetails?.snippet?.thumbnails.high.width}
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.content}>
+          <div className={styles.center}>
+            <CloudUploadOutlined className={iconStyle} />
+            <h1>Paste a Youtube link below to start</h1>
+            <div className={styles.inputField}>
+              <SearchBox
+                placeholder={"Enter youtube link"}
+                className={inputStyle}
+                size={"large"}
+                enterButton={"Verify"}
+                onSearch={handleSearch}
+                allowClear
               />
+              {isLinkInvalid && (
+                <p className={styles.error}>This link is invalid</p>
+              )}
             </div>
-          )}
-          {/* <Link to={`/video/${videoId}/create`}> */}
-          <Button
-            className={styles.uploadbutton}
-            label={"Upload"}
-            shape={"round"}
-            disabled={isUploadDisabled(videoDetails)}
-            danger
-            onClick={handleUpload}
-            loading={loading}
-          />
-          {/* </Link> */}
+            <BrowserView>
+              <Modal
+                className={styles.videoDetailsModal}
+                visible={!_isEmpty(videoDetails)}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                okText={"Proceed"}
+              >
+                <div className={styles.videoDetails}>
+                  <Image
+                    className={styles.thumbnailImage}
+                    src={videoDetails?.snippet?.thumbnails.medium.url}
+                    height={videoDetails?.snippet?.thumbnails.medium.height}
+                    width={videoDetails?.snippet?.thumbnails.medium.width}
+                  />
+                  <h3 className={styles.title}>
+                    {videoDetails?.snippet?.title}
+                  </h3>
+                </div>
+              </Modal>
+            </BrowserView>
+            <MobileView>
+              <Drawer
+                className={styles.videoDetailsDrawer}
+                visible={!_isEmpty(videoDetails)}
+                onOk={handleOk}
+                onCancel={handleCancel}
+              >
+                <div className={styles.videoDetails}>
+                  <Image
+                    className={styles.thumbnailImage}
+                    src={videoDetails?.snippet?.thumbnails.medium.url}
+                  />
+                  <h3 className={styles.title}>
+                    {videoDetails?.snippet?.title}
+                  </h3>
+                  {
+                    <Button
+                      className={styles.drawerButton}
+                      label={"Cancel"}
+                      type={BUTTON_TYPES.TERTIARY}
+                      onClick={() => {
+                        setVideoDetails(EMPTY_OBJECT);
+                      }}
+                    ></Button>
+                  }
+                  {
+                    <Button
+                      className={styles.drawerButton}
+                      label={"Proceed"}
+                      onClick={() => {
+                        handleOk();
+                      }}
+                    ></Button>
+                  }
+                </div>
+              </Drawer>
+            </MobileView>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
