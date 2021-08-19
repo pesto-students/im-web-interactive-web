@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { isMobile } from "imcomponents/atoms/device";
+import { isMobile, withOrientationChange } from "imcomponents/atoms/device";
 import cx from "classnames";
 
 // Graphql
@@ -20,6 +20,7 @@ import { Title, Label } from "imcomponents/atoms/typography";
 import Error from "imcomponents/molecules/error";
 import Player from "imcomponents/organisms/player";
 import FilmList from "imcomponents/organisms/filmList";
+import Drawer from "imcomponents/atoms/drawer";
 import Comments from "../../organisms/comments";
 import Watchlist from "../../organisms/watchlist";
 
@@ -42,10 +43,14 @@ import styles from "./filmDetails.module.scss";
 // Icon
 import { StarFilled } from "imcomponents/atoms/icon";
 
+// Image
+import rotateImg from "imbase/assets/images/rotatephone.png";
+
 const DESCRIPTION_INITIAL_DISPLAY_LIMIT = 400;
 
 const FilmDetails = (props) => {
   const { filmId } = useParams();
+  const { isLandscape } = props;
   const [loading, setLoading] = useState(true);
   const [loadingModal, setLoadingModal] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -85,6 +90,10 @@ const FilmDetails = (props) => {
   const handleCreateWatchParty = () => {
     const { history } = props;
     history.push("/watchparty/create/1234");
+  };
+
+  const onClose = () => {
+    setVisible(false);
   };
 
   const handlePlay = () => {
@@ -137,7 +146,10 @@ const FilmDetails = (props) => {
   const titleMarginClassname = cx(styles.titleMargin, {
     [styles.titleMarginMobile]: isMobile,
   });
-
+  const headerStyles = {
+    display: "flex",
+    justifyContent: "center",
+  };
   return (
     <div className={cx("film-details", styles.container)}>
       {loading ? (
@@ -258,19 +270,49 @@ const FilmDetails = (props) => {
         query={FEATURED_MOVIES}
         dataPath={"getFeatured"}
         linkTo={(id) => {
-          return `film/${id}`;
+          return `/film/${id}`;
         }}
       />
-      {visible && (
-        <Player
-          videoUrl={FilmReader.url(filmDetails)}
-          overlayData={overlayDetails}
-          triggerData={triggerDetails}
-          fullScreen={true}
-          handleVisible={handleVisible}
-          autoPlay={true}
-        />
-      )}
+      <Drawer
+        title={FilmReader.title(filmDetails)}
+        onClose={onClose}
+        visible={visible}
+        key={FilmReader.id(filmDetails)}
+        className={styles.container}
+        headerStyle={headerStyles}
+        height={"100vh"}
+        width={"100vw"}
+        destroyOnClose={true}
+      >
+        {isMobile && isLandscape ? (
+          <Player
+            videoUrl={FilmReader.url(filmDetails)}
+            overlayData={overlayDetails}
+            triggerData={triggerDetails}
+            fullScreen={true}
+            handleVisible={handleVisible}
+            autoPlay={true}
+            disableExternalButtons={true}
+          />
+        ) : (
+          <>
+            <p>Please use landscape mode for better viewing experience!</p>
+            <p>Try rotating your phone to continue watching movie...</p>
+            <Image src={rotateImg}></Image>
+          </>
+        )}
+        {!isMobile && (
+          <Player
+            videoUrl={FilmReader.url(filmDetails)}
+            overlayData={overlayDetails}
+            triggerData={triggerDetails}
+            fullScreen={true}
+            handleVisible={handleVisible}
+            autoPlay={true}
+            disableExternalButtons={true}
+          />
+        )}
+      </Drawer>
     </div>
   );
 };
@@ -279,4 +321,4 @@ FilmDetails.propTypes = {};
 
 FilmDetails.defaultProps = {};
 
-export default FilmDetails;
+export default withOrientationChange(FilmDetails);

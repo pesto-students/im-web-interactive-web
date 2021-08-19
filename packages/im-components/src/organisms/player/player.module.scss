@@ -16,3 +16,13 @@
     margin-right: 1rem;
   }
 }
+
+.webFullScreenWrapper {
+  position: absolute;
+  height: 93vh;
+  width: 100vw;
+  top: 5rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

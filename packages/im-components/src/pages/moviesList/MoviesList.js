@@ -6,11 +6,12 @@ import { isMobile } from "imcomponents/atoms/device";
 import _map from "lodash/map";
 import _isEmpty from "lodash/isEmpty";
 import _get from "lodash/get";
+import _times from "lodash/times";
 
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
 import FilmCardMobile from "imcomponents/molecules/filmCardMobile";
-import Loader from "imcomponents/molecules/loader/Loader";
+import Skeleton from "imcomponents/atoms/skeleton";
 import Error from "imcomponents/molecules/error";
 
 // Readers
@@ -91,11 +92,8 @@ const MoviesList = () => {
         setError(error);
         setLoading(false);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieCriteria]);
-
-  if (loading) {
-    return <Loader />;
-  }
 
   if (!_isEmpty(error)) {
     return <Error {...error} />;
@@ -103,9 +101,19 @@ const MoviesList = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.heading}>{headingName}</h1>
+      {loading ? (
+        <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
+      ) : (
+        <h1>{headingName}</h1>
+      )}
       <div className={styles.content}>
-        <div className={styles.movies}>{_map(movieList, renderMovie)}</div>
+        {loading ? (
+          _times(8, (movie) => (
+            <Skeleton.Image active={true} className={styles.skeleton} />
+          ))
+        ) : (
+          <div className={styles.movies}>{_map(movieList, renderMovie)}</div>
+        )}
       </div>
     </div>
   );
