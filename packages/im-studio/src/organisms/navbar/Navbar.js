@@ -16,6 +16,9 @@ import {
 // Service
 import { logOut } from "imbase/services/firebase";
 
+//Utils
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./navbar.module.scss";
 
@@ -45,7 +48,7 @@ function Navbar() {
 
   return (
     <div className={styles.container}>
-      <Logo text={logoText} />
+      <Logo text={logoText} application={APPS.STUDIO} />
       <BrowserView className={styles.browserView}>
         <Menu
           mode="horizontal"

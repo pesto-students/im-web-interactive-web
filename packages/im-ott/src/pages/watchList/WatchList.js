@@ -23,6 +23,9 @@ import FilmReader from "imbase/readers/Film";
 
 // Utils
 import { getCurrentUser } from "imbase/services/firebase";
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
 
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -37,9 +40,11 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   const filmGenre = FilmReader.genre(filmDetails);
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
 
+  const filmDetailsRoute = getRoute(APPS.OTT, VIEWS.FILMDETAILS, { filmId });
+
   if (isMobile) {
     return (
-      <Link to={`/film/${filmId}`}>
+      <Link to={filmDetailsRoute}>
         <FilmCardMobile
           key={`mobile-${filmId}`}
           title={filmTitle}
@@ -53,7 +58,7 @@ const renderFilm = (filmDetails = EMPTY_OBJECT) => {
   }
 
   return (
-    <Link to={`/film/${filmId}`} className={styles.movieLinks}>
+    <Link to={filmDetailsRoute} className={styles.movieLinks}>
       <FilmCard
         key={filmId}
         title={filmTitle}

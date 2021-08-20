@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+
 // Components
 import Menu from "imcomponents/atoms/menu";
 import Drawer from "imcomponents/atoms/drawer";
@@ -15,6 +16,11 @@ import {
   HeartFilled,
 } from "imcomponents/atoms/icon";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./footerMenu.module.scss";
 
@@ -24,6 +30,9 @@ function FooterMenu() {
   const [selectedTitle, setSelectedTitle] = useState("");
   const [visible, setVisible] = useState(false);
 
+  const watchlistRoute = getRoute(APPS.OTT, VIEWS.WATCHLIST);
+  const homeRoute = getRoute(APPS.OTT, VIEWS.HOME);
+
   const handleClick = (event) => {
     setSelectedMenu(event.key);
     if (event.key === "notifications") {
@@ -31,10 +40,10 @@ function FooterMenu() {
       setVisible(true);
     }
     if (event.key === "likes") {
-      history.push("/watchlist");
+      history.push(watchlistRoute);
     }
     if (event.key === "home") {
-      history.push("/");
+      history.push(homeRoute);
     }
     if (event.key === "search") {
       setSelectedTitle("Search Movie");
