@@ -110,13 +110,7 @@ const FilmList = (props) => {
 
   const filmListContainer = getFilmListClassName(isFeatured);
 
-  let movieListRoute;
-  if (application === APPS.OTT) {
-    movieListRoute = getRoute(APPS.OTT, VIEWS.MOVIELIST, { listKey });
-  }
-  if (application === APPS.STUDIO) {
-    movieListRoute = getRoute(APPS.STUDIO, VIEWS.MOVIELIST, { listKey });
-  }
+  const movieListRoute = getRoute(application, VIEWS.MOVIELIST, { listKey });
 
   // Handle Scrolling by increment / decreamenting scroll left
   const handleNav = (direction) => {
