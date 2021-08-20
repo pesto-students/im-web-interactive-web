@@ -4,15 +4,19 @@
   max-height: 32rem;
 
   .label {
-    margin-left: 4rem;
+    margin-left: 4.4rem;
     font-size: 1.6rem;
+  }
+
+  .mobileLabel {
+    margin-left: 0.4rem;
   }
 
   .skeleton {
     margin-right: 2rem;
     margin-top: 1rem;
-    width: calc(40rem * (9 / 16));
-    height: 15rem;
+    min-width: calc(40rem * (9 / 16));
+    min-height: 15rem;
   }
 
   .seeMore {
@@ -28,6 +32,10 @@
         color: blue;
       }
     }
+  }
+
+  .mobileSeeMore {
+    margin-right: 0rem;
   }
 
   .navItems {
@@ -54,13 +62,13 @@
 }
 
 .container {
-  padding: 1rem 2rem;
+  padding: 1rem 0rem;
   margin-bottom: 1rem;
 
   .titleContainer {
     margin-bottom: 0rem;
     justify-content: space-between;
-  
+
     p {
       margin-bottom: 0rem;
     }
@@ -71,15 +79,6 @@
   background-image: linear-gradient(180deg, white, #eee);
 }
 
-@media only screen and (max-width: 60rem) {
-  .menuContainer {
-    .label {
-      margin-left: 0;
-    }
-
-    .seeMore {
-      padding-top: 1rem;
-      margin-right: 0;
-    }
-  }
+.mobilePadding {
+  padding: 1rem 2rem;
 }

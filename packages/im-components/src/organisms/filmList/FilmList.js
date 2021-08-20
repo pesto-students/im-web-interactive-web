@@ -2,16 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { isMobile } from "imcomponents/atoms/device";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import cx from 'classnames';
+import cx from "classnames";
 
 // Lodash
+import _get from "lodash/get";
 import _map from "lodash/map";
 import _isEmpty from "lodash/isEmpty";
 import _times from "lodash/times";
 
 // graphql
 import { gqlClient } from "imbase/graphql/gqlClient";
-import { NEW_RELEASES, FEATURED_MOVIES } from "imbase/graphql/queries";
 
 // Components
 import FilmCard from "imcomponents/molecules/filmCard";
@@ -29,7 +29,11 @@ import { getFilmListClassName } from "./helpers/filmlist.general";
 import { LeftOutlined, RightOutlined } from "imcomponents/atoms/icon";
 
 // Constants
-import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
+import {
+  EMPTY_ARRAY,
+  EMPTY_OBJECT,
+  EMPTY_STRING,
+} from "imbase/constants/base.constants";
 
 // Styles
 import styles from "./filmlist.module.scss";
@@ -39,7 +43,8 @@ const renderMovie = (
   isFeatured,
   label,
   showDetails,
-  isDetailsRightAligned
+  isDetailsRightAligned,
+  linkTo
 ) => {
   const filmId = FilmReader.id(filmDetails);
   const filmTitle = FilmReader.title(filmDetails);
@@ -48,7 +53,7 @@ const renderMovie = (
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
 
   return (
-    <Link to={`film/${filmId}`}>
+    <Link to={linkTo(filmId)}>
       <FilmCard
         key={label + filmId}
         title={filmTitle}
@@ -67,8 +72,17 @@ const renderMovie = (
 const FilmList = (props) => {
   const history = useHistory();
   const [loading, setLoading] = useState(true);
-  const { label, isFeatured, listKey, showDetails, isDetailsRightAligned } =
-    props;
+  const {
+    label,
+    isFeatured,
+    listKey,
+    showDetails,
+    isDetailsRightAligned,
+    query,
+    dataPath,
+    linkTo,
+    variables,
+  } = props;
   const [movieList, setMovieList] = useState(EMPTY_ARRAY);
   const [error, setError] = useState(EMPTY_OBJECT);
   const filmListRef = useRef();
@@ -97,22 +111,12 @@ const FilmList = (props) => {
   };
 
   useEffect(() => {
-    let queryMovie = NEW_RELEASES;
-    if (listKey === "featured") {
-      queryMovie = FEATURED_MOVIES;
-    }
     setLoading(true);
     gqlClient
-      .query({
-        query: queryMovie,
-      })
+      .query({ query, variables })
       .then((response) => {
         const { data } = response;
-        if (listKey === "featured") {
-          setMovieList(data.getFeatured);
-        } else {
-          setMovieList(data.getNewReleases);
-        }
+        setMovieList(_get(data, dataPath));
         setLoading(false);
       })
       .catch((error) => {
@@ -126,9 +130,21 @@ const FilmList = (props) => {
   }
 
   const filmListContainerClassname = cx(styles.container, {
-    [styles.gradientBackground]: !showDetails
-  })
+    [styles.gradientBackground]: !showDetails,
+    [styles.mobilePadding]: isMobile,
+  });
 
+  const labelClassname = cx(styles.label, {
+    [styles.mobileLabel]: isMobile,
+  });
+
+  const seeMoreClassname = cx(styles.seeMore, {
+    [styles.mobileSeeMore]: isMobile,
+  });
+
+  if (!loading && _isEmpty(movieList)) {
+    return null;
+  }
   return (
     <div className={filmListContainerClassname}>
       {loading ? (
@@ -138,8 +154,8 @@ const FilmList = (props) => {
           level={4}
           className={`${styles.menuContainer} ${styles.titleContainer}`}
         >
-          <div className={styles.label}>{label}</div>
-          <div className={styles.seeMore} onClick={handleSeeAll}>
+          <div className={labelClassname}>{label}</div>
+          <div className={seeMoreClassname} onClick={handleSeeAll}>
             <p>See All</p>
           </div>
         </Title>
@@ -155,7 +171,7 @@ const FilmList = (props) => {
           </div>
         )}
         {loading ? (
-          _times(4, (movie) => (
+          _times(5, (movie) => (
             <Skeleton.Image active={true} className={styles.skeleton} />
           ))
         ) : (
@@ -166,7 +182,8 @@ const FilmList = (props) => {
                 isFeatured,
                 label,
                 showDetails,
-                isDetailsRightAligned
+                isDetailsRightAligned,
+                linkTo
               )
             )}
           </div>
@@ -191,6 +208,10 @@ FilmList.propTypes = {
   isFeatured: PropTypes.bool,
   showDetails: PropTypes.bool,
   isDetailsRightAligned: PropTypes.bool,
+  linkTo: PropTypes.func,
+  query: PropTypes.object,
+  dataPath: PropTypes.string,
+  variables: PropTypes.object,
 };
 
 FilmList.defaultProps = {
@@ -200,6 +221,10 @@ FilmList.defaultProps = {
   isFeatured: false,
   showDetails: false,
   isDetailsRightAligned: false,
+  query: EMPTY_OBJECT,
+  dataPath: EMPTY_STRING,
+  variables: EMPTY_OBJECT,
+  linkTo: () => {},
 };
 
 export default FilmList;

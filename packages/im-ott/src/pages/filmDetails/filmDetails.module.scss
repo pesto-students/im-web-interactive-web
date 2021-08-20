@@ -1,33 +1,39 @@
 .container {
+  .skeletonBanner {
+    min-width: 100vw;
+    min-height: 50vh;
+  }
+
   .bannerImage {
     height: 50vh;
     width: 100vw;
     min-height: 40rem;
-
-    .skeletonBanner {
-      height: 50vh;
-      width: 100vw;
-    }
   }
-  .description {
+  .description,
+  .comments {
     padding: 1rem 4rem;
-    position: relative;
-    top: -8rem;
+
+    .descriptionDetails {
+      display: block;
+      padding: 2rem 0rem;
+    }
+
+    .descriptionBorder,
+    .commentsBorder {
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .minimisedDescription {
+      max-height: 11rem;
+      overflow: hidden;
+    }
   }
 
   .metadata {
     display: flex;
     flex-direction: row;
-    padding: 1rem 4rem;
-
-    .skeletonThumbnail {
-      width: 20rem;
-      height: 20rem;
-      position: relative;
-      img {
-        border-radius: 1.6rem;
-      }
-    }
+    padding: 2rem 4rem 0rem;
 
     h3 {
       white-space: pre-wrap;
@@ -40,21 +46,30 @@
         margin-right: 0.8rem;
       }
     }
-  }
 
-  .thumbnail {
-    width: 20rem;
-    height: 20rem;
-    position: relative;
-    top: -15.4rem;
-    img {
-      border-radius: 1.6rem;
+    .mobileButtonsOrder {
+      flex-direction: column;
+      margin-right: 0rem;
+      button {
+        margin-right: 0rem;
+      }
     }
-  }
 
-  img {
-    height: 100%;
-    width: 100%;
+    .titleMetadata {
+      width: 100%;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      flex-direction: row;
+
+      .thumbnail {
+        max-width: 10rem;
+      }
+
+      .titleMargin {
+        margin-left: 2rem;
+      }
+    }
   }
 
   .ml2 {
@@ -66,25 +81,29 @@
   }
 }
 
-@media only screen and (max-width: 60rem) {
-  .container {
-    .bannerImage {
-      height: 20vh;
-      width: 100vw;
-      min-height: 20rem;
+.viewMoreText {
+  color: gray;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  margin-top: 1.2rem;
+}
 
-      .skeletonBanner {
-        height: 20vh;
-        width: 100vw;
-      }
-    }
-    
-    .metadata {
-      padding: 2rem;
-    }
-    .description {
-      text-align: justify;
-      top: 0;
-    }
-  }
+.playMovieLabel {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileButton {
+  margin-bottom: 1.2rem;
+}
+
+.titleMarginMobile {
+  margin-right: 2rem;
 }

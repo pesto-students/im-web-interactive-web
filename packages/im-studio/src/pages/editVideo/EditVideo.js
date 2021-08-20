@@ -54,7 +54,8 @@ const EditVideo = (props) => {
       <div className={styles.content}>
         <div className={styles.player}>
           <Player
-            isHost={false}
+            isHost={true}
+            disableExternalButtons={true}
             videoUrl={`http://www.youtube.com/watch?v=${movie.mId}`}
           ></Player>
         </div>

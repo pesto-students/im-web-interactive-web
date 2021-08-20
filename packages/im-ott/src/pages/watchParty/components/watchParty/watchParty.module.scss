@@ -1,0 +1,84 @@
+.container {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  z-index: 9999;
+  top: 0;
+  background-color: black;
+
+  .playerContainerClassName {
+    height: 100%;
+    width: 100%;
+  }
+
+  .watchPartySettings {
+    height: 100%;
+    width: fit-content;
+    background-color: white;
+    display: flex;
+    align-items: center;
+
+    .triggerIcon {
+      padding: 0.8rem;
+      position: relative;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      width: fit-content;
+      height: fit-content;
+      left: -3rem;
+      cursor: pointer;
+    }
+
+    .settings {
+      min-width: 28rem;
+      max-width: 32rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2.4rem 1.6rem;
+      color: #444;
+      position: relative;
+      left: -1.5rem;
+
+      .section {
+        padding: 1.6rem 0rem;
+      }
+
+      .bordered {
+        border-bottom: 1px solid #d2d2d2;
+      }
+
+      .input {
+        margin-top: 1.6rem;
+      }
+
+      .inviteFriendsTitle {
+        font-size: 2.4rem;
+        margin-right: 1.2rem;
+        color: #444;
+      }
+
+      .infoIcon {
+        color: #1a90ff;
+        font-size: 1.6rem;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .zeroWidth {
+    width: 0rem;
+  }
+}
+
+.endWatchPartyButton {
+  margin-top: 2rem;
+  height: 4rem;
+  width: 100%;
+  .endWatchPartyButtonLabel {
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+}

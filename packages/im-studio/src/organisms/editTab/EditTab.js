@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 // Components
-import Button from "imcomponents/atoms/button";
+import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form";
 import Image from "imcomponents/atoms/image";
 import Input from "imcomponents/atoms/input";
@@ -43,6 +43,13 @@ const EditTab = (props) => {
   };
 
   const [form] = Form.useForm();
+  
+  form.setFieldsValue({
+    movieurl: url || `http://www.youtube.com/watch?v=${id}`,
+    movietitle: title,
+    moviedescription: description,
+    moviegenre: genre,
+  });
 
   const onFinish = (values) => {
     dispatch(
@@ -182,16 +189,13 @@ const EditTab = (props) => {
               <Button
                 className={styles.backButton}
                 label={"Back"}
-                shape={"round"}
-                ghost
+                type={BUTTON_TYPES.TERTIARY}
               />
             </Link>
             <Button
               className={styles.saveButton}
               label={"Save"}
-              shape={"round"}
               onClick={handleSubmit}
-              danger
             />
           </Form.Item>
         </Form>

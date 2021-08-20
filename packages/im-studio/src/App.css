@@ -13,12 +13,6 @@ html {
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -41,4 +35,20 @@ html {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+*::-webkit-scrollbar-track {
+  background: #eee;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #29282a;
+  border-radius: 0.7rem;
+  border: 0.1rem solid #eee;
 }

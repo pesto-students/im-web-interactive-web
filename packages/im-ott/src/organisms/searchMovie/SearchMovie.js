@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import cx from "classnames";
 
 //Components
 import noDataFound from "imbase/assets/images/noDataFound.png";
@@ -74,8 +75,6 @@ const SearchMovie = (props) => {
   const [searchClicked, setSearchClicked] = useState(false);
   const [searchInit, setSearchInit] = useState(true);
 
-  const searchStyle = isMobile ? styles.searchMobile : styles.search;
-
   useEffect(() => {
     if (_isEmpty(searchValue)) {
       setSearchInit(true);
@@ -101,6 +100,9 @@ const SearchMovie = (props) => {
   }, [searchValue]);
 
   const handleSearch = (value) => {
+    if (_isEmpty(value)) {
+      return;
+    }
     setSearchInit(false);
     setSearchValue(value);
     setSearchClicked(true);
@@ -110,12 +112,24 @@ const SearchMovie = (props) => {
     return <Error {...error} />;
   }
 
+  const containerClassName = cx(styles.container, {
+    [styles.mobileContainer]: isMobile,
+  });
+
+  const headingClassName = cx({
+    [styles.mobileHeading]: isMobile,
+  });
+
+  const searchBoxClassName = cx(styles.searchbox, {
+    [styles.webSearchBox]: !isMobile,
+    [styles.mobileSearchBox]: isMobile,
+  });
+
   return (
-    <div className={styles.container}>
-      <div className={styles.searchbox}>
+    <div className={containerClassName}>
+      <div className={searchBoxClassName}>
         <SearchBox
           placeholder={"Search Movies"}
-          className={searchStyle}
           size={"large"}
           onSearch={handleSearch}
           allowClear
@@ -126,18 +140,26 @@ const SearchMovie = (props) => {
         {loading ? (
           <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
         ) : (
-          searchInit && <h1>Frequently Searched Movies</h1>
+          searchInit && (
+            <h1 className={headingClassName}>Frequently Searched Movies</h1>
+          )
         )}
-        {searchClicked && searchDetails.length === 1 && (
-          <p className={styles.searchResultText}>
-            Found {searchDetails.length} result
-          </p>
-        )}
-        {!searchInit && searchClicked && searchDetails.length > 1 && (
-          <p className={styles.searchResultText}>
-            Found {searchDetails.length} results
-          </p>
-        )}
+        {!loading &&
+          !searchInit &&
+          searchClicked &&
+          searchDetails.length === 1 && (
+            <p className={styles.searchResultText}>
+              Found {searchDetails.length} result
+            </p>
+          )}
+        {!loading &&
+          !searchInit &&
+          searchClicked &&
+          searchDetails.length > 1 && (
+            <p className={styles.searchResultText}>
+              Found {searchDetails.length} results
+            </p>
+          )}
         {loading ? (
           _times(8, (movie) => (
             <Skeleton.Image active={true} className={styles.skeleton} />
@@ -148,12 +170,15 @@ const SearchMovie = (props) => {
           </div>
         )}
         <div>
-          {searchClicked && searchDetails.length === 0 && (
-            <div className={styles.dataNotFound}>
-              <p className={styles.searchResultText}>No results found</p>
-              <Image src={noDataFound} />
-            </div>
-          )}
+          {!loading &&
+            !searchInit &&
+            searchClicked &&
+            searchDetails.length === 0 && (
+              <div className={styles.dataNotFound}>
+                <p className={styles.searchResultText}>No results found</p>
+                <Image src={noDataFound} />
+              </div>
+            )}
         </div>
       </div>
     </div>

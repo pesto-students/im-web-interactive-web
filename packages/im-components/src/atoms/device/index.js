@@ -3,5 +3,6 @@ import {
   MobileView,
   isBrowser,
   isMobile,
+  withOrientationChange,
 } from "react-device-detect";
-export { BrowserView, MobileView, isBrowser, isMobile };
+export { BrowserView, MobileView, isBrowser, isMobile, withOrientationChange };

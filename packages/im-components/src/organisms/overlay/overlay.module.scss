@@ -3,18 +3,20 @@
   z-index: 10;
   bottom: 0;
   display: flex;
-  left: 40%;
+  left: 36%;
   text-align: center;
+  border-radius: 1rem;
   background: rgba($color: black, $alpha: 0.6);
 
   .timeLeft {
     position: absolute;
     right: 1rem;
     color: white;
+    font-size: 1.8rem;
   }
 
   .details {
-    padding: 1.2rem;
+    padding: 1rem 4rem;
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -24,6 +26,10 @@
     }
 
     .center {
+      button {
+        min-width: 15rem;
+      }
+
       button:first-child {
         position: relative;
         margin-right: 2.5rem;
@@ -31,7 +37,8 @@
     }
 
     .selected {
-      border: 0.3rem solid green;
+      border: 0.3rem solid gold;
+      background: gold;
       transform: scale(1.1);
       font-weight: bold;
     }

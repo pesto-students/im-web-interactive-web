@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.fullScreenPadding {
+  padding: 1.6rem 0rem;
+}
+
+.authorImage {
+  padding: 0rem 1.6rem;
+
+  .icon {
+    height: 3.2rem;
+    width: 3.2rem;
+    border-radius: 50%;
+  }
+}
+
+.commentDetails {
+  padding-right: 1.6rem;
+  
+  .authorName {
+    font-weight: 600;
+    margin-right: 0.8rem;
+  }
+
+  .comment {
+    color: #262626;
+    font-weight: 400;
+  }
+}
+
+.dateTime {
+  display: block;
+  font-size: 1.2rem;
+  color: gray;
+  font-weight: 500;
+}

@@ -27,6 +27,9 @@ const Player = (props) => {
     fullScreen,
     handleVisible,
     autoPlay,
+    disableExternalButtons,
+    containerClassName,
+    playerWrapperClassName,
   } = props;
 
   // player wrapper
@@ -46,7 +49,6 @@ const Player = (props) => {
     duration: 0,
     playbackRate: 1.0,
     seeking: false,
-    visible_button_refresh: true,
   });
 
   useEffect(() => {
@@ -129,21 +131,29 @@ const Player = (props) => {
   };
 
   const handleReady = (seconds) => {
-    if (fullScreen) {
-      if (screenfull.isEnabled) {
-        if (playerWrapper.current) {
-          screenfull.request(playerWrapper.current);
-        }
-        screenfull.on("error", (event) => {
-          console.error("Failed to enable fullscreen", event);
-        });
-      }
-    }
+    // NOTE: Keeping this code for a while may need to comeback to use this
+    // Only Works on Chrome
+    // if (fullScreen) {
+    //   if (screenfull.isEnabled) {
+    //     if (playerWrapper.current) {
+    //       screenfull.request(playerWrapper.current);
+    //     }
+    //     screenfull.on("error", (event) => {
+    //       console.error("Failed to enable fullscreen", event);
+    //     });
+    //   }
+    // }
   };
 
+  const playerContentClassname = cx({
+    [styles.playerWrapper]: !fullScreen,
+    [playerWrapperClassName]: !fullScreen,
+    [styles.webFullScreenWrapper]: fullScreen,
+  });
+
   return (
-    <div>
-      <div className={styles.playerWrapper} ref={playerWrapper}>
+    <div className={containerClassName}>
+      <div className={playerContentClassname} ref={playerWrapper}>
         <ReactPlayer
           ref={player}
           className={cx(styles.reactPlayer, classname)}
@@ -179,7 +189,7 @@ const Player = (props) => {
           })}
         </div>
       </div>
-      {state.visible_button_refresh && (
+      {!disableExternalButtons && (
         <div className={styles.wrapper}>
           <div className={styles.progress}>
             <Progress
@@ -227,6 +237,9 @@ Player.propTypes = {
   triggerData: PropTypes.object,
   fullScreen: PropTypes.bool,
   handleVisible: PropTypes.func,
+  disableExternalButtons: PropTypes.bool,
+  containerClassName: PropTypes.string,
+  playerWrapperClassName: PropTypes.string,
 };
 
 Player.defaultProps = {
@@ -236,7 +249,10 @@ Player.defaultProps = {
   overlayData: EMPTY_OBJECT,
   triggerData: EMPTY_OBJECT,
   fullScreen: false,
+  disableExternalButtons: false,
   handleVisible: () => {},
+  containerClassName: "",
+  playerWrapperClassName: "",
 };
 
 export default memo(Player);

@@ -21,6 +21,12 @@ import {
   BellFilled,
   HeartOutlined,
   HeartFilled,
+  CaretRightOutlined,
+  PlusOutlined,
+  MinusOutlined,
+  PlusCircleOutlined,
+  EyeOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 
 export {
@@ -46,4 +52,10 @@ export {
   BellFilled,
   HeartOutlined,
   HeartFilled,
+  CaretRightOutlined,
+  PlusOutlined,
+  MinusOutlined,
+  PlusCircleOutlined,
+  EyeOutlined,
+  InfoCircleOutlined,
 };

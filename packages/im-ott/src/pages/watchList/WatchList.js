@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import cx from "classnames";
 
 // Lodash
 import _map from "lodash/map";
@@ -97,8 +98,12 @@ const WatchList = () => {
     return <Error {...error} />;
   }
 
+  const containerClassName = cx(styles.container, {
+    [styles.mobileContainer]: isMobile,
+  });
+
   return (
-    <div className={styles.container}>
+    <div className={containerClassName}>
       <div className={styles.content}>
         {loading ? (
           <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />

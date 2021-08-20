@@ -78,6 +78,7 @@ function FooterMenu() {
           className={styles.menuItem}
           key="notifications"
           icon={NotificationsIcon}
+          disabled={true}
         ></Menu.Item>
       </Menu>
       <Drawer
