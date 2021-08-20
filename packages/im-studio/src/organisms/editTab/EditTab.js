@@ -27,9 +27,13 @@ import styles from "./editTab.module.scss";
 import { uploadImageToCloudinary } from "./utils/cloudinary";
 
 const EditTab = (props) => {
+  const [thumbnailLoading, setThumbnailLoading] = useState(false);
+  const [backgroundLoading, setBackgroundLoading] = useState(false);
   const dispatch = useDispatch();
   const { tabdata, history, loading } = props;
-  const { mId, title, description, url, genre } = tabdata;
+  const { mId, title, description, url, genre, userThumbnail, userBackground } =
+    tabdata;
+  console.log(tabdata);
 
   const [userBackgroundURL, setUserBackgroundURL] = useState(EMPTY_STRING);
   const [userThumbnailURL, setUserThumbnailURL] = useState(EMPTY_STRING);
@@ -43,21 +47,26 @@ const EditTab = (props) => {
   };
 
   const [form] = Form.useForm();
-  
+
   form.setFieldsValue({
-    movieurl: url || `http://www.youtube.com/watch?v=${id}`,
+    movieurl: url || `http://www.youtube.com/watch?v=${mId}`,
     movietitle: title,
     moviedescription: description,
     moviegenre: genre,
+    movieUserThumbnail: userThumbnail && userThumbnail["url"],
+    movieUserBackground: userBackground && userBackground["url"],
   });
 
   const onFinish = (values) => {
+    console.log(values);
     dispatch(
       updateMovieByID({
         ...tabdata,
         title: values.movietitle,
         description: values.moviedescription,
         genre: values.moviegenre,
+        userThumbnail: values.movieUserThumbnail,
+        userBackground: values.movieUserBackground,
       })
     );
     history.push("#2");
@@ -75,7 +84,9 @@ const EditTab = (props) => {
   const handleThumbnailChange = (event) => {
     const image = event.target.files[0];
     if (image) {
+      setThumbnailLoading(true);
       uploadImageToCloudinary(image).then((response) => {
+        setThumbnailLoading(false);
         const data = response && response.data;
         const { url } = data;
         setUserThumbnailURL(url);
@@ -84,8 +95,6 @@ const EditTab = (props) => {
           height: 360,
           width: 480,
         };
-        console.log("inside thumbnail ");
-        console.log(tabdata);
       });
     }
   };
@@ -93,7 +102,9 @@ const EditTab = (props) => {
   const handleBackgroundChange = (event) => {
     const image = event.target.files[0];
     if (image) {
+      setBackgroundLoading(true);
       uploadImageToCloudinary(image).then((response) => {
+        setBackgroundLoading(false);
         const data = response && response.data;
         const { url } = data;
         setUserBackgroundURL(url);
@@ -117,6 +128,8 @@ const EditTab = (props) => {
             movietitle: title,
             moviedescription: description,
             moviegenre: genre,
+            movieUserThumbnail: userThumbnail && userThumbnail["url"],
+            movieUserBackground: userBackground && userBackground["url"],
           }}
           {...formItemLayout}
           className={styles.editForm}
@@ -151,37 +164,43 @@ const EditTab = (props) => {
           <Form.Item
             label="Genre"
             name="moviegenre"
-            rules={[{ required: true, message: "Please input movie genre!" }]}
+            rules={[{ required: false, message: "Please input movie genre!" }]}
           >
-            <Input placeholder="Enter genre" />
+            <Input placeholder="Enter genre" disabled />
           </Form.Item>
-          <Form.Item label={"Thumbnail Image"} name={"movie_thumbmail"}>
+          <Form.Item label={"Thumbnail Image"} name="movieUserThumbnail">
             <Input
               className={styles.chooseImageInput}
               type={"file"}
-              id={"uploadedThumbnail"}
               onChange={handleThumbnailChange}
             />
-            {!_isEmpty(userThumbnailURL) && (
-              <Image
-                className={styles.uploadImagePreview}
-                src={userThumbnailURL}
-              />
+            {thumbnailLoading ? (
+              <Loader />
+            ) : (
+              !_isEmpty(userThumbnailURL) && (
+                <Image
+                  className={styles.uploadImagePreview}
+                  src={userThumbnailURL || userThumbnail["url"]}
+                />
+              )
             )}
           </Form.Item>
 
-          <Form.Item label={"Background Image"} name={"movie_background"}>
+          <Form.Item label={"Background Image"} name="movieUserBackground">
             <Input
               className={styles.chooseImageInput}
               type={"file"}
-              id={"uploadedBackground"}
               onChange={handleBackgroundChange}
             />
-            {!_isEmpty(userBackgroundURL) && (
-              <Image
-                className={styles.uploadImagePreview}
-                src={userBackgroundURL}
-              />
+            {backgroundLoading ? (
+              <Loader />
+            ) : (
+              !_isEmpty(userBackgroundURL) && (
+                <Image
+                  className={styles.uploadImagePreview}
+                  src={userBackgroundURL}
+                />
+              )
             )}
           </Form.Item>
           <Form.Item {...buttonItemLayout}>
