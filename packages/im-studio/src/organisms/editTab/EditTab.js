@@ -32,8 +32,8 @@ const EditTab = (props) => {
   const dispatch = useDispatch();
   const { tabdata, history, loading } = props;
   const { mId, title, description, url, genre, thumbnails } = tabdata;
-  const userThumbnail = thumbnails.userThumbnail;
-  const userBackground = thumbnails.userBackground;
+  const userThumbnail = thumbnails && thumbnails.userThumbnail;
+  const userBackground = thumbnails && thumbnails.userBackground;
   console.log(tabdata);
 
   const [userBackgroundURL, setUserBackgroundURL] = useState(EMPTY_STRING);
@@ -165,7 +165,11 @@ const EditTab = (props) => {
           >
             <Input placeholder="Enter genre" disabled />
           </Form.Item>
-          <Form.Item label={"Thumbnail Image"} name="movieUserThumbnail">
+          <Form.Item
+            className={styles.uploadImageContainer}
+            label={"Thumbnail Image"}
+            name="movieUserThumbnail"
+          >
             <Input
               className={styles.chooseImageInput}
               type={"file"}
@@ -174,36 +178,20 @@ const EditTab = (props) => {
             {thumbnailLoading ? (
               <Loader />
             ) : (
-              !_isEmpty(userThumbnailURL) && (
+              (!_isEmpty(userThumbnailURL) ||
+                !_isEmpty(userThumbnail && userThumbnail.url)) && (
                 <Image
                   className={styles.uploadImagePreview}
-                  src={userThumbnailURL}
+                  src={userThumbnailURL || (userThumbnail && userThumbnail.url)}
                 />
               )
             )}
           </Form.Item>
-
-          <Form.Item label={"Thumbnail Image"} name="movieUserThumbnail">
-            <Input
-              className={styles.chooseImageInput}
-              type={"file"}
-              onChange={handleThumbnailChange}
-            />
-            {thumbnailLoading ? (
-              <Loader />
-            ) : (
-              !_isEmpty(userThumbnail && userThumbnail["url"]) && (
-                <Image
-                  className={styles.uploadImagePreview}
-                  src={userThumbnail && userThumbnail["url"]}
-                />
-              )
-            )}
-
-            {console.log(userThumbnail)}
-          </Form.Item>
-
-          <Form.Item label={"Background Image"} name="movieUserBackground">
+          <Form.Item
+            className={styles.uploadImageContainer}
+            label={"Background Image"}
+            name="movieUserBackground"
+          >
             <Input
               className={styles.chooseImageInput}
               type={"file"}
@@ -212,10 +200,13 @@ const EditTab = (props) => {
             {backgroundLoading ? (
               <Loader />
             ) : (
-              !_isEmpty(userBackgroundURL) && (
+              (!_isEmpty(userBackgroundURL) ||
+                !_isEmpty(userBackground && userBackground.url)) && (
                 <Image
                   className={styles.uploadImagePreview}
-                  src={userBackgroundURL}
+                  src={
+                    userBackgroundURL || (userBackground && userBackground.url)
+                  }
                 />
               )
             )}

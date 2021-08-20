@@ -157,6 +157,7 @@ const FilmDetails = (props) => {
       ) : (
         <Image
           src={
+            FilmReader.userBackground(filmDetails) ||
             FilmReader.cover(filmDetails) ||
             FilmReader.coverStandard(filmDetails) ||
             FilmReader.coverHigh(filmDetails)

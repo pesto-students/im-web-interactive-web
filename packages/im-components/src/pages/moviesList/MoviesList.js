@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { isMobile } from "imcomponents/atoms/device";
+import cx from "classnames";
 
 // Lodash
 import _map from "lodash/map";
@@ -33,7 +34,8 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   const filmTitle = FilmReader.title(filmDetails);
   const filmRating = FilmReader.rating(filmDetails);
   const filmGenre = FilmReader.genre(filmDetails);
-  const filmImgSrc = FilmReader.thumbnail(filmDetails);
+  const filmImgSrc =
+    FilmReader.userThumbnail(filmDetails) || FilmReader.thumbnail(filmDetails);
 
   if (isMobile) {
     return (
@@ -45,6 +47,7 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
           imgSrc={filmImgSrc}
           rating={filmRating}
           {...filmDetails}
+          isFeatured={false}
         />
       </Link>
     );
@@ -76,6 +79,14 @@ const MoviesList = () => {
     currentUser
   );
 
+  const seeMoreClassname = cx(styles.seeMore, {
+    [styles.mobileSeeMore]: isMobile,
+  });
+
+  const handleSeeAll = () => {
+    history.push(`/movies/${listKey}`);
+  };
+
   useEffect(() => {
     setLoading(true);
     gqlClient
@@ -104,7 +115,12 @@ const MoviesList = () => {
       {loading ? (
         <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
       ) : (
-        <h1>{headingName}</h1>
+        <div>
+          <h1 className={styles.heading}>{headingName}</h1>
+          <div className={seeMoreClassname} onClick={handleSeeAll}>
+            <p>See All</p>
+          </div>
+        </div>
       )}
       <div className={styles.content}>
         {loading ? (
