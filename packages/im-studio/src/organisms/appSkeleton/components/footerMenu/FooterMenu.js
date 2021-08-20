@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+
 // Components
 import Menu from "imcomponents/atoms/menu";
 import {
@@ -8,21 +9,28 @@ import {
   CloudUploadOutlined,
 } from "imcomponents/atoms/icon";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./footerMenu.module.scss";
 
 function FooterMenu() {
   const history = useHistory();
   const [selectedMenu, setSelectedMenu] = useState("home");
+  const uploadRoute = getRoute(APPS.STUDIO, VIEWS.UPLOAD);
+  const homeRoute = getRoute(APPS.STUDIO, VIEWS.HOME);
 
   const handleClick = (event) => {
     setSelectedMenu(event.key);
 
     if (event.key === "upload") {
-      history.push("/upload");
+      history.push(uploadRoute);
     }
     if (event.key === "home") {
-      history.push("/");
+      history.push(homeRoute);
     }
   };
 

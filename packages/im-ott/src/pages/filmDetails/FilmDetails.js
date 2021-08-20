@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { isMobile, withOrientationChange } from "imcomponents/atoms/device";
+import {
+  isMobile,
+  withOrientationChange,
+  BrowserView,
+  MobileView,
+} from "imcomponents/atoms/device";
 import cx from "classnames";
 
 // Graphql
@@ -269,9 +274,6 @@ const FilmDetails = (props) => {
         isFeatured
         query={FEATURED_MOVIES}
         dataPath={"getFeatured"}
-        linkTo={(id) => {
-          return `/film/${id}`;
-        }}
       />
       <Drawer
         title={FilmReader.title(filmDetails)}
@@ -284,34 +286,40 @@ const FilmDetails = (props) => {
         width={"100vw"}
         destroyOnClose={true}
       >
-        {isMobile && isLandscape ? (
-          <Player
-            videoUrl={FilmReader.url(filmDetails)}
-            overlayData={overlayDetails}
-            triggerData={triggerDetails}
-            fullScreen={true}
-            handleVisible={handleVisible}
-            autoPlay={true}
-            disableExternalButtons={true}
-          />
-        ) : (
-          <>
-            <p>Please use landscape mode for better viewing experience!</p>
-            <p>Try rotating your phone to continue watching movie...</p>
-            <Image src={rotateImg}></Image>
-          </>
-        )}
-        {!isMobile && (
-          <Player
-            videoUrl={FilmReader.url(filmDetails)}
-            overlayData={overlayDetails}
-            triggerData={triggerDetails}
-            fullScreen={true}
-            handleVisible={handleVisible}
-            autoPlay={true}
-            disableExternalButtons={true}
-          />
-        )}
+        <MobileView>
+          {isMobile && isLandscape ? (
+            <Player
+              videoUrl={FilmReader.url(filmDetails)}
+              overlayData={overlayDetails}
+              triggerData={triggerDetails}
+              fullScreen={true}
+              handleVisible={handleVisible}
+              autoPlay={true}
+              disableExternalButtons={true}
+            />
+          ) : (
+            !loading && (
+              <>
+                <p>Please use landscape mode for better viewing experience!</p>
+                <p>Try rotating your phone to continue watching movie...</p>
+                <Image src={rotateImg}></Image>
+              </>
+            )
+          )}
+        </MobileView>
+        <BrowserView>
+          {!isMobile && (
+            <Player
+              videoUrl={FilmReader.url(filmDetails)}
+              overlayData={overlayDetails}
+              triggerData={triggerDetails}
+              fullScreen={true}
+              handleVisible={handleVisible}
+              autoPlay={true}
+              disableExternalButtons={true}
+            />
+          )}
+        </BrowserView>
       </Drawer>
     </div>
   );

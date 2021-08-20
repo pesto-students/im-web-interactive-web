@@ -10,13 +10,23 @@ import Input from "imcomponents/atoms/input";
 import Participants from "../participants/Participants";
 import Tooltip from "imcomponents/atoms/toolTip";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./createWatchParty.module.scss";
 
 function WatchParty(props) {
+  const watchPartyId = "1234";
+  const watchpartyRoute = getRoute(APPS.OTT, VIEWS.WATCHPARTY, {
+    watchPartyId,
+  });
+
   const handleCreateWatchParty = () => {
     const { history } = props;
-    history.push("/watchparty/1234");
+    history.push(watchpartyRoute);
   };
   return (
     <div className={styles.container}>
