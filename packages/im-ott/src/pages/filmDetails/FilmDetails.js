@@ -276,6 +276,7 @@ const FilmDetails = (props) => {
         dataPath={"getFeatured"}
       />
       <Drawer
+        id="filmDetailsDrawer"
         title={FilmReader.title(filmDetails)}
         onClose={onClose}
         visible={visible}

@@ -144,6 +144,7 @@ const FilmList = (props) => {
         setError(error);
         setLoading(false);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listKey]);
 
   if (!_isEmpty(error)) {

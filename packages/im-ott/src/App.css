@@ -26,8 +26,13 @@ html {
   opacity: 0.25;
 }
 
-.ant-carousel .ant-typography{
+.ant-carousel .ant-typography {
   color: #fff;
+}
+
+#filmDetailsDrawer button.ant-drawer-close {
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.4);
 }
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
