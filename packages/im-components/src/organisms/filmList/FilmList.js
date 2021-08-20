@@ -50,7 +50,8 @@ const renderMovie = (
   const filmTitle = FilmReader.title(filmDetails);
   const filmRating = FilmReader.rating(filmDetails);
   const filmGenre = FilmReader.genre(filmDetails);
-  const filmImgSrc = FilmReader.thumbnail(filmDetails);
+  const filmImgSrc =
+    FilmReader.userThumbnail(filmDetails) || FilmReader.thumbnail(filmDetails);
 
   return (
     <Link to={linkTo(filmId)}>

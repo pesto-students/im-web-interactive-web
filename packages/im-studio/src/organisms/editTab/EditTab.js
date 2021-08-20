@@ -53,8 +53,6 @@ const EditTab = (props) => {
     movietitle: title,
     moviedescription: description,
     moviegenre: genre,
-    movieUserThumbnail: userThumbnail && userThumbnail["url"],
-    movieUserBackground: userBackground && userBackground["url"],
   });
 
   const onFinish = (values) => {
@@ -65,8 +63,6 @@ const EditTab = (props) => {
         title: values.movietitle,
         description: values.moviedescription,
         genre: values.moviegenre,
-        userThumbnail: values.movieUserThumbnail,
-        userBackground: values.movieUserBackground,
       })
     );
     history.push("#2");
@@ -177,7 +173,8 @@ const EditTab = (props) => {
             {thumbnailLoading ? (
               <Loader />
             ) : (
-              !_isEmpty(userThumbnailURL) && (
+              (!_isEmpty(userThumbnailURL) ||
+                !_isEmpty(userThumbnail && userThumbnail["url"])) && (
                 <Image
                   className={styles.uploadImagePreview}
                   src={userThumbnailURL || userThumbnail["url"]}
