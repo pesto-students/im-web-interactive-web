@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+
 // Components
 import Menu from "imcomponents/atoms/menu";
 import Drawer from "imcomponents/atoms/drawer";
@@ -15,14 +16,23 @@ import {
   HeartFilled,
 } from "imcomponents/atoms/icon";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./footerMenu.module.scss";
 
 function FooterMenu() {
   const history = useHistory();
+  const location = useLocation();
   const [selectedMenu, setSelectedMenu] = useState("home");
   const [selectedTitle, setSelectedTitle] = useState("");
   const [visible, setVisible] = useState(false);
+
+  const watchlistRoute = getRoute(APPS.OTT, VIEWS.WATCHLIST);
+  const homeRoute = getRoute(APPS.OTT, VIEWS.HOME);
 
   const handleClick = (event) => {
     setSelectedMenu(event.key);
@@ -31,16 +41,20 @@ function FooterMenu() {
       setVisible(true);
     }
     if (event.key === "likes") {
-      history.push("/watchlist");
+      history.push(watchlistRoute);
     }
     if (event.key === "home") {
-      history.push("/");
+      history.push(homeRoute);
     }
     if (event.key === "search") {
       setSelectedTitle("Search Movie");
       setVisible(true);
     }
   };
+
+  useEffect(() => {
+    setVisible(false);
+  }, [location]);
 
   const onClose = () => {
     setVisible(false);
@@ -86,8 +100,9 @@ function FooterMenu() {
         placement={"bottom"}
         closable={true}
         onClose={onClose}
+        destroyOnClose={true}
         visible={visible}
-        height={"100vh"}
+        height={"100%"}
         key={"notification-drawer"}
       >
         {selectedMenu === "notifications" ? <Notification /> : <SearchMovie />}

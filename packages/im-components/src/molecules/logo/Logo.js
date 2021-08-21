@@ -6,6 +6,11 @@ import { Link } from "react-router-dom";
 import { VideoCameraFilled } from "imcomponents/atoms/icon";
 import { isMobile } from "imcomponents/atoms/device";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./logo.module.scss";
 
@@ -13,12 +18,21 @@ import styles from "./logo.module.scss";
 import { EMPTY_STRING } from "imbase/constants/base.constants";
 
 const Logo = (props) => {
-  const { text } = props;
+  const { text, application } = props;
   const textStyle = isMobile ? styles.textMobile : styles.text;
   const imgStyle = isMobile ? styles.imageMobile : styles.image;
+
+  let homeRoute;
+  if (application === APPS.OTT) {
+    homeRoute = getRoute(APPS.OTT, VIEWS.HOME);
+  }
+  if (application === APPS.STUDIO) {
+    homeRoute = getRoute(APPS.STUDIO, VIEWS.HOME);
+  }
+
   return (
     <>
-      <Link to={"/"} className={styles.logo}>
+      <Link to={homeRoute} className={styles.logo}>
         <VideoCameraFilled className={imgStyle} />
         <div className={textStyle}>{text}</div>
       </Link>
@@ -28,11 +42,13 @@ const Logo = (props) => {
 
 Logo.propTypes = {
   text: PropTypes.string,
+  application: PropTypes.string,
   children: PropTypes.element,
 };
 
 Logo.defaultProps = {
   text: EMPTY_STRING,
+  application: EMPTY_STRING,
 };
 
 export default Logo;

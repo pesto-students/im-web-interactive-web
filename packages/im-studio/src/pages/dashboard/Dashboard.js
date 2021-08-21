@@ -16,6 +16,7 @@ import Error from "imcomponents/molecules/error";
 
 // Utils
 import { getCurrentUser } from "imbase/services/firebase";
+import APPS from "imbase/constants/route.apps";
 
 // Styles
 import styles from "./dashboard.module.scss";
@@ -45,9 +46,7 @@ const Dashboard = () => {
           isPublished: false,
         }}
         dataPath={"movies"}
-        linkTo={(id) => {
-          return `video/${id}/edit`;
-        }}
+        application={APPS.STUDIO}
       />
       <FilmList
         className={styles.filmlist}
@@ -60,9 +59,7 @@ const Dashboard = () => {
           isPublished: true,
         }}
         dataPath={"movies"}
-        linkTo={(id) => {
-          return `video/${id}/edit`;
-        }}
+        application={APPS.STUDIO}
       />
       <FilmList
         className={styles.filmlist}
@@ -76,9 +73,7 @@ const Dashboard = () => {
           isFeatured: true,
         }}
         dataPath={"movies"}
-        linkTo={(id) => {
-          return `video/${id}/edit`;
-        }}
+        application={APPS.STUDIO}
       />
     </div>
   );

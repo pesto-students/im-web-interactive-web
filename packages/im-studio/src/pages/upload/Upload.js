@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import getVideoId from "get-video-id";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
@@ -25,9 +26,6 @@ import { addMovie } from "../../redux/movies/actions";
 // Styles
 import styles from "./upload.module.scss";
 
-// Helpers
-import { getVideoId } from "./helper/upload.general";
-
 // Services
 import youtubeService from "../../services/youtubeService";
 
@@ -49,7 +47,9 @@ const Upload = () => {
       setIsLinkInvalid(false);
       setVideoDetails(EMPTY_OBJECT);
     } else {
-      const videoIdFromUrl = getVideoId(value);
+      const idData = getVideoId(value);
+      const videoIdFromUrl = idData && idData["id"];
+
       if (_isEmpty(videoIdFromUrl)) {
         setIsLinkInvalid(true);
         setVideoDetails(EMPTY_OBJECT);

@@ -17,9 +17,7 @@ function LandingPage() {
         listKey={"new-releases"}
         query={NEW_RELEASES}
         dataPath={"getNewReleases"}
-        linkTo={(id) => {
-          return `/film/${id}`;
-        }}
+        application={"OTT"}
       />
       <FilmList
         key="featured-movies"
@@ -29,9 +27,7 @@ function LandingPage() {
         showDetails
         query={FEATURED_MOVIES}
         dataPath={"getFeatured"}
-        linkTo={(id) => {
-          return `/film/${id}`;
-        }}
+        application={"OTT"}
       />
       <FilmList
         key="featured-movies"
@@ -40,9 +36,7 @@ function LandingPage() {
         isFeatured={true}
         query={FEATURED_MOVIES}
         dataPath={"getFeatured"}
-        linkTo={(id) => {
-          return `/film/${id}`;
-        }}
+        application={"OTT"}
       />
       <Banner onlyOne />
       <FilmList
@@ -54,9 +48,7 @@ function LandingPage() {
         isDetailsRightAligned
         query={FEATURED_MOVIES}
         dataPath={"getFeatured"}
-        linkTo={(id) => {
-          return `/film/${id}`;
-        }}
+        application={"OTT"}
       />
     </div>
   );

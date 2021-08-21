@@ -53,3 +53,12 @@
   height: fit-content;
   justify-content: center;
 }
+
+.mobileOverlayWrapper {
+  width: 100%;
+  left: 0;
+
+  .details {
+    width: 100%;
+  }
+}

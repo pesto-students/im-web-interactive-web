@@ -20,6 +20,11 @@ import {
 // Service
 import { logOut } from "imbase/services/firebase";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./navbar.module.scss";
 
@@ -29,16 +34,21 @@ function Navbar() {
   const [selectedMenu, setSelectedMenu] = useState("home");
   const { setuser } = useContext(UserContext);
 
+  const watchlistRoute = getRoute(APPS.OTT, VIEWS.WATCHLIST);
+  const movieSearchRoute = getRoute(APPS.OTT, VIEWS.SEARCHMOVIE);
+  const homeRoute = getRoute(APPS.OTT, VIEWS.HOME);
+
   useEffect(() => {
-    if (location.pathname === "/watchlist") {
+    if (location.pathname === watchlistRoute) {
       setSelectedMenu("likes");
-    } else if (location.pathname === "/movie/search") {
+    } else if (location.pathname === movieSearchRoute) {
       setSelectedMenu("search");
-    } else if (location.pathname === "/") {
+    } else if (location.pathname === homeRoute) {
       setSelectedMenu("home");
     } else {
       setSelectedMenu(null);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   const handleLogout = () => {
@@ -56,19 +66,19 @@ function Navbar() {
   const handleClick = (event) => {
     setSelectedMenu(event.key);
     if (event.key === "likes") {
-      history.push("/watchlist");
+      history.push(watchlistRoute);
     }
     if (event.key === "home") {
-      history.push("/");
+      history.push(homeRoute);
     }
     if (event.key === "search") {
-      history.push("/movie/search");
+      history.push(movieSearchRoute);
     }
   };
 
   return (
     <div className={styles.container}>
-      <Logo text={"iFlix"} />
+      <Logo text={"iFlix"} application={APPS.OTT} />
       <BrowserView className={styles.browserView}>
         <Menu
           mode="horizontal"
