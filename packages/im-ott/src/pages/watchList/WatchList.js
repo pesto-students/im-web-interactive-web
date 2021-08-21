@@ -119,6 +119,12 @@ const WatchList = () => {
           _times(8, (movie) => (
             <Skeleton.Image active={true} className={styles.skeleton} />
           ))
+        ) : _isEmpty(films) ? (
+          <div>
+            <p className={styles.infoText}>
+              You have not watchlisted any movies...
+            </p>
+          </div>
         ) : (
           <div className={styles.movies}>{_map(films, renderFilm)}</div>
         )}
