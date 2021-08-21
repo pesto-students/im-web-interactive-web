@@ -80,8 +80,8 @@ const PublishTab = (props) => {
         <Form.Item {...buttonItemLayout}>
           <Button
             className={styles.formButton}
-            label={"Publish"}
-            onClick={onPublish}
+            label={"Delete"}
+            onClick={onDelete}
             disabled={isPublished}
           />
           <Button
@@ -92,8 +92,8 @@ const PublishTab = (props) => {
           />
           <Button
             className={styles.formButton}
-            label={"Delete"}
-            onClick={onDelete}
+            label={"Publish"}
+            onClick={onPublish}
             disabled={isPublished}
           />
         </Form.Item>
