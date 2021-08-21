@@ -1,3 +1,26 @@
-.filmlist {
-  overflow: hidden;
+.container {
+  .filmlist {
+    overflow: hidden;
+  }
+
+  .uploadLinkContainer {
+    text-align: center;
+    margin: 2rem;
+
+    .uploadLink {
+      color: #344c84;
+
+      &:hover {
+        color: blue;
+      }
+
+      .uploadIcon {
+        font-size: 200%;
+      }
+
+      .uploadIconMobile {
+        font-size: 300%;
+      }
+    }
+  }
 }
