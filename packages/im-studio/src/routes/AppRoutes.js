@@ -7,6 +7,7 @@ import AppLoader from "imcomponents/molecules/appLoader";
 import AppSkeleton from "../organisms/appSkeleton";
 import Dashboard from "../pages/dashboard";
 import EditVideo from "../pages/editVideo";
+import PreviewVideo from "../pages/previewVideo";
 import Upload from "../pages/upload";
 
 const AppRoutes = () => {
@@ -34,6 +35,7 @@ const AppRoutes = () => {
         <Route exact path="/upload" component={Upload} />
         <Route exact path="/movies/:movieCriteria" component={MoviesList} />
         <Route exact path="/video/:videoId/edit" component={EditVideo} />
+        <Route exact path="/video/:videoId/preview" component={PreviewVideo} />
       </Switch>
     </AppSkeleton>
   );

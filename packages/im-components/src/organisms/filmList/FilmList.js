@@ -49,7 +49,8 @@ const renderMovie = (
   label,
   showDetails,
   isDetailsRightAligned,
-  application
+  application,
+  listKey
 ) => {
   const filmId = FilmReader.id(filmDetails);
   const filmTitle = FilmReader.title(filmDetails);
@@ -62,8 +63,11 @@ const renderMovie = (
   if (application === APPS.OTT) {
     filmDetailsRoute = getRoute(APPS.OTT, VIEWS.FILMDETAILS, { filmId });
   }
-  if (application === APPS.STUDIO) {
+  if (application === APPS.STUDIO && listKey !== "published-movies") {
     filmDetailsRoute = getRoute(APPS.STUDIO, VIEWS.EDITVIDEO, { filmId });
+  }
+  if (application === APPS.STUDIO && listKey === "published-movies") {
+    filmDetailsRoute = getRoute(APPS.STUDIO, VIEWS.PREVIEWVIDEO, { filmId });
   }
 
   return (
@@ -139,7 +143,7 @@ const FilmList = (props) => {
         setError(error);
         setLoading(false);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listKey]);
 
   if (!_isEmpty(error)) {
@@ -200,7 +204,8 @@ const FilmList = (props) => {
                 label,
                 showDetails,
                 isDetailsRightAligned,
-                application
+                application,
+                listKey
               )
             )}
           </div>
