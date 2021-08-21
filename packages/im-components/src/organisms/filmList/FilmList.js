@@ -35,6 +35,11 @@ import {
   EMPTY_STRING,
 } from "imbase/constants/base.constants";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./filmlist.module.scss";
 
@@ -44,7 +49,7 @@ const renderMovie = (
   label,
   showDetails,
   isDetailsRightAligned,
-  linkTo
+  application
 ) => {
   const filmId = FilmReader.id(filmDetails);
   const filmTitle = FilmReader.title(filmDetails);
@@ -53,8 +58,16 @@ const renderMovie = (
   const filmImgSrc =
     FilmReader.userThumbnail(filmDetails) || FilmReader.thumbnail(filmDetails);
 
+  let filmDetailsRoute;
+  if (application === APPS.OTT) {
+    filmDetailsRoute = getRoute(APPS.OTT, VIEWS.FILMDETAILS, { filmId });
+  }
+  if (application === APPS.STUDIO) {
+    filmDetailsRoute = getRoute(APPS.STUDIO, VIEWS.EDITVIDEO, { filmId });
+  }
+
   return (
-    <Link to={linkTo(filmId)}>
+    <Link to={filmDetailsRoute}>
       <FilmCard
         key={label + filmId}
         title={filmTitle}
@@ -81,7 +94,7 @@ const FilmList = (props) => {
     isDetailsRightAligned,
     query,
     dataPath,
-    linkTo,
+    application,
     variables,
   } = props;
   const [movieList, setMovieList] = useState(EMPTY_ARRAY);
@@ -98,6 +111,8 @@ const FilmList = (props) => {
 
   const filmListContainer = getFilmListClassName(isFeatured);
 
+  const movieListRoute = getRoute(application, VIEWS.MOVIELIST, { listKey });
+
   // Handle Scrolling by increment / decreamenting scroll left
   const handleNav = (direction) => {
     if (direction === "left") {
@@ -108,7 +123,7 @@ const FilmList = (props) => {
   };
 
   const handleSeeAll = () => {
-    history.push(`/movies/${listKey}`);
+    history.push(movieListRoute);
   };
 
   useEffect(() => {
@@ -124,6 +139,7 @@ const FilmList = (props) => {
         setError(error);
         setLoading(false);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listKey]);
 
   if (!_isEmpty(error)) {
@@ -184,7 +200,7 @@ const FilmList = (props) => {
                 label,
                 showDetails,
                 isDetailsRightAligned,
-                linkTo
+                application
               )
             )}
           </div>
@@ -209,7 +225,7 @@ FilmList.propTypes = {
   isFeatured: PropTypes.bool,
   showDetails: PropTypes.bool,
   isDetailsRightAligned: PropTypes.bool,
-  linkTo: PropTypes.func,
+  application: PropTypes.string,
   query: PropTypes.object,
   dataPath: PropTypes.string,
   variables: PropTypes.object,
@@ -225,7 +241,7 @@ FilmList.defaultProps = {
   query: EMPTY_OBJECT,
   dataPath: EMPTY_STRING,
   variables: EMPTY_OBJECT,
-  linkTo: () => {},
+  application: EMPTY_STRING,
 };
 
 export default FilmList;

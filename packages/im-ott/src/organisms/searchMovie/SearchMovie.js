@@ -28,6 +28,11 @@ import FilmReader from "imbase/readers/Film";
 // Constants
 import { EMPTY_OBJECT, EMPTY_STRING } from "imbase/constants/base.constants";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./searchMovie.module.scss";
 
@@ -38,9 +43,11 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   const filmGenre = FilmReader.genre(filmDetails);
   const filmImgSrc = FilmReader.thumbnail(filmDetails);
 
+  const filmDetailsRoute = getRoute(APPS.OTT, VIEWS.FILMDETAILS, { filmId });
+
   if (isMobile) {
     return (
-      <Link to={`/film/${filmId}`}>
+      <Link to={filmDetailsRoute}>
         <FilmCardMobile
           key={filmId}
           title={filmTitle}
@@ -54,7 +61,7 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   }
 
   return (
-    <Link to={`/film/${filmId}`}>
+    <Link to={filmDetailsRoute}>
       <FilmCard
         key={filmId}
         title={filmTitle}

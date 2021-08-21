@@ -24,6 +24,11 @@ import { gqlClient } from "imbase/graphql/gqlClient";
 // Constants
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "imbase/constants/base.constants";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./moviesList.module.scss";
 import { getCurrentUser } from "imbase/services/firebase";
@@ -37,9 +42,11 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   const filmImgSrc =
     FilmReader.userThumbnail(filmDetails) || FilmReader.thumbnail(filmDetails);
 
+  const filmDetailsRoute = getRoute(APPS.OTT, VIEWS.FILMDETAILS, { filmId });
+
   if (isMobile) {
     return (
-      <Link to={`/film/${filmId}`}>
+      <Link to={filmDetailsRoute}>
         <FilmCardMobile
           key={filmId}
           title={filmTitle}
@@ -54,7 +61,7 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   }
 
   return (
-    <Link to={`/film/${filmId}`}>
+    <Link to={filmDetailsRoute}>
       <FilmCard
         key={filmId}
         title={filmTitle}

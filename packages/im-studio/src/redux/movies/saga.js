@@ -40,6 +40,11 @@ import { toast } from "imcomponents/atoms/toaster";
 //Reader
 import YoutubeReader from "imbase/readers/YoutubeVideo";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Apollo Client Queries
 const getAllMoviesFromApi = () => {
   return gqlClient
@@ -106,7 +111,9 @@ function* addMovie({ payload: { history, options } }) {
   const { error, data } = yield call(addMovieApi, options);
   if (data) {
     const { addMovie } = data;
-    history.push(`/video/${addMovie.id}/edit`);
+    const filmId = addMovie.id;
+    const editVideoRoute = getRoute(APPS.STUDIO, VIEWS.EDITVIDEO, { filmId });
+    history.push(editVideoRoute);
   } else {
     Sentry.captureMessage("Saga: add a movie error");
     Sentry.captureException(error);

@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import cx from "classnames";
+
+// Components
+import { isMobile } from "imcomponents/atoms/device";
 
 // Readers
 import OverlayReader from "imbase/readers/Overlay";
@@ -48,8 +52,12 @@ const Overlay = ({ overlay, currentTime, seekTo }) => {
     overlayJumpPoint,
   ]);
 
+  const overlayWrapperClassname = cx(styles.overlayWrapper, {
+    [styles.mobileOverlayWrapper]: isMobile,
+  });
+
   return (
-    <div key={overlayId} className={styles.overlayWrapper}>
+    <div key={overlayId} className={overlayWrapperClassname}>
       <span className={styles.timeLeft}>
         {overlayJumpPoint + 10 - currentTime}s
       </span>
