@@ -22,5 +22,20 @@
       min-width: 12rem;
       filter: drop-shadow(0 0.4rem 0.4rem rgba(0, 0, 0, 0.25));
     }
+
+    .uploadImageContainer {
+      text-align: left;
+
+      .uploadImagePreview {
+        height: 10rem;
+        width: 15rem;
+        border-radius: 1rem;
+        margin-top: 1rem;
+      }
+
+      .deleteIcon {
+        margin-left: 1rem;
+      }
+    }
   }
 }

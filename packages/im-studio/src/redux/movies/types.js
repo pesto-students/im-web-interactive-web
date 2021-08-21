@@ -1,4 +1,5 @@
 export const ADD_MOVIE = "ADD_MOVIE";
+export const DELETE_MOVIE = "DELETE_MOVIE";
 export const GET_MOVIE_BY_ID = "GET_MOVIE_BY_ID";
 export const UPDATE_MOVIE_BY_ID = "UPDATE_MOVIE_BY_ID";
 export const GET_MOVIE_SUCCESS = "GET_MOVIE_SUCCESS";

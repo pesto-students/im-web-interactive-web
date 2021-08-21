@@ -1,31 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 // Components
+import { DeleteOutlined } from "imcomponents/atoms/icon";
 import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
 import Form from "imcomponents/atoms/form";
+import Image from "imcomponents/atoms/image";
 import Input from "imcomponents/atoms/input";
 import TextArea from "imcomponents/atoms/textArea";
 import Loader from "imcomponents/molecules/loader";
+
+import _isEmpty from "lodash/isEmpty";
 
 // Sentry
 import * as Sentry from "@sentry/react";
 
 // Constants
-import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+import { EMPTY_OBJECT, EMPTY_STRING } from "imbase/constants/base.constants";
 
 // Redux Actions
 import { updateMovieByID } from "../../redux/movies/actions";
 
 // Styles
 import styles from "./editTab.module.scss";
+import { uploadImageToCloudinary } from "./utils/cloudinary";
 
 const EditTab = (props) => {
+  const [thumbnailLoading, setThumbnailLoading] = useState(false);
+  const [backgroundLoading, setBackgroundLoading] = useState(false);
+  const [deleteThumbnailClicked, setDeleteThumbnailClicked] = useState(false);
+  const [deleteBackgroundClicked, setDeleteBackgroundClicked] = useState(false);
+  const [userBackgroundURL, setUserBackgroundURL] = useState(EMPTY_STRING);
+  const [userThumbnailURL, setUserThumbnailURL] = useState(EMPTY_STRING);
+
   const dispatch = useDispatch();
   const { tabdata, history, loading } = props;
-  const { id, title, description, url, genre } = tabdata;
+  const { mId, title, description, url, genre, thumbnails } = tabdata;
+  const userThumbnailDB =
+    thumbnails && thumbnails.userThumbnail && thumbnails.userThumbnail.url;
+  const userBackgroundDB =
+    thumbnails && thumbnails.userBackground && thumbnails.userBackground.url;
 
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -36,9 +52,9 @@ const EditTab = (props) => {
   };
 
   const [form] = Form.useForm();
-  
+
   form.setFieldsValue({
-    movieurl: url || `http://www.youtube.com/watch?v=${id}`,
+    movieurl: url || `http://www.youtube.com/watch?v=${mId}`,
     movietitle: title,
     moviedescription: description,
     moviegenre: genre,
@@ -65,6 +81,58 @@ const EditTab = (props) => {
     form.submit();
   };
 
+  const handleThumbnailChange = (event) => {
+    const image = event.target.files[0];
+    if (image) {
+      setThumbnailLoading(true);
+      uploadImageToCloudinary(image).then((response) => {
+        setThumbnailLoading(false);
+        setDeleteThumbnailClicked(false);
+        const data = response && response.data;
+        const { url } = data;
+        setUserThumbnailURL(url);
+        tabdata.thumbnails.userThumbnail = {
+          url,
+          height: 360,
+          width: 480,
+        };
+      });
+    }
+  };
+
+  const handleBackgroundChange = (event) => {
+    const image = event.target.files[0];
+    if (image) {
+      setBackgroundLoading(true);
+      uploadImageToCloudinary(image).then((response) => {
+        setBackgroundLoading(false);
+        setDeleteBackgroundClicked(false);
+        const data = response && response.data;
+        const { url } = data;
+        setUserBackgroundURL(url);
+        tabdata.thumbnails.userBackground = {
+          url,
+          height: 720,
+          width: 1280,
+        };
+      });
+    }
+  };
+
+  const handleDeleteThumbnail = () => {
+    console.log("deleting");
+    setUserThumbnailURL(EMPTY_STRING);
+    tabdata.thumbnails.userThumbnail = EMPTY_OBJECT;
+    setDeleteThumbnailClicked(true);
+  };
+
+  const handleDeleteBackground = () => {
+    console.log("deleting");
+    setUserBackgroundURL(EMPTY_STRING);
+    tabdata.thumbnails.userBackground = EMPTY_OBJECT;
+    setDeleteBackgroundClicked(true);
+  };
+
   return (
     <div className={styles.container}>
       {loading ? (
@@ -72,7 +140,7 @@ const EditTab = (props) => {
       ) : (
         <Form
           initialValues={{
-            movieurl: url || `http://www.youtube.com/watch?v=${id}`,
+            movieurl: url || `http://www.youtube.com/watch?v=${mId}`,
             movietitle: title,
             moviedescription: description,
             moviegenre: genre,
@@ -110,9 +178,65 @@ const EditTab = (props) => {
           <Form.Item
             label="Genre"
             name="moviegenre"
-            rules={[{ required: true, message: "Please input movie genre!" }]}
+            rules={[{ required: false, message: "Please input movie genre!" }]}
           >
-            <Input placeholder="Enter genre" />
+            <Input placeholder="Enter genre" disabled />
+          </Form.Item>
+          <Form.Item
+            className={styles.uploadImageContainer}
+            label={"Thumbnail Image"}
+            name="movieUserThumbnail"
+          >
+            <Input
+              className={styles.chooseImageInput}
+              type={"file"}
+              onChange={handleThumbnailChange}
+            />
+            {thumbnailLoading ? (
+              <Loader />
+            ) : (
+              ((!deleteThumbnailClicked && !_isEmpty(userThumbnailURL)) ||
+                !_isEmpty(userThumbnailDB)) && (
+                <div>
+                  <Image
+                    className={styles.uploadImagePreview}
+                    src={userThumbnailURL || userThumbnailDB}
+                  />
+                  <DeleteOutlined
+                    className={styles.deleteIcon}
+                    onClick={handleDeleteThumbnail}
+                  />
+                </div>
+              )
+            )}
+          </Form.Item>
+          <Form.Item
+            className={styles.uploadImageContainer}
+            label={"Background Image"}
+            name="movieUserBackground"
+          >
+            <Input
+              className={styles.chooseImageInput}
+              type={"file"}
+              onChange={handleBackgroundChange}
+            />
+            {backgroundLoading ? (
+              <Loader />
+            ) : (
+              ((!deleteBackgroundClicked && !_isEmpty(userBackgroundURL)) ||
+                !_isEmpty(userBackgroundDB)) && (
+                <div>
+                  <Image
+                    className={styles.uploadImagePreview}
+                    src={userBackgroundURL || userBackgroundDB}
+                  />
+                  <DeleteOutlined
+                    className={styles.deleteIcon}
+                    onClick={handleDeleteBackground}
+                  />
+                </div>
+              )
+            )}
           </Form.Item>
           <Form.Item {...buttonItemLayout}>
             <Link to="/dashboard">

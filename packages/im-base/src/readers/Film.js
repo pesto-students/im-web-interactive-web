@@ -12,6 +12,8 @@ const thumbnail = _property("thumbnails.high.url");
 const cover = _property("thumbnails.maxres.url");
 const coverStandard = _property("thumbnails.standard.url");
 const coverHigh = _property("thumbnails.high.url");
+const userThumbnail = _property("thumbnails.userThumbnail.url");
+const userBackground = _property("thumbnails.userBackground.url");
 
 export default {
   id,
@@ -25,4 +27,6 @@ export default {
   cover,
   coverStandard,
   coverHigh,
+  userThumbnail,
+  userBackground,
 };

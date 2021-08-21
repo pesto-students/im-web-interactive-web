@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { isMobile } from "imcomponents/atoms/device";
+import cx from "classnames";
 
 // Lodash
 import _map from "lodash/map";
@@ -38,7 +39,8 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
   const filmTitle = FilmReader.title(filmDetails);
   const filmRating = FilmReader.rating(filmDetails);
   const filmGenre = FilmReader.genre(filmDetails);
-  const filmImgSrc = FilmReader.thumbnail(filmDetails);
+  const filmImgSrc =
+    FilmReader.userThumbnail(filmDetails) || FilmReader.thumbnail(filmDetails);
 
   const filmDetailsRoute = getRoute(APPS.OTT, VIEWS.FILMDETAILS, { filmId });
 
@@ -52,6 +54,7 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
           imgSrc={filmImgSrc}
           rating={filmRating}
           {...filmDetails}
+          isFeatured={false}
         />
       </Link>
     );
@@ -66,6 +69,7 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
         imgSrc={filmImgSrc}
         rating={filmRating}
         {...filmDetails}
+        isFeatured={false}
       />
     </Link>
   );
@@ -111,7 +115,7 @@ const MoviesList = () => {
       {loading ? (
         <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
       ) : (
-        <h1>{headingName}</h1>
+        <h1 className={styles.heading}>{headingName}</h1>
       )}
       <div className={styles.content}>
         {loading ? (

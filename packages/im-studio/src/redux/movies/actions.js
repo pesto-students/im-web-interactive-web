@@ -1,5 +1,6 @@
 import {
   ADD_MOVIE,
+  DELETE_MOVIE,
   GET_MOVIE_BY_ID,
   GET_MOVIE_SUCCESS,
   GET_ALL_MOVIES,
@@ -38,6 +39,11 @@ export const getAllMoviesError = (data) => ({
 
 export const addMovie = (options, history) => ({
   type: ADD_MOVIE,
+  payload: { options, history },
+});
+
+export const deleteMovie = (options, history) => ({
+  type: DELETE_MOVIE,
   payload: { options, history },
 });
 
