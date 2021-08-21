@@ -36,16 +36,12 @@ const AppSkeleton = (props) => {
     [styles.mobileHeader]: isMobile,
   });
 
-  const contentClassName = cx(styles.content, {
-    [styles.mobileContent]: isMobile,
-  });
-
   return (
     <Layout className={styles.container}>
       <Header className={headerClassName}>
         <Navbar />
       </Header>
-      <Content className={contentClassName}>{children}</Content>
+      <Content className={styles.content}>{children}</Content>
       <Footer className={styles.footer}>
         <BrowserView className={styles.webFooter}>
           <FooterContent />
