@@ -15,6 +15,11 @@ import * as Sentry from "@sentry/react";
 // Redux Actions
 import { deleteMovie, updateMovieByID } from "../../redux/movies/actions";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./publishTab.module.scss";
 
@@ -22,6 +27,8 @@ const PublishTab = (props) => {
   const dispatch = useDispatch();
   const { tabdata, history } = props;
   const { id, title, description, url, genre, isPublished } = tabdata;
+  const homeRoute = getRoute(APPS.STUDIO, VIEWS.HOME);
+
 
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -41,7 +48,7 @@ const PublishTab = (props) => {
         publishedAt: new Date(),
       })
     );
-    history.push("/dashboard");
+    history.push(homeRoute);
   };
 
   const onUnpublish = (values) => {
@@ -51,12 +58,12 @@ const PublishTab = (props) => {
         isPublished: false,
       })
     );
-    history.push("/dashboard");
+    history.push(homeRoute);
   };
 
   const onDelete = (values) => {
     dispatch(deleteMovie({ movieId: id }, history));
-    history.push("/dashboard");
+    history.push(homeRoute);
   };
 
   const onFinishFailed = (errorInfo) => {
