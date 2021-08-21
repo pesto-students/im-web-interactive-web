@@ -77,6 +77,11 @@ const editVideoRouteGenerate = (params) => {
   return `/video/${filmId}/edit`;
 };
 
+const previewVideoRouteGenerate = (params) => {
+  const { filmId } = params;
+  return `/video/${filmId}/preview`;
+};
+
 const OTT_VIEW_TO_ROUTE_GEN = {
   [VIEWS.HOME]: homeViewRouteGenerate,
   [VIEWS.WATCHLIST]: watchlistViewRouteGenerate,
@@ -93,6 +98,7 @@ const STUDIO_VIEW_TO_ROUTE_GEN = {
   [VIEWS.UPLOAD]: uploadRouteGenerate,
   [VIEWS.MOVIELIST]: moveListViewRouteGenerate,
   [VIEWS.EDITVIDEO]: editVideoRouteGenerate,
+  [VIEWS.PREVIEWVIDEO]: previewVideoRouteGenerate,
 };
 
 const getRoute = (appModule, viewType, params = EMPTY_OBJECT) => {

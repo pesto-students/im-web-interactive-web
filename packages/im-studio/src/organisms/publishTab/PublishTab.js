@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
@@ -28,7 +29,9 @@ const PublishTab = (props) => {
   const { tabdata, history } = props;
   const { id, title, description, url, genre, isPublished } = tabdata;
   const homeRoute = getRoute(APPS.STUDIO, VIEWS.HOME);
-
+  const previewRoute = getRoute(APPS.STUDIO, VIEWS.PREVIEWVIDEO, {
+    filmId: id,
+  });
 
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -84,6 +87,11 @@ const PublishTab = (props) => {
         <Form.Item label="Title">{title}</Form.Item>
         <Form.Item label="Description">{description}</Form.Item>
         <Form.Item label="Genre">{genre}</Form.Item>
+        <Form.Item label="Preview">
+          <Link to={previewRoute} target="_blank">
+            SEE PREVIEW
+          </Link>
+        </Form.Item>
         <Form.Item {...buttonItemLayout}>
           <Button
             className={styles.formButton}
