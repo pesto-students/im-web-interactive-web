@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 // Lodash
 import _isEmpty from "lodash/isEmpty";
@@ -13,10 +13,14 @@ import FilmList from "imcomponents/organisms/filmList";
 // Components
 import Loader from "imcomponents/molecules/loader/Loader";
 import Error from "imcomponents/molecules/error";
+import { CloudUploadOutlined } from "imcomponents/atoms/icon";
+import { isMobile } from "imcomponents/atoms/device";
 
 // Utils
 import { getCurrentUser } from "imbase/services/firebase";
 import APPS from "imbase/constants/route.apps";
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
 
 // Styles
 import styles from "./dashboard.module.scss";
@@ -24,6 +28,7 @@ import styles from "./dashboard.module.scss";
 const Dashboard = () => {
   const currentUser = getCurrentUser()?.uid;
   const { loading, error } = useSelector((state) => state.MovieReducer);
+  const iconStyle = isMobile ? styles.uploadIconMobile : styles.uploadIcon;
 
   if (loading) {
     return <Loader />;
@@ -34,7 +39,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <FilmList
         className={styles.filmlist}
         key="unpublished-movies"
@@ -75,6 +80,12 @@ const Dashboard = () => {
         dataPath={"movies"}
         application={APPS.STUDIO}
       />
+      <div className={styles.uploadLinkContainer}>
+        <Link className={styles.uploadLink} to={getRoute(APPS.STUDIO, VIEWS.UPLOAD)}>
+          <CloudUploadOutlined className={iconStyle} />
+          <h4>Add movies</h4>
+        </Link>
+      </div>
     </div>
   );
 };
