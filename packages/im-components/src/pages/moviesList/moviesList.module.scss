@@ -1,29 +1,6 @@
 .container {
   padding: 4rem;
 
-  .heading {
-    display: inline-block;
-  }
-
-  .seeMore {
-    margin-right: 4rem;
-    float: right;
-
-    p {
-      font-size: 1.4rem;
-      cursor: pointer;
-      color: #344c84;
-
-      &:hover {
-        color: blue;
-      }
-    }
-  }
-
-  .mobileSeeMore {
-    margin-right: 0rem;
-  }
-
   .content {
     display: inline-block;
 

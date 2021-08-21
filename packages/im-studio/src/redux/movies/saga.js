@@ -10,6 +10,7 @@ import {
   MUTATE_DELETE_OVERLAY,
   CREATE_TRIGGER,
   MUTATE_DELETE_TRIGGER,
+  MUTATE_DELETE_MOVIE,
 } from "imbase/graphql/mutation";
 import {
   GET_ALL_MOVIES,
@@ -18,6 +19,7 @@ import {
   UPDATE_MOVIE_BY_ID,
   ADD_ACTION,
   DELETE_ACTION,
+  DELETE_MOVIE,
 } from "./types";
 import {
   getAllMoviesSuccess,
@@ -142,6 +144,10 @@ const deleteActionApi = (apiParams) => {
   return gqlClient.mutate(apiParams);
 };
 
+const deleteMovieApi = (apiParams) => {
+  return gqlClient.mutate(apiParams);
+};
+
 // Sagas Actions
 function* addAction({ payload: { options, actionType } }) {
   let mutationParam;
@@ -205,6 +211,22 @@ function* deleteAction({ payload }) {
   }
 }
 
+function* deleteMovie({ payload }) {
+  const apiParams = {
+    mutation: MUTATE_DELETE_MOVIE,
+    variables: {
+      movieId: payload && payload.options && payload.options.movieId,
+    },
+  };
+
+  const { data } = yield call(deleteMovieApi, apiParams);
+  if (data) {
+    toast.success(`Movie Deleted!`);
+  } else {
+    Sentry.captureMessage("Saga: delete movie didn't receive payload");
+  }
+}
+
 // Watcher Movie
 function* initGetAllMovies() {
   yield takeEvery(GET_ALL_MOVIES, getAllMovies);
@@ -229,6 +251,9 @@ function* initAddAction() {
 function* initDeleteAction() {
   yield takeEvery(DELETE_ACTION, deleteAction);
 }
+function* initDeleteMovie() {
+  yield takeEvery(DELETE_MOVIE, deleteMovie);
+}
 
 function* moviesSaga() {
   yield all([
@@ -238,6 +263,7 @@ function* moviesSaga() {
     initUpdateMovieByID(),
     initAddAction(),
     initDeleteAction(),
+    initDeleteMovie(),
   ]);
 }
 

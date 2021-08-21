@@ -34,7 +34,6 @@ const EditTab = (props) => {
   const { mId, title, description, url, genre, thumbnails } = tabdata;
   const userThumbnail = thumbnails && thumbnails.userThumbnail;
   const userBackground = thumbnails && thumbnails.userBackground;
-  console.log(tabdata);
 
   const [userBackgroundURL, setUserBackgroundURL] = useState(EMPTY_STRING);
   const [userThumbnailURL, setUserThumbnailURL] = useState(EMPTY_STRING);
@@ -57,7 +56,6 @@ const EditTab = (props) => {
   });
 
   const onFinish = (values) => {
-    console.log(values);
     dispatch(
       updateMovieByID({
         ...tabdata,

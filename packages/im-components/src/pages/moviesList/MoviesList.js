@@ -62,6 +62,7 @@ const renderMovie = (filmDetails = EMPTY_OBJECT, isFeatured) => {
         imgSrc={filmImgSrc}
         rating={filmRating}
         {...filmDetails}
+        isFeatured={false}
       />
     </Link>
   );
@@ -78,14 +79,6 @@ const MoviesList = () => {
     movieCriteria,
     currentUser
   );
-
-  const seeMoreClassname = cx(styles.seeMore, {
-    [styles.mobileSeeMore]: isMobile,
-  });
-
-  const handleSeeAll = () => {
-    history.push(`/movies/${listKey}`);
-  };
 
   useEffect(() => {
     setLoading(true);
@@ -115,12 +108,7 @@ const MoviesList = () => {
       {loading ? (
         <Skeleton width="100%" paragraph={{ rows: 0 }} active={true} />
       ) : (
-        <div>
-          <h1 className={styles.heading}>{headingName}</h1>
-          <div className={seeMoreClassname} onClick={handleSeeAll}>
-            <p>See All</p>
-          </div>
-        </div>
+        <h1 className={styles.heading}>{headingName}</h1>
       )}
       <div className={styles.content}>
         {loading ? (

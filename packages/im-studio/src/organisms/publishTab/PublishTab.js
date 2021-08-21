@@ -13,7 +13,7 @@ import Form from "imcomponents/atoms/form";
 import * as Sentry from "@sentry/react";
 
 // Redux Actions
-import { updateMovieByID } from "../../redux/movies/actions";
+import { deleteMovie, updateMovieByID } from "../../redux/movies/actions";
 
 // Styles
 import styles from "./publishTab.module.scss";
@@ -21,7 +21,7 @@ import styles from "./publishTab.module.scss";
 const PublishTab = (props) => {
   const dispatch = useDispatch();
   const { tabdata, history } = props;
-  const { title, description, url, genre, isPublished } = tabdata;
+  const { id, title, description, url, genre, isPublished } = tabdata;
 
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -33,7 +33,7 @@ const PublishTab = (props) => {
   };
 
   const [form] = Form.useForm();
-  const onFinish = (values) => {
+  const onPublish = (values) => {
     dispatch(
       updateMovieByID({
         ...tabdata,
@@ -41,6 +41,21 @@ const PublishTab = (props) => {
         publishedAt: new Date(),
       })
     );
+    history.push("/dashboard");
+  };
+
+  const onUnpublish = (values) => {
+    dispatch(
+      updateMovieByID({
+        ...tabdata,
+        isPublished: false,
+      })
+    );
+    history.push("/dashboard");
+  };
+
+  const onDelete = (values) => {
+    dispatch(deleteMovie({ movieId: id }, history));
     history.push("/dashboard");
   };
 
@@ -55,7 +70,7 @@ const PublishTab = (props) => {
         className={styles.publishForm}
         layout={"horizontal"}
         form={form}
-        onFinish={onFinish}
+        onFinish={isPublished ? onUnpublish : onPublish}
         onFinishFailed={onFinishFailed}
       >
         <Form.Item label="YouTube URL">{url}</Form.Item>
@@ -64,9 +79,21 @@ const PublishTab = (props) => {
         <Form.Item label="Genre">{genre}</Form.Item>
         <Form.Item {...buttonItemLayout}>
           <Button
-            className={styles.saveButton}
+            className={styles.formButton}
             label={"Publish"}
-            onClick={onFinish}
+            onClick={onPublish}
+            disabled={isPublished}
+          />
+          <Button
+            className={styles.formButton}
+            label={"Unpublish"}
+            onClick={onUnpublish}
+            disabled={!isPublished}
+          />
+          <Button
+            className={styles.formButton}
+            label={"Delete"}
+            onClick={onDelete}
             disabled={isPublished}
           />
         </Form.Item>
