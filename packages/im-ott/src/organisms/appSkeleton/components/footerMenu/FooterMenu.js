@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 // Components
 import Menu from "imcomponents/atoms/menu";
@@ -26,6 +26,7 @@ import styles from "./footerMenu.module.scss";
 
 function FooterMenu() {
   const history = useHistory();
+  const location = useLocation();
   const [selectedMenu, setSelectedMenu] = useState("home");
   const [selectedTitle, setSelectedTitle] = useState("");
   const [visible, setVisible] = useState(false);
@@ -50,6 +51,10 @@ function FooterMenu() {
       setVisible(true);
     }
   };
+
+  useEffect(() => {
+    setVisible(false);
+  }, [location]);
 
   const onClose = () => {
     setVisible(false);
@@ -95,8 +100,9 @@ function FooterMenu() {
         placement={"bottom"}
         closable={true}
         onClose={onClose}
+        destroyOnClose={true}
         visible={visible}
-        height={"100vh"}
+        height={"100%"}
         key={"notification-drawer"}
       >
         {selectedMenu === "notifications" ? <Notification /> : <SearchMovie />}
