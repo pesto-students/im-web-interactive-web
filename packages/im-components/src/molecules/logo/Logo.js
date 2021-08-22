@@ -32,7 +32,7 @@ const Logo = (props) => {
 
   return (
     <>
-      <Link to={homeRoute} className={styles.logo}>
+      <Link to={homeRoute || EMPTY_STRING} className={styles.logo}>
         <VideoCameraFilled className={imgStyle} />
         <div className={textStyle}>{text}</div>
       </Link>
