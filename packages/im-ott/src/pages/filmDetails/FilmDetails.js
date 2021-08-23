@@ -41,6 +41,7 @@ import {
 
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+import APPS from "imbase/constants/route.apps";
 
 // Styles
 import styles from "./filmDetails.module.scss";
@@ -275,6 +276,7 @@ const FilmDetails = (props) => {
         isFeatured
         query={FEATURED_MOVIES}
         dataPath={"getFeatured"}
+        application={APPS.OTT}
       />
       <Drawer
         id="filmDetailsDrawer"

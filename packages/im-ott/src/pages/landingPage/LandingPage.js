@@ -30,7 +30,7 @@ function LandingPage() {
         application={"OTT"}
       />
       <FilmList
-        key="featured-movies"
+        key="featured-movies-2"
         label={"Featured Movies"}
         listKey={"featured"}
         isFeatured={true}
@@ -40,7 +40,7 @@ function LandingPage() {
       />
       <Banner onlyOne />
       <FilmList
-        key="featured-movies"
+        key="featured-movies-3"
         label={"Featured Movies"}
         listKey={"new-releases"}
         isFeatured={true}
