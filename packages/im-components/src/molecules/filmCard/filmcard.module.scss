@@ -45,6 +45,7 @@
   .filmImage {
     object-fit: cover;
     border-radius: 1.2rem;
+    filter: drop-shadow(0.2rem 0.4rem 0.4rem grey);
 
     &:hover {
       transform: scale(1.03);

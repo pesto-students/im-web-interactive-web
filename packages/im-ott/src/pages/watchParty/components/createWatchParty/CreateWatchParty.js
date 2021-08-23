@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams, useHistory } from "react-router-dom";
 
 // Components
 import { Title, Label } from "imcomponents/atoms/typography";
@@ -20,14 +21,23 @@ import styles from "./createWatchParty.module.scss";
 
 function WatchParty(props) {
   const watchPartyId = "1234";
+  const { movieId } = useParams();
+  const history = useHistory();
   const watchpartyRoute = getRoute(APPS.OTT, VIEWS.WATCHPARTY, {
     watchPartyId,
   });
+  const filmDetailsRoute = getRoute(APPS.OTT, VIEWS.FILMDETAILS, {
+    filmId: movieId,
+  });
 
   const handleCreateWatchParty = () => {
-    const { history } = props;
     history.push(watchpartyRoute);
   };
+
+  const handleCancel = () => {
+    history.push(filmDetailsRoute);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.playerContainer}>
@@ -86,6 +96,7 @@ function WatchParty(props) {
           <Button
             type={BUTTON_TYPES.LINK}
             className={styles.createWatchPartyButton}
+            onClick={handleCancel}
           >
             <span className={styles.createWatchPartyButtonLabel}>
               {"Cancel"}

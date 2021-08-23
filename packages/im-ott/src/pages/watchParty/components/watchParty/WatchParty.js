@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import cx from "classnames";
 
 // Components
@@ -14,11 +15,18 @@ import Participants from "../participants/Participants";
 import Tooltip from "imcomponents/atoms/toolTip";
 import Button, { BUTTON_TYPES } from "imcomponents/atoms/button";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 // Styles
 import styles from "./watchParty.module.scss";
 
 function WatchParty() {
   const [visible, setVisibility] = useState(true);
+  const homeRoute = getRoute(APPS.STUDIO, VIEWS.HOME);
+  const history = useHistory();
 
   const toggleSettingsVisibility = () => {
     setVisibility(!visible);
@@ -27,6 +35,10 @@ function WatchParty() {
   const settingsClassName = cx(styles.watchPartySettings, {
     [styles.zeroWidth]: !visible,
   });
+
+  const handleEndWatchParty = () => {
+    history.push(homeRoute);
+  };
 
   return (
     <div className={styles.container}>
@@ -73,6 +85,7 @@ function WatchParty() {
               <Button
                 type={BUTTON_TYPES.PRIMARY}
                 className={styles.endWatchPartyButton}
+                onClick={handleEndWatchParty}
               >
                 <span className={styles.endWatchPartyButtonLabel}>
                   {"End Watch Party"}
