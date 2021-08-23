@@ -41,6 +41,7 @@ import {
 
 // Constants
 import { EMPTY_OBJECT } from "imbase/constants/base.constants";
+import VIEWS from "imbase/constants/route.views";
 import APPS from "imbase/constants/route.apps";
 
 // Styles
@@ -54,8 +55,6 @@ import rotateImg from "imbase/assets/images/rotatephone.png";
 
 // Utils
 import getRoute from "imbase/utils/getRoute";
-import VIEWS from "imbase/constants/route.views";
-import APPS from "imbase/constants/route.apps";
 
 const DESCRIPTION_INITIAL_DISPLAY_LIMIT = 400;
 
