@@ -97,11 +97,12 @@ const FilmDetails = (props) => {
     return <Error {...error} />;
   }
 
+  const createWatchPartyRoute = getRoute(APPS.OTT, VIEWS.CREATEWATCHPARTY, {
+    filmId,
+  });
+
   const handleCreateWatchParty = () => {
     const { history } = props;
-    const createWatchPartyRoute = getRoute(APPS.OTT, VIEWS.CREATEWATCHPARTY, {
-      filmId,
-    });
     history.push(createWatchPartyRoute);
   };
 
