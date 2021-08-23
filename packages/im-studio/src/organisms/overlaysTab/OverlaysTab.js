@@ -47,6 +47,7 @@ const OverlaysTab = (props) => {
 
   // Ref for seeker
   const overlaySeekRef = useRef(null);
+const overlayInputRef = useRef(null);
 
   // Styles for tabs
   const formItemLayout = {
@@ -142,6 +143,7 @@ const OverlaysTab = (props) => {
         "OVERLAY"
       )
     );
+    handleReset();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -175,6 +177,7 @@ const OverlaysTab = (props) => {
     overlaySeekRef.current.seekTo(record.jumpPoint);
     const formattedTime = getFormattedTime(record.jumpPoint);
     setJumpIn(formattedTime);
+    overlayInputRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleDelete = (overlayid) => {
@@ -182,10 +185,11 @@ const OverlaysTab = (props) => {
     overlaySeekRef.current.seekTo(0);
     setJumpIn("00:00:01");
     dispatch(deleteAction(id, overlayid, "OVERLAY"));
+    overlayInputRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={overlayInputRef}>
       {loading ? (
         <Loader />
       ) : (
@@ -282,11 +286,12 @@ const OverlaysTab = (props) => {
             </Select>
           </Form.Item>
           <Form.Item {...buttonItemLayout}>
-          <Button
+            <Button
               className={styles.addNewButton}
               label={"Add New"}
               onClick={() => {
                 handleReset();
+                overlayInputRef.current.scrollIntoView({ behavior: "smooth" });
               }}
             />
             <Button
