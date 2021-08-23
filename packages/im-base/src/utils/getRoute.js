@@ -59,6 +59,14 @@ const watchPartyViewRouteGenerate = (params) => {
   return `/watchparty`;
 };
 
+const createWatchPartyViewRouteGenerate = (params) => {
+  const { filmId } = params;
+  if (filmId) {
+    return `/watchparty/create/${filmId}`;
+  }
+  return `/watchparty/create`;
+};
+
 const homeViewRouteGenerate = () => {
   return `/`;
 };
@@ -91,6 +99,7 @@ const OTT_VIEW_TO_ROUTE_GEN = {
   [VIEWS.MOVIELIST]: moveListViewRouteGenerate,
   [VIEWS.SEARCHMOVIE]: searchMovieViewRouteGenerate,
   [VIEWS.WATCHPARTY]: watchPartyViewRouteGenerate,
+  [VIEWS.CREATEWATCHPARTY]: createWatchPartyViewRouteGenerate,
 };
 
 const STUDIO_VIEW_TO_ROUTE_GEN = {

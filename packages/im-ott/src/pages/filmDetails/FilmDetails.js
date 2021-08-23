@@ -51,6 +51,11 @@ import { StarFilled } from "imcomponents/atoms/icon";
 // Image
 import rotateImg from "imbase/assets/images/rotatephone.png";
 
+// Utils
+import getRoute from "imbase/utils/getRoute";
+import VIEWS from "imbase/constants/route.views";
+import APPS from "imbase/constants/route.apps";
+
 const DESCRIPTION_INITIAL_DISPLAY_LIMIT = 400;
 
 const FilmDetails = (props) => {
@@ -94,7 +99,10 @@ const FilmDetails = (props) => {
 
   const handleCreateWatchParty = () => {
     const { history } = props;
-    history.push(`/watchparty/create/${filmId}`);
+    const createWatchPartyRoute = getRoute(APPS.OTT, VIEWS.CREATEWATCHPARTY, {
+      filmId,
+    });
+    history.push(createWatchPartyRoute);
   };
 
   const onClose = () => {
