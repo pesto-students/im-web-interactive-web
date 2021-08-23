@@ -52,6 +52,7 @@
       margin-right: 0rem;
       button {
         margin-right: 0rem;
+        padding: 0;
       }
     }
 
@@ -68,6 +69,10 @@
 
       .titleMargin {
         margin-left: 2rem;
+      }
+
+      .titleMarginMobile {
+        margin: 0;
       }
     }
   }
@@ -102,8 +107,4 @@
 
 .mobileButton {
   margin-bottom: 1.2rem;
-}
-
-.titleMarginMobile {
-  margin-right: 2rem;
 }
