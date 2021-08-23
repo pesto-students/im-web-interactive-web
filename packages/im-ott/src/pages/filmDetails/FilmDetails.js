@@ -94,7 +94,7 @@ const FilmDetails = (props) => {
 
   const handleCreateWatchParty = () => {
     const { history } = props;
-    history.push("/watchparty/create/1234");
+    history.push(`/watchparty/create/${filmId}`);
   };
 
   const onClose = () => {
