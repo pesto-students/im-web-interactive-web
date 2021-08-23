@@ -81,11 +81,11 @@ const PreviewVideo = (props) => {
         fullScreen={true}
         autoPlay={true}
       ></Player>
-      <Button
+      {movie?.isPublished && <Button
         className={styles.formButton}
         label={"Unpublish"}
         onClick={onUnpublish}
-      />
+      />}
     </div>
   );
 };
