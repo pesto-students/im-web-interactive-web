@@ -39,6 +39,7 @@ const Hotspots = (props) => {
   const [jumpIn, setJumpIn] = useState("00:00:01");
 
   const hotspotSeekRef = useRef(null);
+  const hotspotInputRef = useRef(null);
 
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -66,6 +67,7 @@ const Hotspots = (props) => {
         "HOTSPOT"
       )
     );
+    handleReset();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -95,6 +97,7 @@ const Hotspots = (props) => {
     hotspotSeekRef.current.seekTo(record.startPoint);
     const formattedTime = getFormattedTime(record.startPoint);
     setJumpIn(formattedTime);
+    hotspotInputRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleDelete = (hotspotid) => {
@@ -102,6 +105,7 @@ const Hotspots = (props) => {
     hotspotSeekRef.current.seekTo(0);
     setJumpIn("00:00:01");
     dispatch(deleteAction(id, hotspotid, "HOTSPOT"));
+    hotspotInputRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const columns = [
@@ -131,7 +135,7 @@ const Hotspots = (props) => {
   ];
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={hotspotInputRef}>
       {loading ? (
         <Loader />
       ) : (
@@ -180,6 +184,7 @@ const Hotspots = (props) => {
               label={"Add New"}
               onClick={() => {
                 handleReset();
+                hotspotInputRef.current.scrollIntoView({ behavior: "smooth" });
               }}
             />
             <Button

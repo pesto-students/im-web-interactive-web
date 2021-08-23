@@ -192,9 +192,13 @@ const FilmList = (props) => {
           </div>
         )}
         {loading ? (
-          _times(5, (movie) => (
+          !isMobile ? (
+            _times(5, (movie) => (
+              <Skeleton.Image active={true} className={styles.skeleton} />
+            ))
+          ) : (
             <Skeleton.Image active={true} className={styles.skeleton} />
-          ))
+          )
         ) : (
           <div className={styles.navItems} ref={filmListRef}>
             {_map(movieList, (movie) =>

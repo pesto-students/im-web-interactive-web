@@ -41,6 +41,7 @@ const TimeTriggersTab = (props) => {
 
   const triggerSeekInRef = useRef(null);
   const triggerSeekOutRef = useRef(null);
+  const triggerInputRef = useRef(null);
 
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -70,6 +71,7 @@ const TimeTriggersTab = (props) => {
         "TRIGGER"
       )
     );
+    handleReset();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -108,6 +110,7 @@ const TimeTriggersTab = (props) => {
     const formattedTimeOut = getFormattedTime(record.skipTo);
     setJumpIn(formattedTimeIn);
     setJumpOut(formattedTimeOut);
+    triggerInputRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleDelete = (triggerid) => {
@@ -117,6 +120,7 @@ const TimeTriggersTab = (props) => {
     setJumpIn("00:00:01");
     setJumpOut("00:00:01");
     dispatch(deleteAction(id, triggerid, "TRIGGER"));
+    triggerInputRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const columns = [
@@ -151,7 +155,7 @@ const TimeTriggersTab = (props) => {
   ];
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={triggerInputRef}>
       {loading ? (
         <Loader />
       ) : (
@@ -216,11 +220,12 @@ const TimeTriggersTab = (props) => {
             />
           </Form.Item>
           <Form.Item {...buttonItemLayout}>
-          <Button
+            <Button
               className={styles.addNewButton}
               label={"Add New"}
               onClick={() => {
                 handleReset();
+                triggerInputRef.current.scrollIntoView({ behavior: "smooth" });
               }}
             />
             <Button
