@@ -161,7 +161,7 @@ const Hotspots = (props) => {
           >
             <Input placeholder="Enter hotspot name" />
           </Form.Item>
-          <Form.Item label="Jump to point in video">
+          <Form.Item label="Start Point">
             <div className={styles.testPlayerDiv}>
               <Seeker
                 ref={hotspotSeekRef}

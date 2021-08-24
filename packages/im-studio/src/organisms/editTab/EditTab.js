@@ -191,6 +191,7 @@ const EditTab = (props) => {
               className={styles.chooseImageInput}
               type={"file"}
               onChange={handleThumbnailChange}
+              accept="image/*"
             />
             {thumbnailLoading ? (
               <Loader />
@@ -219,6 +220,7 @@ const EditTab = (props) => {
               className={styles.chooseImageInput}
               type={"file"}
               onChange={handleBackgroundChange}
+              accept="image/*"
             />
             {backgroundLoading ? (
               <Loader />
