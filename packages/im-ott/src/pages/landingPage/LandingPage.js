@@ -21,7 +21,7 @@ function LandingPage() {
       />
       <FilmList
         key="featured-movies"
-        label={"Featured Movies"}
+        label={"iFlix Originals"}
         listKey={"featured"}
         isFeatured={true}
         showDetails
@@ -41,7 +41,7 @@ function LandingPage() {
       <Banner onlyOne />
       <FilmList
         key="featured-movies-3"
-        label={"Featured Movies"}
+        label={"Recommended Movies"}
         listKey={"new-releases"}
         isFeatured={true}
         showDetails
