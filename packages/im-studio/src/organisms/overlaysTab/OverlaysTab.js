@@ -47,7 +47,7 @@ const OverlaysTab = (props) => {
 
   // Ref for seeker
   const overlaySeekRef = useRef(null);
-const overlayInputRef = useRef(null);
+  const overlayInputRef = useRef(null);
 
   // Styles for tabs
   const formItemLayout = {
@@ -71,7 +71,7 @@ const overlayInputRef = useRef(null);
       render: (val) => getFormattedTime(val),
     },
     {
-      title: "Template",
+      title: "Title",
       dataIndex: "templateTitle",
     },
     {
@@ -228,7 +228,7 @@ const overlayInputRef = useRef(null);
           >
             <Input placeholder="Enter overlay name" />
           </Form.Item>
-          <Form.Item label="Jump to point in video">
+          <Form.Item label="Jump Point">
             <div className={styles.testPlayerDiv}>
               <Seeker
                 ref={overlaySeekRef}

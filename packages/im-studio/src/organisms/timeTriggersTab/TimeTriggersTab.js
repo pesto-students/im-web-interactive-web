@@ -185,7 +185,7 @@ const TimeTriggersTab = (props) => {
           >
             <Input placeholder="Enter hotspot name" />
           </Form.Item>
-          <Form.Item label="In point">
+          <Form.Item label="Start Point">
             <div className={styles.testPlayerDiv}>
               <Seeker
                 ref={triggerSeekInRef}
@@ -202,7 +202,7 @@ const TimeTriggersTab = (props) => {
               disabled
             />
           </Form.Item>
-          <Form.Item label="Out point">
+          <Form.Item label="Skip To">
             <div className={styles.testPlayerDiv}>
               <Seeker
                 ref={triggerSeekOutRef}
