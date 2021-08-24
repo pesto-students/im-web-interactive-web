@@ -4,7 +4,7 @@
 
 ### **In one line**,
 
-iFlix is a platform to watch and create interactive movies by utilizing multiple module's offered by the platform.
+iFlix is a platform to watch and create interactive movies by utilizing multiple modules offered by the platform.
 
 ### **Who is this for?**
 
