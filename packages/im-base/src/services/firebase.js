@@ -61,6 +61,18 @@ export const signInWithGoogle = () => {
     });
 };
 
+export const signInAsGuest = () => {
+  auth
+    .signInAnonymously()
+    .then(() => {
+      // Signed In
+    })
+    .catch((error) => {
+      Sentry.captureMessage("Error at Login");
+      Sentry.captureException(error);
+    });
+};
+
 export const logOut = () => {
   auth
     .signOut()

@@ -6,6 +6,7 @@ import { Title, Label } from "imcomponents/atoms/typography";
 import { isMobile } from "imcomponents/atoms/device";
 import Logo from "imcomponents/molecules/logo";
 import GoogleLogin from "imcomponents/molecules/googleLogin";
+import GuestLogin from "imcomponents/molecules/guestLogin";
 
 // Utils
 import getRoute from "imbase/utils/getRoute";
@@ -47,6 +48,9 @@ const Login = () => {
           <div className={styles.googleLogin}>
             <GoogleLogin />
           </div>
+          <div className={styles.googleLogin}>
+            <GuestLogin />
+          </div>
         </div>
       </div>
     );
@@ -65,6 +69,9 @@ const Login = () => {
           </Label>
           <div className={styles.googleLogin}>
             <GoogleLogin />
+          </div>
+          <div className={styles.googleLogin}>
+            <GuestLogin />
           </div>
         </div>
       </div>
